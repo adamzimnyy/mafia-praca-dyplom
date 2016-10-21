@@ -1,0 +1,95 @@
+\chapter{Analiza wymagañ systemu}
+\section{Architektura systemu}
+\indent \par
+System zostanie podzielony na cztery czêœci:
+\begin{itemize}[leftmargin=+2cm]
+	\item aplikacjê mobiln¹ na telefony z systemem Android,
+	\item aplikacjê internetow¹ realizuj¹c¹ funkcje konsoli administracyjnej 
+	\item serwer prowadz¹cy grê
+	\item bazê danych
+	
+\end{itemize}
+
+Aplikacja mobilna bêdzie pe³niæ rolê klienta gry i przeznaczona bêdzie dla graczy. Z jej pomoc¹ u¿ytkownicy bêd¹ mogli odczytywaæ i wykonywaæ przydzielone im zlecenia, edytowaæ swój profil, przegl¹daæ ranking i zarz¹dzaæ swoim kontem. Urz¹dzenie mobilne zostanie wykorzystane do okreœlenia lokalizacji u¿ytkowników na potrzeby gry. 
+
+	Konsola administracyjna s³u¿yæ bêdzie administratorom gry to obserwowania jej przebiegu i modyfikowania parametrów, a tak¿e zarz¹dzania kontami u¿ytkowników. 
+	
+	Zadaniem serwera jest automatyczne prowadzenie gry bez koniecznoœci udzia³u administratorów systemu. W ramach pracy serwera powinny byæ generowane lub usuwane zlecenia prywatne i publiczne, wysy³ane powiadomienia do graczy, a tak¿e monitorowana aktywnoœæ graczy. Serwer wykorzystywany bêdzie tak¿e do stworzenia interfejsu komunikacyjnego pomiêdzy aplikacjami klienckimi lub konsol¹ administracyjn¹ a baz¹ danych. 
+
+\section{Wymagania funkcjonalne}
+Na podstawie analizy opisu zasad gry i planowanej architektury systemu, opracowano wymagania funkcjonalne systemu. Poni¿sze podrodzia³y opisuj¹ opracowane wymgania z wyró¿nieniem czêœci systemu, do której przynale¿¹.
+
+\subsection{Aplikacja kliencka}
+Wymagania funkcjonalne aplikacji klienckiej skupiaj¹ siê wokó³ zapewnienia u¿ytkownikom wgl¹du w ich konto. 
+\begin{enumerate}
+	\item	Logowanie - aplikacja powinna pozwalaæ na zalogowanie istniej¹cego u¿ytkownika przy pomocy nazwy u¿ytkownika i has³a. W aplikacji nale¿y umo¿liwiæ zapamiêtanie danych logowania. Po zapamiêtaniu danych logowanie do konta u¿ytkownika powinno nast¹piæ automatycznie po uruchomieniu aplikacji. Po wprowadzeniu nieprawid³owych danych logowania aplikacja powinna wyœwietliæ stosowny komunikat. Po poprawnym logowaniu aplikacja przechodzi do zapisu lokalizacji.
+\item	Rejestracja - aplikacja powinna umo¿liwiaæ rejestracjê nowego konta. W procesie rejestracji nale¿y podaæ dane osobowe oraz dane logowania, a tak¿e wybraæ zdjêcie. Po wyborze zdjêcia aplikacja powinna umo¿liwiæ przyciêcie go. Po klikniêciu w pole Data urodzenia powinien wyœwietliæ siê kalendarz. Typ pola do wprowadzenia danych powinien odpowiadaæ wprowadzanym danym (email, has³o, imiê itd), tak aby na urz¹dzeniu wyœwietli³a siê w³aœciwa klawiatura. Przed zarejestrowaniem u¿ytkownika nale¿y zweryfikowaæ poprawnoœæ wprowadzonych danych oraz zdjêcia. W przypadku niewprowadzenia któregoœ z elementów lub braku weryfikacji nale¿y wyœwietliæ komunikat i zaznaczyæ brakuj¹cy element. Po poprawnym zakoñczeniu rejestracji aplikacja powinna powróciæ do ekranu startowego.
+\item	Wykrycie twarzy na zdjêciu - aplikacja przed przes³aniem zdjêcia na serwer powinna dokonaæ próby wykrycia twarzy na zdjêciu. W przypadku niewykrycia twarzy, wykrycia wiêcej ni¿ jednej twarzy, lub za ma³ej powierzchni zdjêcia zajêtej przez twarz nale¿y wyœwietliæ komunikat z proœb¹ o wybór innego zdjêcia lub inne jego przyciêcie. Po poprawnym wykryciu twarzy na zdjêciu nale¿y wyœwietliæ informacjê o poprawnoœci zdjêcia na ekranie.
+\item	Przes³anie zdjêcia - aplikacja powinna powinna umo¿liwiæ przes³anie zdjêcia na serwer. W przypadku b³êdu podczas przesy³ania nale¿y wyœwietliæ komunikat o b³êdzie. Po poprawnym przes³aniu zdjêcia nale¿y przypisaæ jego identyfikator u¿ytkownikowi.
+\item	Zapis lokalizacji przy logowaniu - po zalogowaniu u¿ytkownika nale¿y zapisaæ lokalizacjê do bazy danych. Jeœli aplikacja nie posiada uprawnieñ do modu³u GPS urz¹dzenia, nale¿y o nie poprosiæ. Jeœli u¿ytkownik odmówi³ uprawnieñ lub modu³ GPS jest wy³¹czony nale¿y wyœwietliæ ekran z informacj¹ o koniecznoœci jego w³¹czenia. Po uzyskaniu dostêpu do modu³u aplikacja powinna poczekaæ na ustalenie lokalizacji z dobr¹ dok³adnoœci¹ (kilka metrów) a nastêpnie wykonaæ zapis do bazy. Po poprawnym wykonaniu zapisu aplikacja przechodzi do widoku Zlecenia. W przypadku b³êdu zapisu do bazy ???
+\item	Wyœwietlenie Zleceñ - aplikacja powinna umo¿liwiaæ wyœwietlenie Zleceñ u¿ytkownika z podzia³em na publiczne i prywatne. Zlecenia powinny byæ pobrane automatycznie po wyœwietleniu ekranu. Nale¿y umo¿liwiæ odœwie¿enie listy poprzez gest poci¹gniêcia w dó³, gdy lista jest przewiniêta do pocz¹tku. Elementy listy powinny wyœwietlaæ dane osobowe celu, zdjêcie, odleg³oœæ od u¿ytkownika oraz pozosta³y czas. Pozosta³y czas zlecenia powinien byæ aktualizowany w czasie rzeczywistym. Zlecenia zakoñczone powinny zamiast czasu wyœwietlaæ napis z ich stanem. W przypadku b³êdu podczas pobierania listy celów nale¿y wyœwietliæ komunikat o b³êdzie. Klikniêcie na element listy powinno otworzyæ ekran szczegó³ów zlecenia. 
+\item	Szczegó³y zlecenia - aplikacja powinna wyœwietliæ szczegó³y zlecenia po wyborze z listy Zleceñ. Zdjêcie celu powinno zajmowaæ mo¿liwie du¿¹ powierzchniê ekranu. Na ekranie nale¿y wyœwietliæ informacje o celu, odleg³oœæ od u¿ytkownika i pozosta³y czas. Pozosta³y czas powinien byæ aktualizowany w czasie rzeczywistym. Ekran Szczegó³y powinien zawieraæ pole tekstowe oraz przycisk s³u¿¹ce do wprowadzenia kodu potwierdzaj¹cego. Gest poci¹gniêcia w dó³ na ekranie powinien pokazaæ mapê zawieraj¹c¹ lokalizacje Szukanego. Po klikniêciu na marker lokalizacji na mapie powinno zostaæ wyœwietlone okno z dat¹ dodania znacznika. Ekran Szczegó³ów powinien umo¿liwiaæ raportowanie u¿ytkowników ³ami¹cych zasady. 
+\item	Potwierdzenie wykonania Zlecenia - u¿ytkownik powinien mieæ mo¿liwoœæ potwierdzenia wykonania Zlecenia poprzez wprowadzenie kodu generowanego w aplikacji szukanego u¿ytkownika. Po wprowadzeniu kodu aplikacja powinna przes³aæ kod na serwer w celu sprawdzenia jego poprawnoœci w bazie danych. W przypadku kodu niepoprawnego nale¿y wyœwietliæ komunikat oraz zablokowaæ mo¿liwoœæ ponownego wprowadzenia kodu na 10 sekund. Po wprowadzeniu poprawnego kodu Zlecenia zmienia status na wykonane. 
+\item Generowanie kodu - aplikacja umo¿liwia wygenerowanie losowego kodu s³u¿¹cego do potwierdzania zleceñ. W momencie generowania aplikacja powinna zapamiêtaæ czas generowania i zapisaæ go w bazie danych. Na ekranie powinien zostaæ wyœwietlony czas wa¿noœci kodu. Czas wa¿noœci powinien byæ aktualizowany w czasie rzeczywistym. 
+\item	Zg³oszenie gracza - aplikacja powinna umo¿liwiaæ zg³oszenie gracza ³ami¹cego zasady gry. Po wyborze opcji Zg³oœ gracza powinno pokazaæ siê okno dialogowe z mo¿liwoœci¹ wyboru jednego  powodów zg³oszenia, polem tekstowym do opisania sytuacji i przyciskami potwierdzaj¹cym i zamykaj¹cym okno dialogowe. Po potwierdzeniu zg³oszenie zostanie przes³ane na serwer, a okno dialogowe powinno zostaæ zamkniête. 
+\item	Nawigacja w aplikacji - aplikacja powinna umo¿liwiaæ nawigowanie pomiêdzy dostêpnymi ekranami przy pomocy menu bocznego wysuwanego z lewej strony. Klikniêcie elementu listy powinno zmieniæ ekran i zamkn¹æ menu. Klikniêcie poza wysuniêtym menu lub gest przeci¹gniêcia w lewo powinny zamkn¹æ menu.
+\item	Ocena - aplikacja powinna posiadaæ skrót do strony aplikacji w sklepie Google Play.
+\item	Strona “O aplikacji” - aplikacja powinna umo¿liwiaæ wyœwietlenie strony informacyjnej o aplikacji zawieraj¹cej dane na temat obecnej wersji, autora, wykorzystanych bibliotek i ich licencji.
+\item	Kontakt z twórc¹ - aplikacja powinna umo¿liwiaæ przes³anie informacji o b³êdach lub opinii do twórcy aplikacji. Przesy³anie mo¿e byæ obs³u¿one za pomoc¹ zewnêtrznej aplikacji pocztowej lub wbudowane w aplikacjê.
+\item	Profil u¿ytkownika - aplikacja powinna udostêpniæ ekran wyœwietlaj¹cy profil zalogowanego u¿ytkownika w ten sam sposób, w jaki wyœwietlane s¹ szczegó³y zlecenia, z pominiêciem elementów interfejsu dotycz¹cych czasu zlecenia i kodu potwierdzaj¹cego.  Widok profilu u¿ytkownika powinien pozwoliæ na edycjê danych u¿ytkownika oraz zmianê zdjêcia. Przy edycji profilu powinna byæ mo¿liwoœæ zmiany maksymalnej odleg³oœci zleceñ. 
+16.	Strona startowa - aplikacja powinna zawieraæ ekran startowy zawieraj¹cy grafikê promocyjn¹ i przyciski Zarejestruj oraz Zaloguj. Strona startowa powinna byæ wyœwietlana przy pierwszym uruchomieniu aplikacji, oraz przy kolejnych jeœli u¿ytkownik nie skorzysta³ z opcji automatycznego logowania. 
+\item	Wylogowanie - aplikacja powinna umo¿liwiaæ wylogowanie z konta u¿ytkownika. Po wylogowaniu dotychczas zapamiêtana nazwa u¿ytkownika i has³o powinny zostaæ zapomniane. Przy kolejnym uruchomieniu aplikacja powinna wyœwietliæ ekran startowy.
+\item	Szkolenie - przy pierwszym uruchomieniu aplikacji powinno zostaæ wyœwietlone krótkie szkolenie w postaci slajdów opisuj¹ce krótko najwa¿niejsze funkcje aplikacji oraz zasady gry.
+\item	Ustawienia aplikacji - w aplikacji powinna byæ mo¿liwoœæ edycji preferencji dotycz¹cych otrzymywanych powiadomieñ.
+
+\end{enumerate}
+\subsection{Aplikacja serwerowa}
+\begin{enumerate}
+	\item	Po³¹czenie z baz¹ danych - system w ramach swojego dzia³ania powinien mieæ mo¿liwoœæ nawi¹zania po³¹czenia i wykonywania operacji na bazie danych.
+\item	Rejestracja - system pozwala na zarejestrowanie nowego konta. Podczas rejestracji nale¿y nadaæ kontu odpowiednie uprawnienia.
+\item	Uwierzytelnienie u¿ytkownika - system powinien byæ zabezpieczony przed dostêpem osób nieuwierzytelnionych. W celu uzyskania dostêpu u¿ytkownik musi podaæ login i has³o wybrane przy rejestracji. System powinien dzia³aæ w trybie bezstanowym tj. nie przechowywaæ informacji o zalogowanym u¿ytkowniku lub sesji. 
+\item	Sprawdzenie dostêpnoœci nazwy u¿ytkownika - system powinien umo¿liwiaæ sprawdzenie zadanej nazwy u¿ytkownika pod k¹tem wystêpowania konta o tej nazwie w bazie danych.
+\item	Sprawdzenie adresu email - system powinien umo¿liwiaæ sprawdzenie zadanego adresu email pod k¹tem wystêpowania konta z tym adresem w bazie danych.
+\item	Pobranie konta u¿ytkownika - system powinien umo¿liwiæ pobranie danych o koncie u¿ytkownika na podstawie jego numeru id lub nazwy u¿ytkownika. 
+\item	Pobranie zleceñ u¿ytkownika - system powinien umo¿liwiæ pobranie zleceñ dostêpnych dla u¿ytkownika na podstawie jego numeru id.
+\item	Pobranie lokalizacji u¿ytkownika - system powinien umo¿liwiæ pobranie znanych lokalizacji u¿ytkownika nowszych ni¿ zadana data. 
+\item	Zapis lokalizacji - system powinien umo¿liwiæ zapis nowej lokalizacji do bazy danych. We wpisie nale¿y zawrzeæ datê jej utworzenia, u¿ytkownika, któremu jest przypisana, a tak¿e informacjê o typie wpisu (logowanie, wykonanie zlecenia, wygenerowanie kodu).  
+\item	Zapis kodu - system powinien umo¿liwiæ zapis nowo wygenerowanego kodu potwierdzaj¹cego wykonanie zlecenia do bazy danych. We wpisie nale¿y zawrzeæ informacjê o dacie wykonania wpisu oraz o u¿ytkowniku, który wygenerowa³ kod.
+\item	Potwierdzenie wykonania zlecenia - system powinien umo¿liwiæ potwierdzenia wykonania zlecenia za pomoc¹ kodu wygenerowanego w aplikacji Szukanego. 
+\item	Pobranie punktacji u¿ytkownika - system powinien umo¿liwiæ pobranie informacji o sumarycznej liczbie punktów uzyskanych przez u¿ytkownika oraz miejscu w rankingu na podstawie tej punktacji. 
+\item	Pobranie przedzia³ów punktowych - system powinien umo¿liwiæ wyznaczenie przedzia³ów punktowych na podstawie progów wymienionych w …….. . U¿ytkownik powinien mieæ mo¿liwoœæ sprawdzenia liczby punktów potrzebnych do zmiany obecnie zajmowanego przez niego przedzia³u na wy¿szy lub ni¿szy.
+\item	Pobranie rankingu najlepszych graczy - system powinien umo¿liwiæ pobranie informacji o najlepszych graczach w rankingu. 
+\item	Pobranie uœrednionej lokalizacji - system powinien umo¿liwiæ pobranie uœrednionej lokalizacji u¿ytkownika na podstawie jego numeru id. Lokalizacjê uœrednion¹ nale¿y wyznaczyæ poprzez znalezienie takiej lokalizacji u¿ytkownika, która w swoim otoczeniu ma maksymaln¹ liczbê innych lokalizacji. W przypadku, gdy liczba ta jest równa dla dwóch lub wiêcej wpisów, nale¿y wybraæ najbardziej aktualn¹. 
+\item	Pobranie najnowszej lokalizacji - system powinien umo¿liwiæ pobranie najbardziej aktualnej lokalizacji u¿ytkownika na podstawie jego numeru id. 
+\item	Edycja profilu - system powinien umo¿liwiaæ edycjê danych na koncie u¿ytkownika
+\item	Zg³oszenie ³amania zasad - system powinien umo¿liwiaæ dodanie nowego zg³oszenia o z³amaniu zasad przez u¿ytkownika. Danymi wymaganymi do dodania zg³oszenia jest id u¿ytkownika zg³aszaj¹cego oraz zg³oszonego i powód zg³oszenia. Opcjonalne jest dodanie opisu s³ownego. System powinien zarejestrowaæ datê przyjêcia zg³oszenia. 
+\item	Zamro¿enie i odmro¿enie konta - w przypadku wyd³u¿onej nieaktywnoœci Gracz powinien mieæ mo¿liwoœæ wstrzymania dzia³alnoœci na swoim koncie poprzez jego zamro¿enie. Po ponownym rozpoczêciu aktywnoœci system powinien umo¿liwiæ odmro¿enie konta. Konta zamro¿one nie bior¹ udzia³u w rozgrywce. 
+\item	Usuniêcie konta - system powinien umo¿liwiæ u¿ytkownikowi usuniêcie swojego konta. Po usuniêciu konta powinny zostaæ tak¿e usuniête wszystkie inne wpisy w bazie danych powi¹zane z usuwanym kontem. 
+\item	Zmiana has³a - system powinien umo¿liwiæ zmianê has³a u¿ytkownikowi. Po proœbie o zmianê has³a wys³anej z poziomu aplikacji mobilnej system powinien wys³aæ email z linkiem potwierdzaj¹cym zmianê. Po wejœciu w link nale¿y wygenerowaæ losowo nowe has³o i wys³aæ je mailowo u¿ytkownikowi. 
+\item	Utworzenie nowych zleceñ - system powinien automatycznie co okreœlony czas przeprowadziæ losowanie nowych zleceñ dla u¿ytkowników. Zasady i przebieg losowania opisane zosta³y w punkcie ….. . Czas, co jaki tworzone s¹ zlecenia jest parametrem systemu i nale¿y go pobraæ z bazy danych po ka¿dym losowaniu. 
+\item	Wygaœniêcie zleceñ - system powinien automatycznie zmieniaæ status aktywnych zleceñ na niewykonane, w przypadku gdy zlecenie pozostaje niewykonane po przekroczeniu czasu wa¿noœci. Czas wa¿noœci zlecenia publicznego to parametr systemu, który nale¿y pobraæ z bazy danych.
+\item	Zmiana widocznoœci zleceñ - system powinien automatycznie zmieniaæ widocznoœæ zleceñ z prywatnych na publiczne, w przypadku gdy zlecenie prywatne pozostaje niewykonane po przekroczeniu czasu wa¿noœci. Czas wa¿noœci zlecenia prywatnego to parametr systemu, który nale¿y pobraæ z bazy danych.
+\item	Wygasanie kodów - system powinien automatycznie zmieniæ status kodów w bazie danych na nieaktualne po up³ywie ich czasu wa¿noœci. Czas wa¿noœci kodu to parametr systemu, który nale¿y pobraæ z bazy danych.
+\item	Wykrywanie nieaktywnych u¿ytkowników - system powinien automatycznie wykrywaæ d³ugie okresy nieaktywnoœci u¿ytkowników. U¿ytkownik po przekroczeniu okreœlonego czasu nieaktywnoœci powinien otrzymaæ mailow¹ informacjê o nieaktywnoœci. W przypadku braku aktywnoœci przez kolejny okres czasu, konto u¿ytkownika nale¿y zamroziæ. U¿ytkownik powinien zostaæ poinformowany o zamro¿eniu konta drog¹ mailow¹. Czas, po którym wysy³ane jest przypomnienie i czas zamro¿enia konta to parametry systemu, które nale¿y pobraæ z bazy danych. 
+\item	Blokada u¿ytkowników - system powinien automatycznie blokowaæ konta u¿ytkowników, którzy przekrocz¹ okreœlon¹ liczbê zg³oszeñ o z³amaniu regulaminu. Wielokrotne zg³oszenia od tego samego u¿ytkownika nale¿y liczyæ pojedynczo. U¿ytkownik, którego konto zosta³o zablokowane powinien otrzymaæ powiadomienie mailowe. 
+\item	Wysy³anie powiadomieñ push - system powinien mieæ mo¿liwoœæ wysy³ania powiadomieñ push na telefony z systemem Android. Zdarzenia powoduj¹ce wys³anie powiadomieñ zosta³y opisane w punkcie ….. Powiadomienia. 
+\item	Zmiana parametrów systemu - system powinien udostêpniaæ API pozwalaj¹ce na zmianê zadanego parametru systemu przez podanie jego nazwy oraz nowej wartoœci. Nazwy parametrów zosta³y opisane w punkcie ….. Parametry systemu. 
+\item	Odczyt parametrów systemu - system powinien pozwalaæ na odczyt ustawionej wartoœci parametru na podstawie jego nazwy.
+\item
+
+\end{enumerate}
+\subsection{Panel administracyjny}
+\begin{enumerate}
+	\item Kontrola dostêpu - panel administracyjny powinien pozwalaæ na dostêp  jedynie u¿ytkownikom posiadaj¹cym odpowiednie uprawnienia. 
+\item Logowanie - panel powinien pozwalaæ na logowanie u¿ytkownika
+\item Wyœwietlenie listy u¿ytkowników - z poziomu panelu administrator powinien mieæ mo¿liwoœæ pobrania i wyœwietlenia listy u¿ytkowników. Nale¿y zapewniæ mo¿liwoœæ filtrowania listy na podstawie kryteriów: statusu konta, daty rejestracji, daty ostatniej aktywnoœci.
+\item Wyœwietlenie listy zg³oszeñ - administrator powinien mieæ mo¿liwoœæ wyœwietlenia listy zg³oszeñ o z³amaniu zasad. Nale¿y zapewniæ mo¿liwoœæ filtrowania listy na podstawie kryteriów: zg³oszony u¿ytkownik, zg³aszaj¹cy u¿ytkownik, data zg³oszenia, rodzaj zg³oszenia.
+\item  Zmiana statusu konta - administrator powinien mieæ mo¿liwoœæ zablokowania lub odblokowania konta wybranego u¿ytkownika
+\item  Zmiana uprawnieñ administracyjnych - administrator powinien mieæ mo¿liwoœæ nadania lub cofniêcia uprawnieñ administracyjnych wybranego u¿ytkownika poza wyznaczonym kontem nadrzêdnym
+\item Zmiana parametrów gry - panel administracyjny powinien powalaæ na   odczyt i zmianê parametrów systemu. Lista parametrów systemu przedstawiona zosta³a w punkcie \ref{parametry}.
+\end{enumerate}
+\section{Wymagania niefunkcjonalne}
+\section{Projekt interfejsu}
+\subsection{Aplikacja kliencka}
+\subsection{Panel administracyjny}
+\section{Wykorzystywane technologie i narzêdzia}
