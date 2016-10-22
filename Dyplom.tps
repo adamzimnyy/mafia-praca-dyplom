@@ -11,8 +11,8 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=682
-NormalPos.bottom=884
+NormalPos.right=1644
+NormalPos.bottom=893
 Class=LaTeXView
 Document=rozdzial05.tex
 
@@ -29,8 +29,8 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=682
-NormalPos.bottom=884
+NormalPos.right=1644
+NormalPos.bottom=893
 Class=LaTeXView
 Document=rozdzial01.tex
 
@@ -47,14 +47,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=682
-NormalPos.bottom=884
+NormalPos.right=1644
+NormalPos.bottom=893
 Class=LaTeXView
 Document=rozdzial03.tex
 
 [Frame2_View0,0]
-TopLine=27
-Cursor=1773
+TopLine=352
+Cursor=27886
 
 [Frame3]
 Flags=0
@@ -65,18 +65,36 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=682
-NormalPos.bottom=884
+NormalPos.right=1644
+NormalPos.bottom=893
 Class=LaTeXView
 Document=rozdzial02.tex
 
 [Frame3_View0,0]
-TopLine=121
-Cursor=6147
+TopLine=55
+Cursor=5741
+
+[Frame4]
+Flags=0
+ShowCmd=1
+MinPos.x=-1
+MinPos.y=-1
+MaxPos.x=-1
+MaxPos.y=-1
+NormalPos.left=4
+NormalPos.top=26
+NormalPos.right=1644
+NormalPos.bottom=893
+Class=LaTeXView
+Document=Dyplom.tex
+
+[Frame4_View0,0]
+TopLine=112
+Cursor=4266
 
 [SessionInfo]
-FrameCount=4
-ActiveFrame=3
+FrameCount=5
+ActiveFrame=4
 
 [Bookmarks]
 Dyplom.tex=46 93 
