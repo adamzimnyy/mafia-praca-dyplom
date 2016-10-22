@@ -21,6 +21,7 @@
 \usepackage{color,calc}
 %\usepackage{soul} % pakiet z komendami do podkreœlania tekstu
 
+\usepackage{enumitem}
 \usepackage{ebgaramond} % pakiet z czcionkami garamond, potrzebny tylko do strony tytu³owej, musi wyst¹piæ przed pakietem tgtermes
 
 %% Aby uzyskaæ polskie literki w pdfie (a nie zlepki) korzystamy z pakietu czcionek tgterms. 
@@ -493,7 +494,7 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 %                  Pocz¹tek dokumentu 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\includeonly{skroty,rozdzial01} % jeœli chcemy kompilowaæ tylko fragmenty, to mo¿na tu je wpisaæ
-
+\newcommand{\header}[1]{\paragraph{#1}\mbox{}\\ \indent}
 \begin{document}
 % Tutaj mo¿na prze³¹czyæ odstêp miêdzy liniami
 %\SingleSpacing
