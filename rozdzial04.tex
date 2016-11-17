@@ -1,16 +1,235 @@
-\chapter{Implementacja systemu}\indent \par
-\section{Aplikacja kliencka}\indent \par
+\chapter{Projekt systemu}
 
-Ta sekcja opisuje proces implementacji aplikacji mobilnej przeznaczonej dla graczy.
-		\subsection{Struktura projektu}\indent \par
-		\subsection{Wykorzystane technologie i biblioteki}\indent \par
-		\subsection{Interfejs u¿ytkownika}\indent \par
-\section{Aplikacja serwerowa}\indent \par
-		\subsection{Struktura projektu}\indent \par
-		\subsection{Wykorzystane technologie i biblioteki}\indent \par
-		\subsection{Bezpieczeñstwo}\indent \par
-		\subsection{Automatyzacja dzia³ania systemu}\indent \par
+\section{Architektura systemu}
+\indent \par
+System zostanie podzielony na cztery czêœci:
+\begin{itemize}[leftmargin=+2cm]
+	\item aplikacjê mobiln¹ na telefony z systemem Android,
+	\item aplikacjê internetow¹ realizuj¹c¹ funkcje konsoli administracyjnej 
+	\item serwer prowadz¹cy grê
+	\item bazê danych
+	
+\end{itemize}
+
+Aplikacja mobilna bêdzie pe³niæ rolê klienta gry i przeznaczona bêdzie dla graczy. Z jej pomoc¹ u¿ytkownicy bêd¹ mogli odczytywaæ i wykonywaæ przydzielone im zlecenia, edytowaæ swój profil, przegl¹daæ ranking i zarz¹dzaæ swoim kontem. Urz¹dzenie mobilne zostanie wykorzystane do okreœlenia lokalizacji u¿ytkowników na potrzeby gry. 
+
+	Konsola administracyjna s³u¿yæ bêdzie administratorom gry to obserwowania jej przebiegu i modyfikowania parametrów, a tak¿e zarz¹dzania kontami u¿ytkowników. 
+	
+	Zadaniem serwera jest automatyczne prowadzenie gry bez koniecznoœci udzia³u administratorów systemu. W ramach pracy serwera powinny byæ generowane lub usuwane zlecenia prywatne i publiczne, wysy³ane powiadomienia do graczy, a tak¿e monitorowana aktywnoœæ graczy. Serwer wykorzystywany bêdzie tak¿e do stworzenia interfejsu komunikacyjnego pomiêdzy aplikacjami klienckimi lub konsol¹ administracyjn¹ a baz¹ danych. 
+\section{Przypadki u¿ycia} 
+\indent \par
+Na podstawie sprecyzowanych powy¿ej zasad gry i opisu dzia³ania systemu opracowano przypadki u¿ycia systemu opisuj¹ce scenariusze, jakie mog¹ zajœæ podczas u¿ytkowania systemu. Ze wzglêdu na zautomatyzowan¹ naturê czêœci serwerowej systemu, opis scenariuszy skupia siê g³ównie na czynnoœciach wykonywanych przez u¿ytkownika aplikacji mobilnej.
+\begin{enumerate}
+
+\item Rejestracja
+\begin{description}
+\item[Aktor] \hfill \\
+ Niezarejestrowany u¿ytkownik aplikacji
+\item[Zdarzenie inicjuj¹ce] \hfill \\
+U¿ytkownik bêd¹c na ekranie startowym aplikacji klikn¹³ przycisk „Rejestracja”.
+\item[Warunki pocz¹tkowe] \hfill \\
+brak
+\item[Opis przebiegu interakcji] \hfill \\
+\begin{enumerate}
+\item W aplikacji wyœwietlany jest ekran Rejestracja.
+\item	U¿ytkownik klika przycisk „Wybór zdjêcia”.
+		\begin{enumerate}[label*=\arabic*.]
+		\item	Na telefonie zostaje otwarta aplikacja do wyboru obrazu
+		\item	U¿ytkownik wybiera obraz
+		\item	Aplikacja wyœwietla widok pozwalaj¹cy na przyciêcie zdjêcia
+		\item	U¿ytkownik ustawia przyciêcie i potwierdza
+		\item	Przyciête zdjêcie wyœwietla siê w miejscu przycisku na 	ekranie Rejestracja
+		\item	Na zdjêciu wykrywana jest twarz i wyœwietlana jest informacja potwierdzaj¹ca wykrycie twarzy
+		\end{enumerate}
+\item	U¿ytkownik wype³nia pola tekstowe szablonu rejestracyjnego
+		\begin{enumerate}[label*=\arabic*.]
+		\item	Po klikniêciu w pole „Data urodzenia” zamiast klawiatury wyœwietla siê kalendarz.
+		\item	U¿ytkownik wybiera datê z kalendarza i potwierdza przyciskiem Ok.
+		\item	Data zostaje wpisana w polu „Data urodzenia”.
+		\end{enumerate}
+\item	U¿ytkownik zaznacza pole wyboru „Akceptujê zasady gry”.
+\item	U¿ytkownik klika przycisk „Rejestruj”.
+\item	Zdjêcie u¿ytkownika jest przesy³ane na serwer.
+\item	W miejscu przycisku „Rejestruj” wyœwietlony zostaje pasek postêpu przesy³ania.
+\item	Po przes³aniu zdjêcia otrzymywany jest jego identyfikator.
+\item	Dane z szablonu wraz z identyfikatorem zdjêcia przesy³ane s¹ na serwer.
+\item	Okno rejestracji zamyka siê automatycznie po 4 sekundach i aplikacja powraca do ekranu startowego.
+\end{enumerate}
+\item[Sytuacje wyj¹tkowe] \hfill \\
+Ad. 3.3. Wybrana data urodzenia jest w przysz³oœci. Wyœwietlany jest komunikat o niepoprawnoœci daty.\\*
+Ad. 8. Przes³anie zdjêcia nie powiod³o siê. Wyœwietlany jest komunikat o b³êdzie przesy³ania zdjêcia. Nastêpuje powrót do kroku 5.
+\item[Przebiegi alternatywne ] \hfill
+\begin{enumerate}
+\item	Punkty 2., 3. oraz 4. mog¹ zostaæ wykonane w dowolnej kolejnoœci.
+ \item	W dowolnym momencie rejestracji u¿ytkownik mo¿e wyœwietliæ zasady gry. Wyœwietlenie zasad nie ma wp³ywu na resztê przebiegu rejestracji. Scenariusz zostaje rozszerzony o kroki:
+\begin{enumerate}
+\item	U¿ytkownik klika w przycisk „Zasady gry”. 
+\item	Wyœwietlone zostaje okno z zasadami. 
+\item	U¿ytkownik czyta zasady i klika przycisk „Ok”.
+\item	 Okno z zasadami zamyka siê.
+
+\end{enumerate}
+\end{enumerate}
+
+\item[Warunki koñcowe] \hfill \\
+Zarejestrowane zosta³o nowe konto u¿ytkownika.
+
+\end{description}
+%------------------------------------------------------------------------------------------
+\item Logowanie
+
+\begin{description}
+
+\item [Aktor]\hfill \\
+	U¿ytkownik
+\item [Zdarzenie inicjuj¹ce]\hfill \\
+	U¿ytkownik bêd¹c na ekranie startowym aplikacji klikn¹³ przycisk „Logowanie”.
+\item [Warunki pocz¹tkowe]\hfill \\
+U¿ytkownik posiada konto w aplikacji (jest zarejestrowany).
+\item [Opis przebiegu interakcji]\hfill
+\begin{enumerate}
+\item	W aplikacji wyœwietlany jest ekran Logowanie.
+\item	U¿ytkownik uzupe³nia pola „nazwa u¿ytkownika” i „has³o”.
+\item	U¿ytkownik klika przycisk „Zaloguj”.
+\item	Pola tekstowe i przycisk zastêpowane s¹ przez wskaŸnik postêpu.
+\item	Dane logowania przesy³ane s¹ przez aplikacjê na serwer.
+\item	Serwer sprawdza poprawnoœæ wprowadzonych danych.
+\item	Aplikacja otrzymuje token uwierzytelniaj¹cy u¿ytkownika.
+\item	Aplikacja przechodzi do widoku Zapis lokalizacji.
+\end{enumerate}
+\item [Sytuacje wyj¹tkowe ]\hfill \\
+Ad. 4. Wprowadzone dane s¹ niepoprawne. Wyœwietlony zostaje komunikat „Niepoprawne dane logowania”. Nastêpuje powrót do kroku 2.
+\item [Przebiegi alternatywne ]\hfill \\
+	brak
+\item [Warunki koñcowe]\hfill \\
+	U¿ytkownik zosta³ zalogowany.
+	\end{description}
+%------------------------------------------------------------------------------------------
+\item Zapis lokalizacji u¿ytkownika
+
+\begin{description}
+\item [Aktor]\hfill \\
+	Aplikacja? 
+\item [Zdarzenie inicjuj¹ce] \hfill \\
+	U¿ytkownik zosta³ zalogowany (przypadek Logowanie do aplikacji mobilnej)
+\item [Warunki pocz¹tkowe] \hfill \\ brak
+\item [Opis przebiegu interakcji]  \hfill
+\begin{enumerate}
+	\item	W aplikacji wyœwietlony zostaje ekran Zapis lokalizacji
+	\item	Wyœwietlony zostaje komunikat „Sprawdzanie uprawnieñ”
+	\item	Aplikacja sprawdza uprawnienia dostêpu do modu³u GPS telefonu.
+	\item	Wyœwietlony zostaje komunikat „Sprawdzanie ustawieñ”
+	\item	Aplikacja sprawdza, czy w telefonie w³¹czone s¹ us³ugi lokalizacyjne. 
+	\item	Wyœwietlony zostaje komunikat „Oczekiwanie na lokalizacjê”
+	\item	Aplikacja rozpoczyna nas³uchiwanie aktualizacji lokalizacji.
+	\item	Gdy dok³adnoœæ lokalizacji osi¹gnie 25 m informacje o lokalizacji s¹ przesy³ane na serwer.
+	\item	Serwer zapisuje dane do bazy.
+	\item	Aplikacja przechodzi do widoku Zlecenia.
+\end{enumerate}
+
+\item [Sytuacje wyj¹tkowe]  \hfill \\
+Ad. 8.	Nie uda³o siê ustaliæ dok³adnej lokalizacji przez okres 30 sekund. Wyœwietlany jest komunikat „Nie uda³o siê ustaliæ lokalizacji. Spróbuj ponownie póŸniej”.
+\item [Przebiegi alternatywne]  \hfill \\
+Ad. 3. Aplikacja nie ma uprawnieñ do modu³u GPS telefonu. \\*
+Wyœwietlane jest okno dialogowe z proœb¹ o uprawnienia. Nastêpuje powrót do kroku 3.\\*
+Ad 5. W telefonie wy³¹czone s¹ us³ugi lokalizacyjne
+Wyœwietlane jest okno dialogowe z proœb¹ o zmianê ustawieñ. Otwarte zostaj¹ ustawienia telefonu. Nastêpuje powrót do kroku 5.
+\item [Warunki koñcowe] \hfill \\
+	Lokalizacja zosta³a zapisana do bazy danych.
+\item[Uwagi] \hfill \\
+	Aktualizacje lokalizacji nie s¹ zatrzymywane po wykonaniu zapisu.
+\end{description}
+
+%------------------------------------------------------------------------------------------
+
+
+
+\end{enumerate} % wyliczanie przypadków u¿ycia
+
+
+
+
+\section{Projekt interfejsu}\indent \par
+
+
+\subsection{Aplikacja kliencka}\indent \par
+
+\begin{figure}
+\label{fig:welcome}
+\centering
+\includegraphics[width=4cm]{rys03/drawer}
+\caption{Ekran startowy aplikacji}
+\end{figure}
+
+\begin{figure}
+\label{fig:register}
+\centering
+\begin{tabular}{@{}ll@{}}
+a) & b) \\
+\includegraphics[width=4cm]{rys03/register} &
+\includegraphics[width=4cm]{rys03/register2}
+\end{tabular}
+\caption{a) Ekran rejestracji b) Okno dialogowe kalendarza}
+\end{figure}
+
+\begin{figure}
+\label{fig:login}
+\centering
+\includegraphics[width=4cm]{rys03/login}
+\caption{Ekran logowania}
+\end{figure}
+
+\begin{figure}
+\label{fig:nogps}
+\centering
+\includegraphics[width=4cm]{rys03/nogps}
+\caption{Ekran zapisu lokalizacji po logowaniu}
+\end{figure}
+
+\begin{figure}
+\label{fig:drawer}
+\centering
+\includegraphics[width=4cm]{rys03/drawer}
+\caption{Panel nawigacyjny aplikacji}
+\end{figure}
+
+\begin{figure}
+\label{fig:targets}
+\centering
+\includegraphics[width=4cm]{rys03/targets}
+\caption{Lista zleceñ}
+\end{figure}
+
+
+\begin{figure}
+\label{fig:details}
+\centering
+\begin{tabular}{@{}ll@{}}
+a) & b) \\
+\includegraphics[width=4cm]{rys03/details3} &
+\includegraphics[width=4cm]{rys03/report}
+\end{tabular}
+\caption{a) Ekran szczegó³y zlecenia b) Okno dialogowe zg³aszania z³amania zasad}
+\end{figure}
+
+\begin{figure}
+\label{fig:map}
+\centering
+\includegraphics[width=4cm]{rys03/map}
+\caption{Mapa znanych lokalizacji u¿ytkownika}
+\end{figure}
+
+\begin{figure}
+\label{fig:code}
+\centering
+\includegraphics[width=4cm]{rys03/code}
+\caption{Widok "`Generowanie kodu"'}
+\end{figure}
+
+Test test test
+
+\subsection{Panel administracyjny}\indent \par 
+Test test test1
+
 \section{Projekt bazy danych}\indent \par
 \section{Protokó³ komunikacji w systemie}\indent \par
-
-
