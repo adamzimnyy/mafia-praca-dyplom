@@ -254,10 +254,10 @@ Zmiany w profilu u¿ytkownika zosta³y zapisane.
 
 \subsection{Aplikacja kliencka}\indent \par
 
-Projekt interfejsu aplikacji mobilnej zosta³ wykonany w oparciu o wskazówki \textit{Material design}\ref{material_design} opracowane przez Google.
+Projekt interfejsu aplikacji mobilnej zosta³ wykonany w oparciu o wskazówki \textit{Material design}\ref{material_design} opracowane przez Google. Po implementacji niektóre elementy interfejsu mog¹ ró¿niæ siê nieznacznie od zaprojektowanych, zale¿nie od dostêpnych 
 
 Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkownik mo¿e przejœæ do logowania lub rejestracji do gry. Z poziomu ekranu powitalnego jest równie¿ mo¿liwoœæ wyœwietlenia zasad gry. Po klikniêcie przycisku Login, wyœwietlony zostaje ekran logowania widoczny na rysunku \ref{fig:login}, a po klikniêciu przycisku Register ekran Rejestracja ( rysunek \ref{fig:register} a) ).
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=4cm]{rys04/welcome}
 \caption{Ekran startowy aplikacji}
@@ -272,7 +272,7 @@ Po klikniêciu przez uzytkownika w pole \textit{data urodzenia} zamiast standardo
 
 Na górnej krawêdzi ekranu znajduje siê pasek nawigacyjny pozwalaj¹cy na powrót do ekranu startowego aplikacji.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \begin{tabular}{@{}ll@{}}
 a) & b) \\
@@ -305,7 +305,9 @@ Na ekranie Zapis lokalizacji pod umieszczon¹ grafik¹ wyœwietlany jest komunikat 
 \end{figure}
 
 
-Widok listy zleceñ u¿ytkownika wyœwietlany po zakoñczeniu zapisu lokalizacji podzielony jest na dwie jednakowe sekcje: prywatne i publiczne. W ka¿dej z sekcji znajduje siê lista zleceñ danego typu. Elementy listy zawieraj¹ informacje o u¿ytkowniku bêd¹cym celem zlecenia oraz jego status. Po klikniêciu elementu listy otwarty zostaje widok Szczegó³y zlecenia widoczny na rysku \ref{fig:details}. Na górnym pasku nawigacyjnym znajduje siê przycisk pozwalaj¹cy na pokazanie bocznego panelu nawigacyjnego. Panel nawigacyjny mo¿e te¿ zostaæ przywo³any poprzez przeci¹gniêcie w prawo po ekranie. Wysuniêty panel nawigacyjny widoczny jest na rysunku \ref{fig:drawer}.
+Widok listy zleceñ u¿ytkownika wyœwietlany po zakoñczeniu zapisu lokalizacji podzielony jest na dwie jednakowe sekcje: prywatne i publiczne. W ka¿dej z sekcji znajduje siê lista zleceñ danego typu. Elementy listy zawieraj¹ informacje o u¿ytkowniku bêd¹cym celem zlecenia oraz jego status. Po klikniêciu elementu listy otwarty zostaje widok Szczegó³y zlecenia widoczny na rysku \ref{fig:details}. 
+
+Na górnym pasku nawigacyjnym znajduje siê przycisk pozwalaj¹cy na pokazanie bocznego panelu nawigacyjnego. Panel nawigacyjny mo¿e te¿ zostaæ przywo³any poprzez przeci¹gniêcie w prawo po ekranie. Wysuniêty panel nawigacyjny widoczny jest na rysunku \ref{fig:drawer}.
 
 \begin{figure}[H]
 \centering
@@ -315,7 +317,7 @@ Widok listy zleceñ u¿ytkownika wyœwietlany po zakoñczeniu zapisu lokalizacji pod
 \end{figure}
 
 
-
+G³ówym elementem widoku szczegó³ów zlecenia zajmuj¹cym znacz¹c¹ czêœæ ekranu jest zdjêcie profilowe u¿ytkownika. Pod nim znajduj¹ siê dane osobowe szukanego gracza, a tak¿e informacje o statusie zlecenia. Na dole ekranu znajduje siê formaularz do wprowadzenia kodu potwierdzaj¹cego wykonanie zlecenia. Górny pasek aplikacji zawiera przycisk powrotu do listy zleceñ oraz przycisk do zg³aszania z³amania przez gracza zasad gry. Po naciœniêciu tego przycisku w aplikacji wyœwietlone zostanie okno dialogowe widoczne na rysunku \ref{fig:details} b).
 
 \begin{figure}[H]
 \centering
@@ -328,7 +330,7 @@ a) & b) \\
 \label{fig:details}
 \end{figure}
 
-
+Po wykonaniu gestu przeci¹gniêcia w dó³ na ekranie szczegó³ów zlecenia wyœwietlona zostaje mapa z naniesonymi znacznikami oznaczaj¹cymi znane lokalizacje szukanego gracza. Po klikniêciu na znacznik pokazana zostanie data i godzina zarejestrowania tej lokalizacji.
 
 
 \begin{figure}[H]
@@ -339,8 +341,7 @@ a) & b) \\
 \end{figure}
 
 
-
-
+Boczne menu nawygacyjne przywo³ywane poprzez naciœniêcie przycisku nawygacyjnego lub przeci¹gniêcie w prawo na ekranie listy zleceñ pozwala na prze³¹czanie pomiêdzy kolejnymi ekranami aplikacji. U do³u menu nawigacyjnego znajduj¹ siê równie¿ przyciski pozwalaj¹ce na kontakt z twórc¹ aplikacji oraz otwarcie strony aplikacji w sklepie Google Play.
 
 \begin{figure}[H]
 \centering
@@ -349,7 +350,7 @@ a) & b) \\
 \label{fig:drawer}
 \end{figure}
 
-
+Na ekran generowania kodu potwierdzaj¹cego sk³ada siê zegar wraz z okr¹g³ym paskiem postêpu, pole tekstowe oraz przycisk. W celu wygenerowania kodu u¿ytkownik musi przytrzymaæ przycisk a¿ to na³adowania do pe³na wskaŸnika, który pojawi siê wokól przycisku. Po na³adowaniu generowany kod pojawi siê w polu tekstowym, a zegar zacznie odliczaæ czas do koñca wa¿noœci kodu.
 
 
 \begin{figure}[H]
@@ -364,3 +365,1059 @@ a) & b) \\
 
 \section{Projekt bazy danych}\indent \par
 \section{Protokó³ komunikacji w systemie}\indent \par
+
+Korzystaj¹c z przygotowanych wymagañ funkcjonalnych oraz przypadków u¿ycia aplikacji opracowano protokó³ komunikacyjny w systemie. Komunikacja pomiêdzy serwerem a aplikacjami dostêpnymi dla u¿ytkowników systemu bêdzie odbywaæ siê poprzez zapytania HTTP. Do wymiany danych zastosowany zostanie format JSON (ang. JavaScript Object Notation).
+
+W planowanej koncepcji protoko³u komunikacyjnego adresy zosta³y podzielone na trzy grupy ró¿ni¹ce siê uprawnieniami dostêpu:
+\begin{itemize}
+	\item \texttt{/api/*} - adresy dostêpne dla graczy
+	\item \texttt{/admin/*} - adresy dostêpne dla administratorów
+	\item pozosta³e - adresy dostêpne dla wszyskich
+\end{itemize}
+
+W celu uzyskania dostêpu do \texttt{/api/*} lub \texttt{/admin/*} wymagane jest przes³anie wraz z zapytaniem nag³ówka \texttt{X-Auth-Token} zawieraj¹cego informacje o uprawnieniach. Szczegó³y dotycz¹ce tego zabezpieczenia opisane zosta³y w sekcji \ref{token}.
+
+\subsection{Œcie¿ki dostêpu API}
+
+
+Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
+\lstset{style=json_color}
+% ------------------------------------------------------------------------------------------------
+\begin{enumerate}
+	\item Rejestracja konta 
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/register/} \\
+\hline
+\end{tabularx}
+
+\quad
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Rejestruje nowe konto. Dane w szablonie wype³nionym przez u¿ytkownika s¹ uzupe³niane o uprawnienia i datê rejestracji, a has³o jest szyfrowane, po czym nastêpuje zapis do bazy.
+\end{tcolorbox}
+\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
+\color{black}
+
+%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{template} & \texttt{UserTemplate} & szablon danych u¿ytkownika &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+%\end{tcolorbox}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{3cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & User &\\
+\end{tabularx}
+\end{adjustwidth}
+
+%\noindent\rule[0.2ex]{\linewidth}{0.2pt}
+\quad
+%\end{tcolorbox}
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+	\item Logowanie
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/auth/} \\
+\hline
+\end{tabularx}
+
+\quad
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Autentykuje u¿ytkownika na podstawie podanych danych logowania i zwraca token dostêpu do API systemu.
+\end{tcolorbox}
+\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
+\color{black}
+
+%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{name} & \texttt{AuthenticationRequest} &  &\\
+\end{tabularx}
+\end{adjustwidth}
+%\end{tcolorbox}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{AuthenticationResponse} &\\
+\end{tabularx}
+\end{adjustwidth}
+
+%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
+
+%\noindent\rule[0.2ex]{\linewidth}{0.2pt}
+\quad
+%\end{tcolorbox}
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+
+\item Sprawdzenie dostêpnoœci nazwy u¿ytkownika lub adresu email
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/register/check?username=\{name\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zwraca informacje o istnieniu konta u¿ytkownika o zadanej nazwie.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{name} & \texttt{String} & nazwa uzytkownika &\\
+\end{tabularx}
+
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{boolean} &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\quad
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{1.5cm} X}
+	\texttt{true} & nazwa u¿ytkownika jest wolna \\
+	\tiny{lub} & \\
+	\texttt{false} & nazwa u¿ytkownika jest zajêta \\
+
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item Pobranie konta u¿ytkownika
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user?user=\{id\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zwraca dane o koncie u¿ytkownika o zadanym numerze id.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{id} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
+\end{tabularx}
+
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{User} &\\ 
+	\texttt{404} & \texttt{Not found} &  &\\
+\end{tabularx}
+\end{adjustwidth}
+
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+
+\item	Pobranie zleceñ u¿ytkownika
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/target?user=\{id\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zwraca zlecenia u¿ytkownika o zadanym numerze id.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{id} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
+\end{tabularx}
+
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{List<Target>} &\\ 
+	\texttt{404} & \texttt{Not found} &  &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+
+
+\item	Pobranie lokalizacji  u¿ytkownika
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/location?user=\{id\}\&date=\{date\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zwraca zlecenia u¿ytkownika o zadanym numerze id.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{id} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
+	\texttt{date} & \texttt{timestamp} & data utworzenia, od której maj¹ zostaæ pobrane rekordy &\\
+\end{tabularx}
+
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{List<Location>} &\\ 
+	\texttt{400} & \texttt{Bad request} & \texttt{"User not found!"} &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Zapis lokalizacji u¿ytkownika
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/location} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zapis lokalizacji u¿ytkownika do bazy. 
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{location} & \texttt{Location} & lokalizacja u¿ytkownika &\\
+	
+\end{tabularx}
+
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{"`Location save success"'}&\\ 
+	\texttt{400} & \texttt{Bad request} & Exception stack trace &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Zapis kodu
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/code} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zapis kodu do bazy danych.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{code} & \texttt{Code} & kod potwierdzaj¹cy zlecenie &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{null}&\\
+\end{tabularx}
+\end{adjustwidth}
+\
+
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Potwierdzenie wykonania zlecenia
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/target/confirm?target=\{id\}\&code=\{code\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Potwierdza wykonanie zlecenia. Kod przes³any jako parametr jest porównywany z wyszkuwanym w baze na podstawie u¿ytkownika bêd¹cego celem zlecenia. 
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X L{0.8cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ \hline
+	\texttt{id} & \texttt{long} & numer identyfikacyjny zlecenia \\
+	\texttt{code} & \texttt{String} & szeœcioliterowy kod potwierdzaj¹cy wygenerowany w aplikacji \\
+	\end{tabularx}
+
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{Target}&\\ 
+	\texttt{400} & \texttt{Bad request} &  &\\
+\end{tabularx}
+\end{adjustwidth}
+
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Pobranie najbardziej aktualnej lokalizacji 
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/location/last?user=\{id\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zwraca najbardziej aktualn¹ znan¹ lokalizacjê u¿ytkownika o zadanym numerze id.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+		\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
+\end{tabularx}
+
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{Location}&\\ 
+	\texttt{400} & \texttt{Bad request} & \texttt{"User not found!"} &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Edycja profilu u¿ytkownika 
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Aktualizuje informacje zawarte w koncie u¿ytkownika na podstawie przes³anego szablonu.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{3cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{template} & \texttt{UserTemplate} & szablon z danymi u¿ytkownika &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
+	\texttt{400} & \texttt{Bad request} &  &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item Zg³oszenie z³amania zasad
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/report} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zapis zg³oszenia o ³amaniu zasad do bazy.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{code} & \texttt{Report} &  &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Odmro¿enie lub zamro¿enie konta
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user/status?user=\{id\}\&status=\{status\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zmiana statusu konta na aktywne lub zawieszone.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
+	\texttt{status} & \texttt{String} & \texttt{active} lub \texttt{suspended} &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
+	\texttt{400} & \texttt{Bad request} & &\\
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Usuniêcie konta u¿ytkownika
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{DELETE}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user?user=\{id\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Usuwa konto u¿ytkownika i powi¹zane z nim informacje. Konto mo¿e zostaæ usuniête tylko przez jego w³aœciciela lub administratora.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
+	\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika \\
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Zmiana has³a
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/auth/password?username={username}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Wysy³a proœbê o przes³anie linku do zmiany has³a na adres email u¿ytkownika o podanej nazwie.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
+	\texttt{username} & \texttt{String} & nazwa u¿ytkownika \\
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Zmiana parametru dzia³ania systemu
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/param?key=\{key\}\&value=\{value\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Aktualizuje wybrany parametr zadan¹ wartoœci¹.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
+	\texttt{key} & \texttt{String} & nazwa parametru \\
+	\texttt{value} & \texttt{String} & nowa wartoœæ \\
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item	Odczyt wartoœci parametru dzia³ania systemu
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/param?key=\{key\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Odczytuje wartoœæ zadanego parametru.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
+	\texttt{key} & \texttt{String} & nazwa parametru \\
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{String}&\\ 
+	\texttt{400} & \texttt{Bad request} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+\item Odblokowanie lub zablokowanie konta
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/user?user=\{id\}\&status=\{status\}} \\
+\hline
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Zmienia status konta u¿ytkownika na zablokowany lub aktywny. Dostêpne tylko dla administracji.
+\end{tcolorbox}
+
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
+	\texttt{status} & \texttt{String} & \texttt{active} lub \texttt{banned} &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+\vspace{\baselineskip}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
+	\texttt{400} & \texttt{Bad request} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+\
+
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+	\item Pobranie listy u¿ytkowników
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/user?status=\{status\}\&role=\{role\}} \\
+\hline
+\end{tabularx}
+
+\quad
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Pobiera listê u¿ytkowników nak³adaj¹c zdefiniowane filtry.
+\end{tcolorbox}
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{status} & \texttt{String} & \texttt{active}, \texttt{suspended} lub \texttt{banned} &\\
+	\texttt{role} & \texttt{String} & \texttt{user} lub \texttt{admin} &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{List<User>}&\\ 
+	\texttt{400} & \texttt{Bad request} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+%\noindent\rule[0.2ex]{\linewidth}{0.2pt}
+\quad
+%\end{tcolorbox}
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+	\item Pobranie listy zg³oszeñ
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/role?user=\{id\}\&role=\{role\}} \\
+\hline
+\end{tabularx}
+
+\quad
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Pobiera listê zg³oszeñ o ³amaniu zasad nak³adaj¹c zdefiniowane filtry.
+\end{tcolorbox}
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{user} & \texttt{long} & numer identyfikacyjny  u¿ytkownika  &\\
+	\texttt{role} & \texttt{String} & \texttt{user} lub \texttt{admin}  &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{List<Report>}&\\ 
+	\texttt{400} & \texttt{Bad request} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+\quad
+%\end{tcolorbox}
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+	\item Nadanie lub odebranie uprawnieñ administracyjnych 
+
+\begin{mybox}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+
+ \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/report?by=\{id\}\&reported=\{id2\}\&reason=\{reason\}} \\
+\hline
+\end{tabularx}
+
+\quad
+\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
+\quad Nadaje lub obiera uprawnienia administracyjne zadanemu kontu.
+\end{tcolorbox}
+\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
+\color{black}
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
+	\texttt{reported} & \texttt{long} & numer identyfikacyjny zg³oszonego u¿ytkownika &\\
+	\texttt{by} & \texttt{long} & numer identyfikacyjny zg³aszaj¹cego u¿ytkownika  &\\
+	\texttt{reason} & \texttt{String} & powód zg³oszenia  &\\
+	
+\end{tabularx}
+\end{adjustwidth}
+\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
+\color{black}
+
+
+\begin{adjustwidth}{1cm}{}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
+	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
+	\texttt{400} & \texttt{Bad request} & &\\ 
+\end{tabularx}
+\end{adjustwidth}
+
+\quad
+%\end{tcolorbox}
+\end{mybox}
+% ----------------------------------------------------------------------------------
+
+
+\subsection{Struktury danych}
+
+\begin{enumerate}
+
+\item AuthenticationRequest 
+
+
+\begin{lstlisting}
+   {
+      "username": "string"
+      "password": "string"
+   }
+\end{lstlisting}
+\item AuthentiactionResponse
+
+
+\begin{lstlisting}
+   { 
+      "token": "string",
+      "user": <User>
+   }
+   \end{lstlisting}
+
+\item Location 
+
+
+\begin{lstlisting}
+      {
+      "date": "2016-11-20T22:03:02.155Z",
+      "id": 0,
+      "latitude": 0,
+      "longitute": 0,
+      "type": "string",
+      "user": <User>
+    }
+   \end{lstlisting}
+
+
+\item Target 
+\begin{lstlisting}
+ {
+       "completed": "2016-11-20T22:03:02.153Z",
+       "created": "2016-11-20T22:03:02.153Z",
+       "hunted": <User>,
+       "hunter": <User>,
+       "id": 0,
+       "location": <Location>,
+       "publicTarget": true,
+       "status": "string"
+     }
+		
+		\end{lstlisting} 
+		
+		\item User 
+		
+
+\begin{lstlisting}
+      {
+         "authorities": "string",
+         "dateOfBirth": "2016-11-19T16:48:15.682Z",
+         "description": "string",
+         "email": "string",
+         "firstName": "string",
+         "gender": "string",
+         "id": 0,
+         "lastActive": "2016-11-19T16:48:15.682Z",
+         "lastName": "string",
+         "latitude": 0,
+         "loginstreak": 0,
+         "longitude": 0,
+         "noTargetSince": "2016-11-19T16:48:15.683Z",
+         "notifications": "string",
+         "password": "string",
+         "profilePicture": "string",
+         "registerDate": "2016-11-19T16:48:15.683Z",
+         "score": 0,
+         "status": "string",
+         "targetDistance": 0,
+         "username": "string"
+      }
+   \end{lstlisting}
+
+
+	\item UserTemplate 
+	
+	
+\begin{lstlisting}
+   {
+      "dateOfBirth": "2016-11-20T21:10:21.927Z",
+      "description": "string",
+      "email": "string",
+      "firstName": "string",
+      "gender": "string",
+      "lastName": "string",
+      "notifications": "string",
+      "password": "string",
+      "profilePicture": "string",
+      "targetDistance": 0,
+      "username": "string"
+   }
+\end{lstlisting}
+
+\end{enumerate}
+
+
+\end{enumerate}  % api endpoint enum

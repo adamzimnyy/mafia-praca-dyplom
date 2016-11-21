@@ -25,8 +25,6 @@
 \restylefloat{figure}
 \usepackage{enumitem}
 \usepackage{ebgaramond} % pakiet z czcionkami garamond, potrzebny tylko do strony tytu≥owej, musi wystπpiÊ przed pakietem tgtermes
-\usepackage{multirow}
-\usepackage[table,xcdraw]{xcolor}
 
 %% Aby uzyskaÊ polskie literki w pdfie (a nie zlepki) korzystamy z pakietu czcionek tgterms. 
 %% W pakiecie tym sπ zdefiniowane klony czcionek Times o kszta≥tach: normalny, pogrubiony, italic, italic pogrubiony.
@@ -40,7 +38,7 @@
 %% o dostÍpnych fontach oraz mapy. Moøna to zrobiÊ z konsoli (jako administrator)
 %% initexmf --admin --update-fndb
 %% initexmf --admin --mkmaps
-\usepackage{tabularx}
+
 \usepackage{tgtermes}   
 \renewcommand*\ttdefault{txtt}
 
@@ -51,74 +49,8 @@
 %                                  dodatkowych pakietÛw oraz uruchomienia updmap (konsola administratora)
 %                                  niestety polskie literki sπ zlepkami
 %\usepackage{newtxmath,tgtermes} % moøna teø po≥πczyÊ czcionki do tekstu i czcionki do wzorÛw
+
 \usepackage{listings} % pakiet do prezentacji kodu. 
-\usepackage{color}
-\definecolor{jsonbg}{HTML}{F5F5F5}
- 
-\lstdefinestyle{json}{
-    basicstyle=\tiny\ttfamily,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,   			
-    keepspaces=true,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
-}
-
-\newcommand\JSONnumbervaluestyle{\color{blue}}
-\newcommand\JSONstringvaluestyle{\color{greentext}}
-
-% switch used as state variable
-\newif\ifcolonfoundonthisline
-
-\makeatletter
-\definecolor{greentext}{HTML}{2c8c27}
-\lstdefinestyle{json_color}
-{
-  showstringspaces    = false,
-  keywords            = {false,true},
-  alsoletter          = 0123456789.,
-  morestring          = [s]{"}{"},
-  stringstyle         = \ifcolonfoundonthisline\JSONstringvaluestyle\fi,
-  MoreSelectCharTable =%
-    \lst@DefSaveDef{`:}\colon@json{\processColon@json},
-  basicstyle          = \ttfamily\tiny,
-  keywordstyle        = \ttfamily\bfseries,
-}
-
-% flip the switch if a colon is found in Pmode
-\newcommand\processColon@json{%
-  \colon@json%
-  \ifnum\lst@mode=\lst@Pmode%
-    \global\colonfoundonthislinetrue%
-  \fi
-}
-
-\lst@AddToHook{Output}{%
-  \ifcolonfoundonthisline%
-    \ifnum\lst@mode=\lst@Pmode%
-      \def\lst@thestyle{\JSONnumbervaluestyle}%
-    \fi
-  \fi
-  %override by keyword style if a keyword is detected!
-  \lsthk@DetectKeywords% 
-}
-
-% reset the switch at the end of line
-\lst@AddToHook{EOL}%
-  {\global\colonfoundonthislinefalse}
-
-\makeatother
-
-
-
-
- 
-\usepackage{array}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 %Wczeúniej by≥ problem z polskimi znakami w otoczeniu lstlisting, stπd pozostawiono w komentarzu zastosowane wtedy rozwiπzanie: 
 %\lstset{literate=%-
 %{π}{{\k{a}}}1 {Ê}{{\'c}}1 {Í}{{\k{e}}}1 {≥}{{\l{}}}1 {Ò}{{\'n}}1 {Û}{{\'o}}1 {ú}{{\'s}}1 {ø}{{\.z}}1 {ü}{{\'z}}1 {•}{{\k{A}}}1 {∆}{{\'C}}1 { }{{\k{E}}}1 {£5}{{\L{}}}1 {—}{{\'N}}1 {”}{{\'O}}1 {å}{{\'S}}1 {Ø}{{\.Z}}1 {è}{{\'Z}}1 }%{\ \ }{{\ }}1}
@@ -285,7 +217,7 @@
 %\else
 %\pdfoutput=1 % we are running PDFLaTeX
 %\pdftrue \fi
-%\ifpdf
+\ifpdf
  \usepackage[pdftex,bookmarks,breaklinks,unicode]{hyperref}
  \usepackage[draft, pdftex]{graphicx} % draft
  \DeclareGraphicsExtensions{.pdf,.jpg,.mps,.png}
@@ -302,28 +234,12 @@
   }}
 }
 \makeatother
-%\else
-%\usepackage{graphicx}
-%\DeclareGraphicsExtensions{.eps,.ps,.jpg,.mps,.png}
-%\fi
+\else
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.eps,.ps,.jpg,.mps,.png}
+\fi
 \sloppy
 
-\usepackage[breakable]{tcolorbox}
-
-\usepackage[framemethod=tikz]{mdframed}
-\definecolor{bluebg}{rgb}{0.122, 0.435, 0.698}
-\definecolor{bluebg_light}{HTML}{62a2d6}
-\definecolor{bluefont}{HTML}{447198}
-
-
-\newmdenv[nobreak=true,innerlinewidth=1pt,backgroundcolor=jsonbg, roundcorner=4pt,linecolor=bluebg,innerleftmargin=0pt,
-innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=-3pt]{mybox}
-
-
-\def\Vhrulefill{\leavevmode\leaders\hrule height 0.7ex depth \dimexpr0.4pt-0.7ex\hfill\kern0pt}
-
-\usepackage{changepage}
-\usepackage{lipsum}
 
 %\graphicspath{{rys01/}{rys02/}}
 
