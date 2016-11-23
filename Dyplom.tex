@@ -56,7 +56,7 @@
 \definecolor{jsonbg}{HTML}{F5F5F5}
  
 \lstdefinestyle{json}{
-    basicstyle=\tiny\ttfamily,
+    basicstyle=\footnotesize\ttfamily,
     breakatwhitespace=false,         
     breaklines=true,                 
     captionpos=b,   			
@@ -87,6 +87,29 @@
   basicstyle          = \ttfamily\tiny,
   keywordstyle        = \ttfamily\bfseries,
 }
+
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\lstdefinestyle{java}{
+language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\footnotesize\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+
 
 % flip the switch if a colon is found in Pmode
 \newcommand\processColon@json{%
@@ -287,7 +310,7 @@
 %\pdftrue \fi
 %\ifpdf
  \usepackage[pdftex,bookmarks,breaklinks,unicode]{hyperref}
- \usepackage[draft, pdftex]{graphicx} % draft
+ \usepackage[draft,pdftex]{graphicx} % draft
  \DeclareGraphicsExtensions{.pdf,.jpg,.mps,.png}
 \pdfcompresslevel=9
 \pdfoutput=1
@@ -307,6 +330,8 @@
 %\DeclareGraphicsExtensions{.eps,.ps,.jpg,.mps,.png}
 %\fi
 \sloppy
+
+\usepackage{wrapfig}
 
 \usepackage[breakable]{tcolorbox}
 
@@ -614,9 +639,13 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 
 \newpage
 \mbox{}\pdfbookmark[0]{Spis tabel}{spisTabel.1}
-%\addcontentsline{toc}{chapter}{Spis tabel}
+\addcontentsline{toc}{chapter}{Spis tabel}
 \listoftables*
 
+\newpage
+\addcontentsline{toc}{chapter}{Spis listingów}
+\renewcommand\lstlistlistingname{Spis listingów}
+\lstlistoflistings
 \include{skroty} %skróty mo¿na sobie pomin¹æ
 \chapterstyle{default}
 \include{rozdzial01}
@@ -634,7 +663,6 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 %       (w tym przypadku jest to "dokumentacja.bib")
 \bibliography{dokumentacja}
 \appendix
-\include{dodatekA}
 \include{dodatekB}
 
 \chapterstyle{noNumbered}

@@ -63,8 +63,8 @@ Wymagania funkcjonalne aplikacji klienckiej skupiaj¹ siê wokó³ zapewnienia u¿ytk
 \item	Wygasanie kodów - system powinien automatycznie zmieniæ status kodów w bazie danych na nieaktualne po up³ywie ich czasu wa¿noœci. Czas wa¿noœci kodu to parametr systemu, który nale¿y pobraæ z bazy danych.
 \item	Wykrywanie nieaktywnych u¿ytkowników - system powinien automatycznie wykrywaæ d³ugie okresy nieaktywnoœci u¿ytkowników. U¿ytkownik po przekroczeniu okreœlonego czasu nieaktywnoœci powinien otrzymaæ mailow¹ informacjê o nieaktywnoœci. W przypadku braku aktywnoœci przez kolejny okres czasu, konto u¿ytkownika nale¿y zamroziæ. U¿ytkownik powinien zostaæ poinformowany o zamro¿eniu konta drog¹ mailow¹. Czas, po którym wysy³ane jest przypomnienie i czas zamro¿enia konta to parametry systemu, które nale¿y pobraæ z bazy danych. 
 \item	Blokada u¿ytkowników - system powinien automatycznie blokowaæ konta u¿ytkowników, którzy przekrocz¹ okreœlon¹ liczbê zg³oszeñ o z³amaniu regulaminu. Wielokrotne zg³oszenia od tego samego u¿ytkownika nale¿y liczyæ pojedynczo. U¿ytkownik, którego konto zosta³o zablokowane powinien otrzymaæ powiadomienie mailowe. 
-\item	Wysy³anie powiadomieñ push - system powinien mieæ mo¿liwoœæ wysy³ania powiadomieñ push na telefony z systemem Android. Zdarzenia powoduj¹ce wys³anie powiadomieñ zosta³y opisane w punkcie \ref{powiadomienia}. 
-\item	Zmiana parametrów systemu - system powinien udostêpniaæ API pozwalaj¹ce na zmianê zadanego parametru systemu przez podanie jego nazwy oraz nowej wartoœci. Nazwy parametrów zosta³y opisane w punkcie \ref{parametry}. 
+\item	Wysy³anie powiadomieñ push - system powinien mieæ mo¿liwoœæ wysy³ania powiadomieñ push na telefony z systemem Android. 
+\item	Zmiana parametrów systemu - system powinien udostêpniaæ API pozwalaj¹ce na zmianê zadanego parametru systemu przez podanie jego nazwy oraz nowej wartoœci. Parametry zosta³y opisane w punkcie \ref{parametry}. 
 \item	Odczyt parametrów systemu - system powinien pozwalaæ na odczyt ustawionej wartoœci parametru na podstawie jego nazwy.
 \end{enumerate}
 
@@ -81,7 +81,7 @@ Wymagania funkcjonalne aplikacji klienckiej skupiaj¹ siê wokó³ zapewnienia u¿ytk
 	\end{enumerate}
 	
 	
-\section{Wymagania niefunkcjonalne}\indent \par
+%\section{Wymagania niefunkcjonalne}\indent \par
 \section{Konfigurowalne parametry systemu}\indent \par \label{parametry}
 W celu zapewnienia maksymalnej elastycznoœci dzia³ania systemu wprowadzone zosta³y parametry zarz¹daj¹ce przebiegiem gry. Parametry te mog¹ zostaæ zmienione w dowolnym momencie z poziomu panelu administracyjnego, bez koniecznoœci wstrzymywania gry. Parametry s¹ odczytywane z bazy danych za ka¿dym razem, gdy ich wartoœæ jest potrzebna. Dziêki takiemu rozwi¹zaniu po zmianie wartoœci parametru przy kolejnym jego u¿yciu przez aplikacjê, odczytana zostanie zawsze aktualna wartoœæ. Do konfigurowalnych parametrów systemu nale¿¹:
 \begin{itemize}[leftmargin=+2cm]

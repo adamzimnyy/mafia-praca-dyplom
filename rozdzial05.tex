@@ -1,16 +1,649 @@
 \chapter{Implementacja systemu}\indent \par
+
+W tym rozdziale opisana zosta³a implementacja wybranych elementów zaprojektowanego systemu.
+
+
+\section{Aplikacja serwerowa}\indent \par
+
+\subsection{Wykorzystywane technologie i narzêdzia}\indent \par 
+
+Podczas realizacji systemu wykorzystano nastêpuj¹ce technologie: 
+
+\begin{enumerate}
+	\item Java 1.8
+	\item Spring Framework\ref{tech:spring} - jest to szkielet tworzenia aplikacji internetowych w jêzyku Javy dla platformy Enterprise Edition. Obecnie jest jedn¹ z najbardziej popularnych technologii na rynku ze wzglêdu na wsparcie twórców i spo³ecznoœci oraz du¿e mo¿liwoœci konfiguracyjne, po pozwala ³atwo dostosowaæ go do w³asnych potrzeb
+	\item Spring Boot - rozszerzenie framworka Spring pozwalaj¹ce na uruchomienie aplikacji jak wykonywalnego programu Javy
+	\item Spring Security - rozszerzenie skupiaj¹ce siê na dostarczeniu funkcjonalnoœci autentykowania i autoryzacji u¿ytkowników w aplikacjach Spring
+	\item Hibernate - narzêdzie do realizacji warstwy dostêpu do danych, pozwala na przenoszenie danych pomiêdzy relacyjn¹ baz¹ danych a obiektami Javy 
+	\item Swagger UI - narzêdzie generuj¹ce dokumentacjê API dostêpn¹ pod wybranym adresem URL wewn¹trz aplikacji internetowej
+	\item JSON Web Token - metoda reprezentowania deklaracji uprawnie¿ u¿ytkowników pozwalaj¹ca na bezpieczne przesy³anie informacji pomiêdzy dwoma stronami
+	\item Maven
+	\item projekt Cerberus - w ramach tego projektu zaprezentowano implementacjê systemu bezstanowej autoryzacji u¿ytkowników z wykorzystaniem Spring Security oraz JSON Web Token.
+\end{enumerate}
+\subsection{Struktura plików projektu}
+
+
+Pliki klas projektu podzielone zosta³y na paczki zgodnie z ich zastosowaniem: 
+
+
+
+\begin{itemize}
+	\item config - zawiera pliki konfiguracyjne frameworka Spring, oznaczone adnotacj¹ \texttt{@Configuration}
+	\item constant - zawiera klasy definiuj¹ce sta³e u¿ywane w projekcie
+	\item controller - zawiera klasy kontrolerów, które obs³uguj¹ zapytania http wysy³ane na przypisane im adresy URL i poprzez klasy service zwracaj¹ u¿ytkownikowi dane z bazy danych
+	\item mapper - zawiera klasy pozwalaj¹ce na konwersje pomiêdzy klasami modelu
+	\item model - zawiera definicje obiektów reprezentuj¹cych rzeczywiste dane, na których operuje system
+	\item repository - zawiera interfejsy dostêpu do bazy danych (ang. DAO - database access object), w których zdefiniowane s¹ zapytania wywo³ywane przez aplikacje
+	\item security - pochodz¹ce z projektu Cerberus klasy wspomagaj¹ce obs³ugê autoryzacji przy pomocy tokena
+	\item service - zawiera klasy przetwarzaj¹ce dane pobrane z bazy danych przez DAO przed przekazaniem ich do kontrolera
+	\item task - zawiera klasy automatyzuj¹ce zadania wykonywane przez aplikacje poprzez okresowe wywo³ywanie metod
+	\item util
+\end{itemize}
+
+Oprócz plików z kodem Ÿród³owym programu wa¿nym plikiem jest \texttt{pom.xml} pozwalaj¹cy na do³¹czanie do projektu zewnêtrznych bibliotek pobieranych z odpowiednich serwisów, np. Maven Repository\ref{techmaven_repo}.
+
+		\subsection{Zabezpieczenie dostêpu do API}\indent \par \label{zabezpieczenia}
+Jako podstawê implementacji serwera wykorzystano projekt demonstracyjny Cerberus\ref{tech:cerberus} dostêpny na repozytorium GitHub na licencji MIT\ref{tech:mit}.  Konfiguracjê zabezpieczeñ tworzy siê poprzez utworzenie klasy rozszerzaj¹cej \texttt{WebSecurityConfigurerAdapter}. W tej klasie nadpisuje siê metodê \texttt{configure()}, a w niej tworzy politykê zabezpieczeñ dostêpu do API. Na listingu widocznym poni¿ej przedstawiono fragment konfiguracji, która okreœla trzy poziomy dostêpu dla ró¿nych adresów URL w zaleznoœci od zadeklarowanej grupy u¿ytkownika: 
+
+\begin{enumerate}
+	\item \texttt{USER}
+\end{enumerate}
+
+Nad deklaracj¹ klasy widnieje adnotacja \texttt{@Configuration} wskazuj¹ca na to, ¿e metody klasy mog¹ byæ wykorzystane przez Spring do tworzenia obiektów podczas uruchomienia programu.
+
+\lstset{style=java}
+
+
+\begin{lstlisting}[caption=Konfiguracja Spring Security]
+
+$$@Configuration
+$$@EnableWebSecurity
+$$@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    $$@Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .csrf()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(this.unauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().permitAll();
+
+        // Custom JWT based authentication
+        httpSecurity
+                .addFilterBefore(authenticationTokenFilterBean(), 
+								UsernamePasswordAuthenticationFilter.class);
+    }
+\end{lstlisting}
+
+W celu uaktywnienia filtrowania zapytañ, przed ka¿dym zapytaniem wywo³ywany jest filtr sprawdzaj¹cy obecnoœæ tokena w nag³ówku \texttt{X-Auth-Token} zapytania. Z uzyskanego tokena odczytywane s¹ dane u¿ytkownika, które nastêpnie przekazywane s¹ do filtra autoryzuj¹cego zapytania. W przypadku braku obecnoœci poprawnego tokena u¿ytkownik zostanie przekierowany na adres \texttt{/error/}.
+
+\begin{lstlisting} 
+
+public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
+
+  $$@Value("X-Auth-Token")
+  private String tokenHeader;
+
+  $$@Autowired
+  private TokenUtils tokenUtils;
+
+  $$@Autowired
+  private UserDetailsService userDetailsService;
+
+  $$@Override
+  public void doFilter(ServletRequest request, ServletResponse response,
+	 FilterChain chain) throws IOException, ServletException {
+
+    HttpServletRequest httpRequest = (HttpServletRequest) request;
+    String authToken = httpRequest.getHeader(this.tokenHeader);
+    String username = this.tokenUtils.getUsernameFromToken(authToken);
+
+    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+      if (this.tokenUtils.validateToken(authToken, userDetails)) {
+        UsernamePasswordAuthenticationToken authentication = 
+				new UsernamePasswordAuthenticationToken(userDetails, null,
+				                 userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource()
+				.buildDetails(httpRequest));
+        SecurityContextHolder.getContext()
+				.setAuthentication(authentication);
+      }
+    }
+
+    chain.doFilter(request, response);
+  }
+
+}
+\end{lstlisting}
+
+		
+\subsection{Baza danych} \indent \par \label{db}
+Jako technologiê wykonania bazy danych wybrano Postgre SQL. Po³¹czenie z baz¹ danych realizowane jest przy pomocy sterownika JDBC. Parametry po³¹czenia i konfiguracja bazy danych okreœla klasa \texttt{DatabaseConfig} przedstawiona na listingu \ref{lst:db_config}. W konfiguracji definiowane jest obiekt \texttt{dataSource}, w którym zawarty jest adres bazy danych oraz dane logowania, a tak¿e dodatkowe ustawienia powi¹zane z frameworkiem Hibernate, w szczególnoœci okreœlana jest platforma bazy danych. W konfiguracji obiektu \texttt{EntityMaagerFactory} odpowiedzialnego za tworzenie po³¹czeñ z baz¹ danych przekazywane s¹ ustalone wczeœniej parametry po³¹czenia, a tak¿e okreœlana jest œcie¿ka do modelu danych.
+\begin{lstlisting}[label=lst:db_config,caption=Konfiguracja bazy danych]
+
+$$@Configuration
+$$@EnableTransactionManagement
+%%@EnableJpaRepositories(%%"adamzimny.repository"%%)%%
+public class DatabaseConfig {
+
+    $$@Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl(
+		"jdbc:postgresql://<database-url>");
+        dataSource.setUsername("xxx");
+        dataSource.setPassword("xxx");
+        return dataSource;
+    }
+
+    $$@Bean
+    public Properties jpaProperites() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
+        return properties;
+    }
+
+    $$@Bean
+    public HibernateJpaVendorAdapter jpaVendorAdapter() {
+        HibernateJpaVendorAdapter hibernateJpaVendorAdapter
+		= new HibernateJpaVendorAdapter();
+        hibernateJpaVendorAdapter.setShowSql(false);
+        hibernateJpaVendorAdapter
+		.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
+        return hibernateJpaVendorAdapter;
+    }
+
+    $$@Bean
+    public EntityManagerFactory entityManagerFactory() {
+        HibernateJpaVendorAdapter vendorAdapter 
+		= new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+
+        LocalContainerEntityManagerFactoryBean factory 
+		= new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("adamzimny.model");
+        factory.setJpaVendorAdapter(jpaVendorAdapter());
+        factory.setDataSource(dataSource());
+        factory.setJpaProperties(jpaProperites());
+        factory.afterPropertiesSet();
+        return factory.getObject();
+    }
+
+    $$@Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory());
+        return txManager;
+    }
+}
+
+\end{lstlisting}
+
+Model fizyczny bazy danych generowany jest na podstawie klas znajduj¹cych siê w pakiecie \texttt{model}. Podczas uruchomienia aplikacji baza danych obecna na serwerze jest skanowana pod k¹tem ró¿nic z modelem. Je¿eli zostan¹ one wykryte, wykonywane s¹ modyfikacje prowadz¹ce do przeniesienia zmian z modelu na bazê danych. Du¿¹ zalet¹ tego rozwi¹zania jest brak koniecznoœci prowadzania rêcznych modyfikacji w bazie danych.
+
+Tworzenie tabel w bazie danych zarz¹dzane jest przez dodanie odpowiednich adnotacji w klasach modelu. Przyk³adowa klasa przedstawiona zosta³a na listingu \ref{lst:model}. Adnotacja \texttt{@Entity} mówi o tym, ¿e nale¿y utworzyæ z tej klasy tabelê w bazie danych. Pole adnotowane \texttt{@Id} staje siê kluczem  g³ównym tabeli, którego wartoœci bêd¹ generowane automatycznie dziêki adnotacji \texttt{@GeneratedValue}. Klucze obce tabeli oznaczane s¹ jedn¹ z adnotacji \texttt{@OneToOne, @OneToMany, @ManyToOne, @ManyToMany}, zale¿nie od typu relacji pomiêdzy encjami.
+
+\begin{lstlisting}[label={lst:model}, caption={Przyk³adowa klasa modelu}]
+$$@Entity
+public class Target {
+
+    $$@Id
+    $$@GeneratedValue(strategy= GenerationType.AUTO)
+    Integer id;
+    $$@OneToOne
+    User hunted;
+    $$@OneToOne
+    User hunter;
+    String status;
+
+    $$@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z" )
+    Date created;
+
+    $$@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z")
+    Date completed;
+    boolean publicTarget = false;
+
+    $$@OneToOne
+    Location location;
+}
+\end{lstlisting}
+
+Interfejsy dostêpu do bazy danych znajduj¹ce siê w pakiecie \texttt{repository} rozszerzaj¹ klasê \texttt{JpaRepository}. Klasa ta dostarcza podstawowych metod operacji na tabelach, takich jak \texttt{save()} czy \texttt{findAll()}. Tworzenie dodatkowych zapytañ jest mo¿liwe poprzed deklaracje metod interfejsu. Nie ma koniecznoœci pisania zapytañ w jêzyku SQL, framework Hibernate dostarcza mechanizm pozwalaj¹cy na generowanie ich na podstawie nazwy metody. Nazwa powinna rozpoczynaæ siê od s³ów \texttt{findBy}, po których znajduj¹ siê nazwy kolumn w tabeli. Mo¿liwe jest równie¿ grupowanie, zliczanie i sortowanie wyników wed³ug tej samej konwencji nazewnictwa
+
+
+\begin{lstlisting}[label={lst:repo},caption={Przyk³adowy interfejs DAO}]
+$$@Repository
+$$@Transactional
+public interface LocationDAO extends JpaRepository<Location,Integer> {
+
+    List<Location> findByUserAndDateAfter(User user, Date date);
+    List<Location> findByUserAndType(User user, String type);
+    List<Location> findByUser(User user);
+    List<Location> findByUserOrderByDateDesc(User user);
+}
+\end{lstlisting}
+
+Mechanizm tworzenia zapytañ jest jednak ograniczony do jednej tabeli. Je¿eli zapytanie wymaga po³¹czenia rekordów wielu tabel, wymagane jest u¿ycie adnotacj \texttt{@Query} nad metod¹ interfejsu oraz podanie w niej pe³nego zapytania w sk³adni SQL. Parametry zapytania nale¿y opisaæ adnotacj¹ \texttt{@Param}.
+
+
+\begin{lstlisting}[label={lst:query}, caption={Zapytanie SQL zawieraj¹ce ³¹czenie tabel}]
+
+    %%@Query(%%"select u from Target t join t.hunter u group
+		by u.id having count(t) < :count"%%)%%
+    List<User> findByTargetCountLessThan(@Param("count") long count);
+		
+\end{lstlisting}
+
+
+\subsection{Komunikacja i przep³yw danych} \indent \par
+
+Komunikacja pomiêdzy serwerem a aplikacjami mobilnymi realizowana jest przy pomocy zapytañ HTTP. Po poprawnym przetworzeniu zapytania wys³anego przez aplikacjê klienck¹, serwer odpowiada danymi zapisywanymi w formacie JSON.
+
+Aplikacje tworzone przy pomocy frameworka spring cechuj¹ siê wspóln¹ architektur¹ warstwow¹ definiuj¹c¹ przep³yw informacji w systemie. Po otrzymaniu zapytania HTTP przez aplikacjê przekazywane jest ono do odpowiedniego kontrolera. Adresy obs³ugiwane przez kontroler lub jego metody okreœla siê przy pomocy adnotacji \texttt{@RequestMapping}, co pokazane na listingu \ref{lst:controller}. 
+
+\begin{lstlisting}[label=lst:controller, caption=Przyk³adowy kontroler]
+$$@EnableAutoConfiguration
+$$@RestController
+public class UserController {
+
+    $$@Autowired
+    UserService userService;
+		
+    %%@RequestMapping(value = %%"api/user/status"%%, method = %%RequestMethod.PATCH%%)%%
+    public ResponseEntity<?> changeStatus(%%@RequestParam(%%"user"%%)%% long id,  
+		%%@RequestParam(%%"status"%%)%% String status) {
+        if ("active".equals(status) || "suspended".equals(status)) {
+            Optional<User> userOptional = userService.get(id);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                user.setStatus(status);
+                userService.save(user);
+                return ResponseEntity.ok(userOptional.get());
+            }
+        }
+        return ResponseEntity.badRequest().body(null);
+    }
+}
+\end{lstlisting}
+
+Po otrzymaniu zapytania kontroler mo¿e wywo³aæ metody klas typu \texttt{service}, które z kolei pobieraj¹ dane z bazy danych poprzez metody klas typu DAO z pakietu \texttt{repository}.
+
+\begin{lstlisting}[label={lst:service},caption={Przyk³adowy serwis aplikacji}]
+$$@Service
+public class UserService {
+    $$@Autowired
+    UserDAO userDAO;
+
+    public Optional<User> get(long id) {
+        return userDAO.findById(id);
+    }
+}
+
+\end{lstlisting}
+
+Po zwróceniu danych z bazy w kontrolerze tworzona jest odpowiedŸ na zapytanie. Zale¿nie od przebiegu obs³ugi zapytania, ustawiany jest status odpowiedzi, a w przypadku zapytañ poprawnych (ze statusem \texttt{200 Ok}) w cia³o odpowiedzi wpisywane s¹ pobrane z bazy danych wyniki.
+
+\subsection{Implementacja obs³ugi wybranych zapytañ}
+
+Obs³uga zapytañ przez serwer jest w wielu przypadkach bardzo zbli¿ona. W tym dziale przedstawione zosta³y przyk³adowe realizacje wybranych wymagañ funkcjonalnych. 
+
+\subsubsection{Rejestracja}\indent \par
+
+Tworzenie nowych obiektów w konwencji REST realizwane jest przez zapytania typu \texttt{POST}. Rejestracja nowego konta u¿ytkownika rozpoczyna siê od przes³ania zapytania  na adres \texttt{/register/}. Zapytania wysy³ane na ten adres nale¿¹ do trzeciej grupy opisanej w punkcie \ref{prot_kom} i nie musz¹ posiadaæ tokena.
+
+\begin{lstlisting}[label={lst:register_controller},caption={Kontroler rejestracji}]
+
+$$@RestController
+public class RegisterController {
+
+    $$@Autowired
+    UserService userService;
+
+    %%@RequestMapping(value = %%"register"%%, method = %%RequestMethod.POST%%)%%
+    public ResponseEntity<?> register(%%@RequestBody%% UserTemplate userTemplate) {
+        User user = UserMapper.map(userTemplate);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User u = userService.register(user);
+        return ResponseEntity.ok().body(u);
+    }
+}
+
+\end{lstlisting}
+
+W kontrolerze pobierany jest przes³any parametr \texttt{userTemplate}. Przy wykorzystaniu klasy konweruj¹cej z pakietu \texttt{mapper} tworzony jest obiekt klasy \texttt{User}, która jest docelow¹ klas¹ zapisywan¹ w bazie danych.
+
+Has³o przes³ane przez u¿ytkownika jest szyfrowane, aby nie zosta³o zapisane jawnym tekstem w bazie danych. Po zaszyfrowaniu has³a obiekt przekazywany jest do serwisu. 
+
+\begin{lstlisting}[label={lst:user_service},caption={Metoda rejestracji u¿ytkownika w klasie \texttt{UserService}}]
+
+    public User register(User user) {
+        user.setRegisterDate(new Date());
+        user.setStatus("ACTIVE");
+        user.setAuthorities("ROLE_USER");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date d;
+        try {
+            d = sdf.parse("01/01/1980");
+        } catch (ParseException e) {
+            d = new Date();
+        }
+        user.setNoTargetSince(d);
+
+        userDAO.save(user);
+        return user;
+    }
+		
+\end{lstlisting}
+
+Serwis zajmuje siê przygotowaniem obiektu do zapisu w bazie danych. Ustawiana jest data rejestracji i nadawane s¹ uprawnienia u¿ytkownika. Dodatkowo u¿ytkownikowi przypisuje siê datê, od której nie posiada on zleceñ jako rok 1980. Pozwoli to odnaleŸæ nowych u¿ytkowników w systemie sortuj¹c po dacie i nadaæ im priorytet w przydzielaniu zleceñ.
+
+Po wykonaniu tych operacji obiekt jest zapisywany w bazie danych metod¹ \texttt{save()} klasy \texttt{UserDAO} i zwracany do kontrolera. W kontrolerze tworzona jest odpowiedŸ na zapytanie o statusie \texttt{200 Ok} informuj¹cym o poprawnym wykonaniu rejestracji, a nowo utworzony obiekt u¿ytkownika jest zwracany jako w odpowiedzi.
+
+\subsubsection{Pobranie lokalizacji u¿ytkownika}\indent \par
+
+Jako zapytania zwracaj¹ce dane uzytkownikowi przyj¹to zapytania \texttt{GET}. Parametrami zapytania s¹ id uzytkownika oraz data, od której nale¿y wyszukaæ lokalizacje. W sygnaturze metody przed drugim parametrem znajduje siê dopisek \texttt{required = false}. Oznacza to, ¿e parametr ten jest opcjonalny, czyli zapytanie wys³ane na adres \texttt{/api/location?user=1} równie¿ zostanie obs³u¿one przez tê metodê.
+
+Rozpoczynaj¹c obs³ugê zapytania kontroler wyszukuje u¿ytkownika o zadanym numerze id w bazie danych. Je¿eli u¿ytkownik nie zostanie znaleziony, tworzona jest odpowiedŸ o statusie \texttt{400 Bad request}. W przypadku znalezienia u¿ytkownika, sprawdzana jest obecnoœæ opcjonalnego parametru daty i je¿eli zosta³ on podany, uwzglêdniany jest on w dalszej obs³udze zapytania przez serwis. 
+
+\begin{lstlisting}[label={lst:location_controller},caption={Kontroler lokalizacji u¿ytkownika}]
+%%@RequestMapping(value = %%"api/location"%%)%%
+public class LocationController {
+
+%%@RequestMapping(value = %%"api/location"%%, method = %%RequestMethod.GET%%)%%
+    public ResponseEntity<?> findByUserAndDateAfter(
+            %%@RequestParam(%%"user"%%)%% long id,
+            %%@RequestParam(value = %%"date"%%, required =%% false%%)%% String dateString)
+            throws ParseException {
+
+        Optional<User> user = userService.get(id);
+        if (user.isPresent()) {
+            if (dateString != null) {
+                DateFormat df = new SimpleDateFormat(
+				        "yyyy-MM-dd HH:mm:ss zzz");
+                Date date = df.parse(dateString);
+
+                return ResponseEntity.ok(locationService
+	    			.findByUserAndDateAfter(user.get(), date));
+            } else {
+                return ResponseEntity.ok(locationService
+		    		.findByUser(user.get()));
+            }
+        }
+        return ResponseEntity.badRequest().body("User not found!");
+    }
+}
+\end{lstlisting}
+
+Kontroler wywo³uje jedn¹ z dwóch metod serwisu zale¿nie od wartoœci parametru \texttt{date}. W obs³udze tego zapytania nie ma ¿adnej dodatkowej logiki, która musi zostaæ wykonana przez serwis, wiêc jego dzia³anie sprowadza siê do pobrania rekordów z bazy danych i ich zwrócenia.
+
+ 
+
+\begin{lstlisting}[label={lst:location_service},caption={Metody pobierania lokalizacji w \texttt{LocationService}}]
+
+    public List<Location> findByUserAndDateAfter(User user, Date date) {
+        List<Location> list = locationDAO.findByUserAndDateAfter(user, date);
+        return list;
+    }
+		
+		    public List<Location> findByUser(User user) {
+        return locationDAO.findByUser(user);
+    }
+	}
+
+\end{lstlisting}
+
+Po wykonaniu opracji na bazie danych tworzona jest odpowiedŸ na zapytanie o statusie \texttt{200 Ok}.
+
+\subsubsection{Potwierdzenie wykonania zlecenia}\indent \par
+
+Do wprowadzania modyfikacji u¿ywa siê metody \texttt{PATCH} zapytañ HTTP. Parametrami zapytania s¹ numer id zlecenia oraz kod potwierdzaj¹cy. Po otrzymaniu zapytania na adres \texttt{/api/target/confirm} kontroler wyszukuje zlecenie o zadanym numerze. Je¿eli zlecenie nie zostanie odnalezione kontroler zwraca odpowiedŸ o statusie \texttt{400 Bad request}.
+
+
+
+
+\begin{lstlisting}[label={lst:confirm_target},caption={Fragment kontrolera zleceñ}]
+$$@RestController
+%%@RequestMapping(value = %%"api"%%)%%
+public class TargetController {
+
+    $$@Autowired
+    TargetService targetService;
+
+    $$@Autowired
+    UserService userService;
+
+    $$@Autowired
+    CodeService codeService;
+
+    %%@RequestMapping(value = %%"target/confirm"%%, method = %%RequestMethod.PATCH%%)%%
+    public ResponseEntity<Target> confirm(
+	%%@RequestParam(%%"target"%%)%% long target_id, 
+		%%@RequestParam(%%"code"%%)%% String codeString) {
+        Optional<Target> target = targetService.findById(target_id);
+        if(target.isPresent()){
+        Optional<Code> code = codeService.getCodeForUser(
+		target.get().getHunted());
+            if(code.isPresent() && code.get().getCode().equals(codeString)){
+               return ResponseEntity.ok(targetService.confirm(
+				target.get(), code.get()));
+            }
+        }
+
+        return ResponseEntity.badRequest().body(null);
+    }
+}
+\end{lstlisting}
+
+Po pobraniu zlecenia z bazy odczytywany jest ostatni kod wygenerowany przez u¿ytkownika bêd¹cego Szukanym w zleceniu. Kod przes³any jako parametr zapytania jest porównywany z pobranym kodem. Je¿eli s¹ one jednakowe, kontroler przekazuje obiekt zlecenia do serwisu w celu potwierdzenia. 
+
+Serwis ustawia status i datê wykonania zlecenia, a tak¿e przypisuje lokalizacjê, w której zlecenie zosta³o wykonane na podstawie uzytego kodu. Po wykonaniu zapisu do bazy zmodyfikowany obiekt jest zwracany do kontrolera.
+
+\begin{lstlisting}[label={lst:confirm_service},caption={Metoda serwisu \texttt{TargetService} potwierdzaj¹ca wykonanie zlecenia}]
+
+    public Target confirm(Target target, Code code) {
+        target.setCompleted(new Date());
+        target.setStatus("COMPLETED");
+        target.setLocation(code.getLocation());
+        targetDao.save(target);
+        return target;
+    }
+		
+		
+
+\end{lstlisting}
+
+Kontroler po otrzymaniu zmodyfikowanego obiektu przesy³a go w odpowiedz na zapytanie htpp ze statusem \texttt{200 Ok}.
+
+\subsection{Automatyzacja dzia³ania systemu}\indent \par
+		
+		W celu umozliwienia wykonywania czêœci zadañ serwera automatycznie w okreœlonych odstêpach czasu wykorzystano funkcjonalnoœæ planowania zadañ frameworka Spring. Uaktywnienie funkcjonalnoœci wymaga utworzenia konfiguracji z uzytciem adnotacji \texttt{@EnableScheduling}. W konfiguracji przedstawionej na listingu \ref{lst:scheduler_config} wyspecyfikowano tak¿e liczbê w¹tków zadañ, jakie mog¹ zostaæ przydzielone. Je¿eli w¹tków by³oby zbyt ma³o, zaplanowane zadania by³yby opóŸniane a¿ do momentu ukoñczenia aktywnych zadañ i zwolnienia w¹tku.
+		
+		\begin{lstlisting}[label={lst:scheduler_config},caption={Konfiguracja planera zadañ}]
+$$@Configuration
+$$@EnableScheduling
+public class SchedulerConfig {
+
+    $$@Bean
+    public Executor taskScheduler() {
+        return Executors.newScheduledThreadPool(10);
+    }
+}
+\end{lstlisting}
+		
+Do tworzenia zadañ s³u¿y adnotacja \texttt{@Scheduled}. Klasa, w której tworzone s¹ zadania musi posiadaæ adnotacjê \texttt{@Component}, mówi¹c¹ o tym, ¿e jest zarz¹dzana przez Spring i mo¿e dziêki temu zostaæ odnaleziona podczas skanowania klas przy uruchamianiu aplikacji. 
+
+Adnotacja \texttt{@Scheduled} przyjmuje jeden z dostepnych parametrów ustalaj¹cych sposób powtarzania zadañ: 
+\begin{itemize}
+	\item fixedRate - opóŸnienie kolejnego wykonania liczone jest od rozpoczêcia poprzedniego
+	\item fixedDelay - opóŸnienie kolejnego wykonania liczone jest od zakoñczenia poprzedniego
+	\item cron - czas wykonywania zadania definiowany jest przy pomocy wyra¿enia \texttt{cron}
+\end{itemize}
+		
+Sposób tworzenia wyra¿eñ \texttt{cron} przedstawia poni¿sza tabela.
+
+\begin{table}[H]
+\begin{tabular}{lcll}
+\textbf{jednostka czasu} & \textbf{wymagane} & \textbf{dozwolone wartoœci} & \textbf{znaki specialne}\\ \hline
+sekundy &Y &0-59 &, - * / \\
+minuty &Y& 0-59& , - * / \\
+godziny&Y& 0-23 &, - * / \\
+dzieñ miesi¹ca &Y &1-31 &, - * ? / L W \\
+miesi¹c &Y &0-11 lub JAN-DEC &, - * / \\
+dzieñ tygodnia & Y &1-7 or SUN-SAT& , - * ? / L \# \\
+rok &N &puste lub 1970-2099 &, - * / \\
+\end{tabular}
+\caption{Parametry wyra¿eñ cron}
+\label{table:cron}
+\end{table}
+\begin{description}
+\tiny
+\item [*] - ka¿da wartoœæ
+\item [?] - wartoœæ dowolna
+\item [-] - zakres
+\item [,] - wiele wartoœci
+\item [/] - wartoœæ inkrementowana, np. */5 - co 5 minut
+\item [L] - ostatnia wartoœæ, np. 5L - ostatni pi¹tek miesi¹ca
+\item [W] - najbli¿szy dzieñ roboczy
+\item [\#] - kolejny numer wyst¹pienia, np. 6\#3 - trzeci pi¹tek miesi¹ca
+\end{description}	
+			
+Na przyk³ad:
+
+\begin{description}
+\item [0 15 10 * * ? 2005] - uruchom o 10:15 ka¿dego dnia w roku 2005
+\item [0 0/5 14 * * ?] - uruchom co 5 minut, zaczynaj¹c od 14:00, do 14:55 w³¹cznie, ka¿dego dnia
+\item [0 15 10 ? * 6L 2002-2005] - uruchom o 10:15, w ka¿dy ostatni pi¹tek miesi¹ca w latach od 2002 do 2005 w³¹cznie
+\end{description}
+		
+		
+		Dodatkowym parametrem, który mo¿na przekazaæ w adnotacji \texttt{@Scheduled} jest \texttt{initialDelay} pozwalaj¹cy okreœliæ opóŸnienie rozpoczêcia wykonywania zadania po raz pierwszy po uruchomieniu aplikacji.
+		
+\subsubsection{Przyk³ady implementacji zadañ w projekcie}
+
+\begin{enumerate}
+	\item \textbf{Generowanie nowych zleceñ.} Schemat powtarzania tego zadania okreœla wyra¿enie \texttt{
+	cron = "0 0 0/12 * * ?"}, które interpretowane jest jako "`co 12 godzin, ka¿dego dnia, zaczynaj¹c o pó³nocy"'.
+	Generowanie zleceñ rozpoczyna siê od pobrania z bazy danych listy u¿ytkowników, którzy posiadaj¹ mniej ni¿ maksymalna dozwolona liczba zleceñ prywatnych. Ze wzglêdu na z³o¿onoœæ zapytania, konieczne by³o jego zdefiniowanie rêczne przy pomocy adnotacji \texttt{Query}, co zaprezentowano na listingu \ref{lst:query} w dziale \ref{db} \nameref{db}.
+	
+	Nastêpnie, dla ka¿dego u¿ytkownika tworzona jest lista u¿ytkowników znajduj¹cych siê w pobli¿u na podstawie zapamiêtanej ostatniej ich lokalizacji. Z utworzonej listy losowanych jest tylu u¿ytkowników, aby uzupe³niæ zlecenia do maksymalnej wartoœci.
+	
+	
+	\begin{lstlisting} [label={lst:generate_task},caption={Zadanie generuj¹ce nowe zlecenia}]
+%%@Scheduled(cron = %%"0 0 0/12 * * ?"%%)%%
+public void createNewTargets() {
+        List<User> hunters = targetService
+	.findByTargetCountLessThan(Preferences.MAX_PRIVATE_TARGETS);
+        for (User u : hunters) {
+            List<User> potentialTargets = userService
+				.findNearbyPlayers(u);
+            for (int i = 0; i < Preferences.MAX_PRIVATE_TARGETS
+		- targetService.countTargetsOf(u); i++) {
+                Random r = new Random();
+                int id = r.nextInt() % potentialTargets.size();
+                targetService.createTarget(u.getId(), id, false);
+                potentialTargets.remove(id);
+            }
+        }
+    }
+		
+		\end{lstlisting}
+		
+		Sposób implementacji funkcji wyszukiwania graczy zosta³ zaprezentowany na poni¿szym listingu. 
+		
+\begin{lstlisting} [label={lst:distance},caption={Pobieranie listy u¿ytkowników z uwzglêdnieniem odleg³oœci}]
+
+    public List<User> findNearbyPlayers(User u) {
+        List<User> results = new ArrayList<>();
+        List<User> activeUsers = userDAO.findByStatus(Users.ACTIVE);
+        for(User a : activeUsers){
+            if(a!= u && getDistance(a,u)){
+                results.add(a);
+            }
+        }
+        return results;
+    }
+
+    private boolean getDistance(User a, User u) {
+        return distance(a.getLatitude(),u.getLatitude(),
+			a.getLongitude(),u.getLongitude(),0,0)
+			<= u.getTargetDistance();
+    }
+
+    public static double distance(double lat1, double lat2, double lon1,
+                                  double lon2, double el1, double el2) {
+
+        final int R = 6371; // Radius of the earth
+
+        Double latDistance = Math.toRadians(lat2 - lat1);
+        Double lonDistance = Math.toRadians(lon2 - lon1);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+        + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+        * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        double height = el1 - el2;
+
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+        return Math.sqrt(distance);
+    }
+\end{lstlisting}
+
+Funkcja obliczaj¹ca odleg³oœæ dwóch punktów na podstawie wspó³rzêdnych zosta³a zaczerpniêta z odpowiedz na pytanie w serwisie StackOverflow\ref{bib:stack_distance}.
+
+
+	\item \textbf{Zmiana widocznoœci zleceñ z prywatnych na publiczne}. Aby mo¿liwe by³o utrzymanie spójnoœci danych, to zadanie wywo³ywane jest co 10 sekund. W zadaniu pobierana jest lista zleceñ prywatnych, które przekroczy³y czas wykonania. Odpowiednie zapytanie zaprezentowano na listingu \ref{lst:expired_service}. Nastêpnie ka¿de zlecenie jest modyfikowane przez zmianê widocznoœci na publiczne, nadanie nowej daty utworzenia w celu zrestartowania wa¿noœci i usuniêcie przypisania do u¿ytkownika Szukaj¹cego.
+	
+		\begin{lstlisting} [label={lst:public_task},caption={Zadanie zmieniaj¹ce widocznoœæ zleceñ}]
+%%@Scheduled(fixedRate = %%10 * 1000%%)%%
+public void makePublicTargets() {
+        List<Target> targetList = targetService.findExpired(false);
+        for (Target t : targetList) {
+            t.setPublicTarget(true);
+            t.setCreated(new Date());
+            t.setHunter(null);
+            targetService.save(t);
+        }
+    }
+	
+		\end{lstlisting}
+		
+			\begin{lstlisting} [label={lst:expired_service},caption={Metoda serwisu \texttt{TargetService} pobieraj¹ca zlecenia wymagaj¹ce zmian.}]
+			
+public List<Target> findExpired(boolean publi) {
+        LocalDateTime daysAgo = LocalDateTime.now()
+		.minusDays(Preferences.PRIVATE_TARGET_DAYS);
+        return targetDao.findByPublicTargetAndStatusAndCreatedBefore(
+		publi,Targets.ACTIVE,Date.from(daysAgo.atZone(
+		ZoneId.systemDefault()).toInstant()));
+    }
+\end{lstlisting}
+		
+\end{enumerate}
+		
+		
 \section{Aplikacja kliencka}\indent \par
 
 Ta sekcja opisuje proces implementacji aplikacji mobilnej przeznaczonej dla graczy.
 		\subsection{Struktura projektu}\indent \par
 		\subsection{Wykorzystane technologie i biblioteki}\indent \par
 		\subsection{Interfejs u¿ytkownika}\indent \par
-\section{Aplikacja serwerowa}\indent \par
-		\subsection{Struktura projektu}\indent \par
-		\subsection{Wykorzystane technologie i biblioteki}\indent \par
-		\subsection{Bezpieczeñstwo}\indent \par
-		\subsection{Automatyzacja dzia³ania systemu}\indent \par
 
-
-\section{Wykorzystywane technologie i narzêdzia}\indent \par 
 Test test test2

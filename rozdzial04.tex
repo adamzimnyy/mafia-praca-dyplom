@@ -23,14 +23,14 @@ Na podstawie sprecyzowanych powy¿ej zasad gry i opisu dzia³ania systemu opracowa
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{rys04/usecase1.jpg}
-\caption{}
+\caption{Diagram przypadków u¿ycia po stronie aplikacji mobilnej}
 \label{fig:usecase_1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{rys04/usecase2.jpg}
-\caption{}
+\caption{Diagram przypadków u¿ycia po stronie aplikacji serwerowej}
 \label{fig:usecase_2}
 \end{figure}
 
@@ -364,7 +364,51 @@ Na ekran generowania kodu potwierdzaj¹cego sk³ada siê zegar wraz z okr¹g³ym pask
 
 
 \section{Projekt bazy danych}\indent \par
-\section{Protokó³ komunikacji w systemie}\indent \par
+
+W tym rozdziale przedstawiony zosta³ model konceptualny oraz fizyczny bazy danych wykorzystywanej w systemie. 
+
+\subsection{Model konceptualny}\indent \par
+
+Poni¿ej zaprozentowano diagram zwi¹zków encji w bazie danych prezentuj¹cy relacje pomiêdzy poszczególnymi tabelami.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=8cm]{rys04/db3.jpg}%
+\caption{Model konceptualny bazy danych}%
+\label{}%
+\end{figure}
+
+Podstawow¹ tabel¹ w bazie jest tabela \texttt{users} przechowuj¹ca konta uzytkowników. Ka¿dy z u¿ytkowników mo¿e posiadaæ zero lub wiêcej zleceñ (\texttt{targets}). Zlecenie mo¿e byæ przypisane jednemu u¿ytkownikowi w przypadku zleceñ prywatnych, lub nieprzypisane w przypadku zleceñ publicznych. Ka¿de zlecenie musi posiadaæ dok³adnie jednego u¿ytkownika bêd¹cego Szukanym. Zlecenia mog¹ mieæ przypisan¹ lokalizacjê, w której zosta³y wykonane.
+
+Kod generowany w aplikacji musi byæ przypisany do uzytkownika generuj¹cego go. U¿ytkownik mo¿e nie posiadaæ wygenerowanych kodów, lub posiadaæ dok³adnie jeden, jednak to ograniczenie  nie zosta³o uzglêdnione w relacjach encji z za³o¿eniem, ¿e zostanie wporwadzone na etapie implementacji. 
+
+Kod musi posiadaæ lokalizacjê, w której zosta³ wygenerowany. Lokalizacja musi byæ przypisana do dok³adnie jednego u¿ytkownika. U¿ytkownik mo¿e posiadaæ wiele lokalizacji.
+
+Zg³oszenia (\texttt{reports}) o z³amaniu zasad musz¹ nale¿eæ do jednego u¿ytkownika zg³oszonego, oraz mieæ jednego u¿ytkownika zg³aszaj¹cego.
+
+Punkty (\texttt{rewards}) otrzymywane s¹ za wykonynanie konkrentnego zlecenia i przyznawane jednemu u¿ytkownikowi. U¿ytkownik mo¿e posiadaæ zero lub wiele przyznanych punktów.
+
+\subsection{Model fizyczny}\indent \par
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{rys04/db2.jpg}%
+\caption{Model fizyczny bazy danych}%
+\label{}%
+\end{figure}
+
+Tabela users zawiera istotne informacje personalne u¿ytkownika, takie jak imiê, nazwisko, datê urodzenia, a tak¿e wybrane przez uzytkownika dane logowania. Tabela zosta³a rozszerzona o dane statystyczne o uzytkowniku, m.in. datê ostatniego logowania, datê rejestracji. Pole \texttt{authorities} okreœla rolê u¿ytkownika (gracz, administrator) i jest wykorzystywane w metodach autoryzacji, co zostanie omówione w póŸniejszych rozdzia³ach.
+
+Tabela location przechowuje poza kluczami g³ównym i pochodnym u¿ytkownika informacje lokalizacyjne: d³ugoœæ i szerokoœæ geograficzn¹ oraz datê utworzenia i typ wpisu (np. logowanie).
+
+Tabela target ³¹czy dwóch u¿ytkowników w parê. Jeden z nich staje siê szukaj¹cym, a drugi szukanym. W tabeli umieszczone zosta³y informacje o dacie utworzenia i ukoñczenia zlecenia, widocznoœci dla u¿ytkowników systemu oraz statusie zlecenia.
+
+Tabela code zawiera ci¹g znaków bêd¹cy losowo generowanym has³em potwierdzaj¹cym zlecenie, datê utworzenia oraz referencje do u¿ytkownika bêd¹cego w³aœcicielem kodu i lokalizacji wygenerowania.
+
+W tabeli report przechowywane s¹ zg³oszenia o z³amaniu zasad sk³adaj¹ce siê z powodu zg³oszenia (wybieranego w aplikacji z zamkniêtej listy dostêpnych mo¿liwoœci), daty i nieobowi¹zkowego opisu dodatkowego. Zg³oszenie przypisywane jest dwóm u¿ytkownikom, zg³oszonemu i zg³aszaj¹cemu.
+
+Tabela reward przechowuje informacje o zdobywanych przez u¿ytkowników punktach. Wpis sk³ada siê z wartoœci punktowej, daty dodania, opisu s³ownego mówi¹cego o tym, za co punkty zosta³y przyznane oraz informacji o u¿ytkowniku otrzymuj¹cym je.
+
+\section{Protokó³ komunikacji w systemie}\indent \par \label{prot_kom}
 
 Korzystaj¹c z przygotowanych wymagañ funkcjonalnych oraz przypadków u¿ycia aplikacji opracowano protokó³ komunikacyjny w systemie. Komunikacja pomiêdzy serwerem a aplikacjami dostêpnymi dla u¿ytkowników systemu bêdzie odbywaæ siê poprzez zapytania HTTP. Do wymiany danych zastosowany zostanie format JSON (ang. JavaScript Object Notation).
 
@@ -380,7 +424,7 @@ W celu uzyskania dostêpu do \texttt{/api/*} lub \texttt{/admin/*} wymagane jest 
 \subsection{Œcie¿ki dostêpu API}
 
 
-Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
+Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymienione w sekcji Parametry danych lub Zwaracane wartoœci zosta³y przedstawione w kolejnym punkcie.
 \lstset{style=json_color}
 % ------------------------------------------------------------------------------------------------
 \begin{enumerate}
@@ -406,7 +450,7 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
 
 
 \begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+\begin{tabularx}{\textwidth}{L{2cm} L{3cm} X L{2cm}}
 	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
 	\texttt{template} & \texttt{UserTemplate} & szablon danych u¿ytkownika &\\
 	
@@ -421,7 +465,7 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
 
 
 \begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{3cm} X L{2cm}}
+\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
 	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
 	\texttt{200} & \texttt{Ok} & User &\\
 \end{tabularx}
@@ -453,7 +497,7 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
 %\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
 
 \begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
+\begin{tabularx}{\textwidth}{L{2cm} X X L{2cm}}
 	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
 	\texttt{name} & \texttt{AuthenticationRequest} &  &\\
 \end{tabularx}
@@ -747,7 +791,7 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
 \begin{adjustwidth}{1cm}{}
 \begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
 	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{null}&\\
+	\texttt{200} & \texttt{Ok} & &\\
 \end{tabularx}
 \end{adjustwidth}
 \
@@ -1316,7 +1360,8 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
 
 
 \subsection{Struktury danych}
-
+ 
+Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas komunikacji pomiêdzy serwerem a aplikacjami klienckimi. W celu uproszczenia opisu struktury zagnie¿dzone zosta³y zast¹pione ich nazw¹, np. \texttt{<User>}.
 \begin{enumerate}
 
 \item AuthenticationRequest 
@@ -1367,6 +1412,36 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista.
      }
 		
 		\end{lstlisting} 
+		
+		
+		
+\item Report 
+\begin{lstlisting}
+ {
+       "date": "2016-11-20T22:03:02.153Z",
+       "reported_by": <User>,
+       "id": 0,
+       "player_id": <User>,
+       "description": "string",
+       "reason": "string"
+     }
+		\end{lstlisting} 
+
+\item Reward 
+\begin{lstlisting}
+ {
+       "added": "2016-11-20T22:03:02.153Z",
+       "awardedfor": "string",
+       "value": 0,
+       "player_id": <User>,
+       "id": 0,
+       "taget_id": <Target>
+     }
+		
+		\end{lstlisting} 
+
+		
+		
 		
 		\item User 
 		
