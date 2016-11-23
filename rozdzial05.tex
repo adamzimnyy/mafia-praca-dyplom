@@ -22,10 +22,8 @@ Podczas realizacji systemu wykorzystano nastêpuj¹ce technologie:
 \end{enumerate}
 \subsection{Struktura plików projektu}
 
-
+Projekt zosta³ wykonany w œrodowisku Intellij IDEA w wersji 2016.2 Ultimate. 
 Pliki klas projektu podzielone zosta³y na paczki zgodnie z ich zastosowaniem: 
-
-
 
 \begin{itemize}
 	\item config - zawiera pliki konfiguracyjne frameworka Spring, oznaczone adnotacj¹ \texttt{@Configuration}
@@ -37,10 +35,9 @@ Pliki klas projektu podzielone zosta³y na paczki zgodnie z ich zastosowaniem:
 	\item security - pochodz¹ce z projektu Cerberus klasy wspomagaj¹ce obs³ugê autoryzacji przy pomocy tokena
 	\item service - zawiera klasy przetwarzaj¹ce dane pobrane z bazy danych przez DAO przed przekazaniem ich do kontrolera
 	\item task - zawiera klasy automatyzuj¹ce zadania wykonywane przez aplikacje poprzez okresowe wywo³ywanie metod
-	\item util
 \end{itemize}
 
-Oprócz plików z kodem Ÿród³owym programu wa¿nym plikiem jest \texttt{pom.xml} pozwalaj¹cy na do³¹czanie do projektu zewnêtrznych bibliotek pobieranych z odpowiednich serwisów, np. Maven Repository\ref{techmaven_repo}.
+Oprócz plików z kodem Ÿród³owym programu wa¿nym plikiem jest \texttt{pom.xml} pozwalaj¹cy na do³¹czanie do projektu zewnêtrznych bibliotek pobieranych z odpowiednich serwisów, np. Maven Repository\ref{tech:maven_repo}.
 
 		\subsection{Zabezpieczenie dostêpu do API}\indent \par \label{zabezpieczenia}
 Jako podstawê implementacji serwera wykorzystano projekt demonstracyjny Cerberus\ref{tech:cerberus} dostêpny na repozytorium GitHub na licencji MIT\ref{tech:mit}.  Konfiguracjê zabezpieczeñ tworzy siê poprzez utworzenie klasy rozszerzaj¹cej \texttt{WebSecurityConfigurerAdapter}. W tej klasie nadpisuje siê metodê \texttt{configure()}, a w niej tworzy politykê zabezpieczeñ dostêpu do API. Na listingu widocznym poni¿ej przedstawiono fragment konfiguracji, która okreœla trzy poziomy dostêpu dla ró¿nych adresów URL w zaleznoœci od zadeklarowanej grupy u¿ytkownika: 
@@ -81,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Custom JWT based authentication
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), 
-								UsernamePasswordAuthenticationFilter.class);
+				UsernamePasswordAuthenticationFilter.class);
     }
 \end{lstlisting}
 
@@ -89,9 +86,10 @@ W celu uaktywnienia filtrowania zapytañ, przed ka¿dym zapytaniem wywo³ywany jest
 
 \begin{lstlisting} 
 
-public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationTokenFilter 
+	extends UsernamePasswordAuthenticationFilter {
 
-  $$@Value("X-Auth-Token")
+  %%@Value(%%"X-Auth-Token"%%)%%
   private String tokenHeader;
 
   $$@Autowired
@@ -108,12 +106,14 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
     String authToken = httpRequest.getHeader(this.tokenHeader);
     String username = this.tokenUtils.getUsernameFromToken(authToken);
 
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+    if (username != null && SecurityContextHolder
+		.getContext().getAuthentication() == null) {
+      UserDetails userDetails = this.userDetailsService
+			.loadUserByUsername(username);
       if (this.tokenUtils.validateToken(authToken, userDetails)) {
         UsernamePasswordAuthenticationToken authentication = 
-				new UsernamePasswordAuthenticationToken(userDetails, null,
-				                 userDetails.getAuthorities());
+	new UsernamePasswordAuthenticationToken(userDetails, null,
+				           userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource()
 				.buildDetails(httpRequest));
         SecurityContextHolder.getContext()
@@ -129,7 +129,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 
 		
 \subsection{Baza danych} \indent \par \label{db}
-Jako technologiê wykonania bazy danych wybrano Postgre SQL. Po³¹czenie z baz¹ danych realizowane jest przy pomocy sterownika JDBC. Parametry po³¹czenia i konfiguracja bazy danych okreœla klasa \texttt{DatabaseConfig} przedstawiona na listingu \ref{lst:db_config}. W konfiguracji definiowane jest obiekt \texttt{dataSource}, w którym zawarty jest adres bazy danych oraz dane logowania, a tak¿e dodatkowe ustawienia powi¹zane z frameworkiem Hibernate, w szczególnoœci okreœlana jest platforma bazy danych. W konfiguracji obiektu \texttt{EntityMaagerFactory} odpowiedzialnego za tworzenie po³¹czeñ z baz¹ danych przekazywane s¹ ustalone wczeœniej parametry po³¹czenia, a tak¿e okreœlana jest œcie¿ka do modelu danych.
+Jako technologiê wykonania bazy danych wybrano Postgre SQL. Po³¹czenie z baz¹ danych realizowane jest przy pomocy sterownika JDBC. Parametry po³¹czenia i konfiguracja bazy danych okreœla klasa \texttt{DatabaseConfig} przedstawiona na listingu \ref{lst:db_config}. W konfiguracji definiowane jest obiekt \texttt{dataSource}, w którym zawarty jest adres bazy danych oraz dane logowania, a tak¿e dodatkowe ustawienia powi¹zane z frameworkiem Hibernate, w szczególnoœci okreœlana jest platforma bazy danych. W konfiguracji obiektu \texttt{EntityManagerFactory} odpowiedzialnego za tworzenie po³¹czeñ z baz¹ danych przekazywane s¹ ustalone wczeœniej parametry po³¹czenia, a tak¿e okreœlana jest œcie¿ka do modelu danych.
 \begin{lstlisting}[label=lst:db_config,caption=Konfiguracja bazy danych]
 
 $$@Configuration
@@ -162,7 +162,7 @@ public class DatabaseConfig {
 		= new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(false);
         hibernateJpaVendorAdapter
-		.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
+	.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
         return hibernateJpaVendorAdapter;
     }
 
@@ -210,10 +210,10 @@ public class Target {
     User hunter;
     String status;
 
-    $$@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z" )
+    %%@JsonFormat(pattern=%%"yyyy-MM-dd HH:mm:ss Z"%% )%%
     Date created;
 
-    $$@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z")
+    %%@JsonFormat(pattern=%%"yyyy-MM-dd HH:mm:ss Z"%%)%%
     Date completed;
     boolean publicTarget = false;
 
@@ -244,7 +244,7 @@ Mechanizm tworzenia zapytañ jest jednak ograniczony do jednej tabeli. Je¿eli zap
 
     %%@Query(%%"select u from Target t join t.hunter u group
 		by u.id having count(t) < :count"%%)%%
-    List<User> findByTargetCountLessThan(@Param("count") long count);
+    List<User> findByTargetCountLessThan(%%@Param(%%"count"%%) %%long count);
 		
 \end{lstlisting}
 
@@ -368,7 +368,8 @@ public class LocationController {
 %%@RequestMapping(value = %%"api/location"%%, method = %%RequestMethod.GET%%)%%
     public ResponseEntity<?> findByUserAndDateAfter(
             %%@RequestParam(%%"user"%%)%% long id,
-            %%@RequestParam(value = %%"date"%%, required =%% false%%)%% String dateString)
+            %%@RequestParam(value = %%"date"%%, %%
+			%%required =%% false%%)%% String dateString)
             throws ParseException {
 
         Optional<User> user = userService.get(id);
@@ -606,10 +607,10 @@ public void createNewTargets() {
     }
 \end{lstlisting}
 
-Funkcja obliczaj¹ca odleg³oœæ dwóch punktów na podstawie wspó³rzêdnych zosta³a zaczerpniêta z odpowiedz na pytanie w serwisie StackOverflow\ref{bib:stack_distance}.
+Funkcja obliczaj¹ca odleg³oœæ dwóch punktów na podstawie wspó³rzêdnych zosta³a zaczerpniêta z  serwisu StackOverflow\ref{bib:stack_distance}.
 
 
-	\item \textbf{Zmiana widocznoœci zleceñ z prywatnych na publiczne}. Aby mo¿liwe by³o utrzymanie spójnoœci danych, to zadanie wywo³ywane jest co 10 sekund. W zadaniu pobierana jest lista zleceñ prywatnych, które przekroczy³y czas wykonania. Odpowiednie zapytanie zaprezentowano na listingu \ref{lst:expired_service}. Nastêpnie ka¿de zlecenie jest modyfikowane przez zmianê widocznoœci na publiczne, nadanie nowej daty utworzenia w celu zrestartowania wa¿noœci i usuniêcie przypisania do u¿ytkownika Szukaj¹cego.
+	\item \textbf{Zmiana widocznoœci zleceñ z prywatnych na publiczne}. Aby mo¿liwe by³o utrzymanie spójnoœci danych, konieczne jest czêste wykonywanie aktualizacji. Z tego powodu to zadanie wywo³ywane jest co 10 sekund. Podczas wykonywania pobierana jest lista zleceñ prywatnych, które przekroczy³y czas przydzielone na ich potwierdzenie. Odpowiednie zapytanie zaprezentowano na listingu \ref{lst:expired_service}. Nastêpnie ka¿de zlecenie jest modyfikowane przez zmianê widocznoœci na publiczne, nadanie nowej daty utworzenia w celu zrestartowania wa¿noœci i usuniêcie przypisania do u¿ytkownika Szukaj¹cego.
 	
 		\begin{lstlisting} [label={lst:public_task},caption={Zadanie zmieniaj¹ce widocznoœæ zleceñ}]
 %%@Scheduled(fixedRate = %%10 * 1000%%)%%
@@ -642,8 +643,172 @@ public List<Target> findExpired(boolean publi) {
 \section{Aplikacja kliencka}\indent \par
 
 Ta sekcja opisuje proces implementacji aplikacji mobilnej przeznaczonej dla graczy.
-		\subsection{Struktura projektu}\indent \par
-		\subsection{Wykorzystane technologie i biblioteki}\indent \par
-		\subsection{Interfejs u¿ytkownika}\indent \par
 
+		\subsection{Struktura projektu}\indent \par
+		Projekt zosta³ wykonany w programie Android Studio w wersji 2.1.3. W plikach projektu wyró¿niæ mo¿na dwie zasadnicze grupy: klasy w jêzyku Java oraz pliki zasobów. 
+		Pliki klas podzielone zosta³y w pakiety zgodnie z ich przeznaczeniem:
+		\begin{itemize}
+			\item activity - zawiera klasy \texttt{Activity} widoków dostêpnych w aplikacji
+			\item api - klasy dostarczaj¹ce funkcjonalnoœci komunikacji z serwerem poprzez zapytania http
+			\item constant - wartoœci sta³ych wykorzystywanych w projekcie
+			\item fragment - zawiera klasy fragmentów bêd¹cych zawartoœci¹ klas \texttt{Activity}
+			\item model - zawiera definicje obiektów reprezentuj¹cych rzeczywiste dane, na których operuje system
+			\item util - zawiera klasy wspomagaj¹ce dostarczaj¹ce funkcjonalnoœci przetwarzania danych poprzez statyczne metody
+			\item view - zawiera niestandardowe klasy komponentów widoku 
+
+		\end{itemize}
+		
+		
+		Struktura plików zasobów jest okreœlona z góry dla wszystkich projektów. Wyró¿niæ mo¿na nastêpuj¹ce foldery: 
+		\begin{itemize}
+			\item drawable - obrazy oraz pliki xml elementów widoku
+			\item layout - pliki interfejsu graficznego aplikacji
+			\item menu - lista opcji dostêpnych na ró¿nych menu aplikacji
+			\item mipmap - ikony aplikacji
+			\item values - pliki xml okreœlaj¹ce wartoœci takie jak kolory, wymiary, style u¿ywane w aplikacji
+		\end{itemize}
+		
+		
+		Oprócz  opisanych powy¿ej plików istotn¹ rolê w projekcie pe³ni¹ dwa pliki \texttt{build.gradle} pozwalaj¹ce na konfiguracje projektu oraz do³¹czanie bibliotek.
+		
+		\subsection{Konfiguracja projektu}\indent \par
+		\subsection{Biblioteki wykorzystane w projekcie}\indent \par
+		
+		W celu poszerzenia funkcjonalnoœci dostêpnych w projektach Androida i zaoszczêdzenia czasu programowania stosuje siê biblioteki do³¹czane poprzez plik \texttt{gradle.build}. Biblioteki do³¹cza siê poprzez podanie zale¿noœci w sekcji \texttt{dependencies\{\}}. 
+		
+		Poni¿sza lista przedstawia wszystkie biblioteki wykorzystywane w projekcie. Wybrane z nich zostan¹ szerzej opisane w dalszej czêœci pracy.
+		
+		\begin{itemize}
+			\item ButterKnife - biblioteka pozwala na wstrzykiwanie elementów widoków z pliku xml do klas Javy
+			\item FastAdapter - biblioteka u³atwiaj¹ca tworzenie list z wykorzystaniem komponentu \texttt{RecyclerView}
+			\item AppCompat - biblioteka dostarczana przez Google, zapewniaj¹ca kompatybilnoœæ ze starszymi wersjami systemu Android
+			\item Design - biblioteka Google dostarczaj¹ca komponentów widoków
+			\item Circular Image View - element interfejsu pozwalaj¹cy na utworzenie okr¹g³ebo obrazu
+			\item Gson - biblioteka pozwalaj¹ca na konwersjê pomiêdzy obiektami Javy a ich reprezentacj¹ w formacie JSON
+			\item Retrofit - klient HTTP dla Androida pozwalaj¹cy na wygodne tworzenie zapytañ HTTP 
+			\item Joda - dostarcza funkcjonalnoœci pozwalaj¹cych na wygodne przetwarzanie dat i czasu z uwzglêdnieniem stref czasowych
+			\item Universal Image Loader - pozwala na ³adowanie obrazów z ró¿nych Ÿróde³ w tle, pozwalaj¹c na p³ynn¹ pracê aplikacji bez obci¹¿ania interfejsu
+			\item Android Image Cropper - dostarcza funkcjonalnoœæ przycinania zdjêæ wykorzystywan¹ podczas rejestracji konta
+			\item Hold To Load Layout - widok w kszta³cie ko³a wyœwietlaj¹cy pasek ³adowania wokó³ siebie podczas d³ugiego wciœniêcia
+			\item Okhttp3 Logging Interceptor - rozszerzenie dla biblioteki Retrofit opartej na Okhttp3 pozwalaj¹ce na wyœwietlanie zapytañ HTTP w logach aplikacji i na konsoli
+			\item Number Progress Bar - pasek postêpu z numeryczn¹ reprezentacj¹ poziomu ukoñczenia w procentach
+			\item Play Services - us³ugi dostarczane przez Google, niezbêdne do wykorzystania API Google Maps
+			\item Swipe Reveal Layout - komponent interfejsu pozwalaj¹cy na umieszczenie dwóch widoków ponad sob¹ i odkrywanie ich gestem przeci¹gniêcia po ekranie
+			\item Google Maps - obs³uga Google Maps 
+			\item Circular Progress Bar - pasek postêpu w kszta³cie okrêgu, wykorzystywany jako odliczanie czasu
+			
+		\end{itemize}
+		\subsection{Tworzenie interfejsu aplikacji}\indent \par
+		
+Interfejs u¿ytkownika w aplikacjach na systemy Android tworzony jest przy pomocy plików XML znajduj¹cych siê w katalogu \texttt{res/layout} projektu. Do tworzenia interfejsu wykorzystuje siê standardowe komponenty dostarczane przez œrodowisko Android, jak np. Button, ImageView, EditText itp. Komponenty osadza siê kontenerach okreœlaj¹cych ich uk³ad na ekranie, np. LinearLayout, w którym elementy uk³adane s¹ jeden obok drugiego w okreœlonym kierunku(pionowo lub poziomo). Ka¿dy element widoku posiada w³aœciwoœci, którymi mo¿na zmieniaæ jego wygl¹d i zachowanie. Mo¿liwe jest wykorzystanie elementów spoza domyœlnego zestawu dostêpnego w œrodowisku, na przyk³ad poprzez do³¹czenie zewnêtrznej biblioteki lub zdefiniowanie w³asnej klasy. W takim wypadku przy deklaracji elementu w pliku XML nale¿y podaæ pe³n¹ œcie¿kê do klasy z  uwzglêdniemiem pakietu w jakim siê znajduje. Przyk³adowy plik definicji widoku wykorzystuj¹cy zewnêtrzn¹ klasê przedstawiono na listingu \ref{lst:android_xml}. Elementom interfejsu mo¿na nadawaæ identyfikatory korzystaj¹c z parametru \texttt{android:id="@+id/<nazwa>"}. Po nadajniu identyfikatora mo¿liwe jest odnalezienie elementu w klasie aktywnoœci.
+
+\begin{lstlisting}[language=XML,label={lst:android_xml},caption={Przyk³adowy plik widoku aplikacji}]
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" 
+              android:background="@color/gray_background">
+							
+    <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:id="@+id/progressBar" 
+            android:layout_gravity="bottom|center_horizontal"
+	    android:indeterminate="true"/>
+			
+    <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center"
+            app:civ_border="false"
+            app:civ_shadow="false"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:src="@drawable/no_gps_logo"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_gravity="center"
+              android:layout_height="wrap_content"
+              android:textSize="38sp"
+              android:text="Enable GPS\nto continue" 
+              android:layout_margin="40dp"
+              android:id="@+id/status_text"
+              android:gravity="center_horizontal"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginLeft="@dimen/button_width_margin"
+            android:id="@+id/settings"
+            android:layout_marginRight="@dimen/button_width_margin"
+            android:background="@color/gray_button"
+            android:text="Settings"
+            android:textSize="14sp"
+            android:textAllCaps="false"/>
+</LinearLayout>
+\end{lstlisting}
+
+Widoki w aplikacjach Android posiadaj¹ kontrolery, które pozwalaj¹ na okreœlanie ich zachowania. Klasami kontrolerów s¹ przewa¿nie klasy \texttt{Activity} lub \texttt{Fragment}. W klasach tych nastêpuje powi¹zanie pomiêdzy zdefiniowanymi elementami pliku XML a zmiennymi w kodzie programu, co pozwala na oprogramowanie ich dzia³ania. 
+
+Bibilioteka ButterKnife pozwala na wykonywanie opisanych powi¹zañ przy pomocy adnotacji. W tym projekcie wykorzystano dwa rodzaje adnotacji: 
+\begin{itemize}
+	\item \texttt{@BindView} - stosowana do zmiennych klasy, wyszukuje element o zadanym id w pliku XML i przypisuje go do adnotowanej zmiennej
+	\item \texttt{@OnClick} - stosowana do metod klasy, powoduje wywo³anie adnotowanej metody po klikniêciu w element widoku o okreœlonym id.
+\end{itemize}
+
+W celu uaktywnienia rozszerzenia ButterKnife w metodzie \texttt{onCreate} kontrolera po wywo³aniu metody \texttt{setContentView} przypisuj¹cej plik z definicj¹ interfejsu do kontrolera konieczne jest utworzenie powi¹zañ metod¹ \texttt{ButterKnife.bind(this);}. Fragment kodu kontrolera prezentuj¹cy opisane czynnoœci przedstawia poni¿szy listing.
+
+\lstset{style=java}
+
+\begin{lstlisting}[label={lst:butterknife},caption={Tworzenie powi¹zañ interfejsu przy pomocy biblioteki ButterKnife}]
+
+public class GpsActivity extends AppCompatActivity
+	implements LocationListener {
+
+    android.location.Location lastKnown;
+    boolean exitLoop = false;
+
+    %%@BindView(%%R.id.settings%%)%%
+    Button settingsButton;
+
+    %%@BindView(%%R.id.status_text%%)%%
+    TextView statusText;
+
+    %%@Override%%
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_gps);
+        ButterKnife.bind(this);
+        AppVariable.locationManager = (LocationManager) getSystemService(
+		Context.LOCATION_SERVICE);
+        AppVariable.locationListener = this;
+        getLocation();
+    }
+}
+\end{lstlisting}
+
+W danym momencie, w aplikacji aktywny mo¿e byæ tylko jeden widok z jednym kontrolerem. Prze³¹czanie pomiêdzy widokami realizowane jest przez intencje (ang. intent).
+
+
+//TODO intent helper, lista aktywnoœci, nawigacja w aplikacji
+
+
+
+		\subsection{Komunikacja z serwerem} \indent \par \label{komunikacja_android}
+		\subsection{Rejestracja konta} \indent \par
+		\subsection{Logowanie do konta} \indent \par
+		\subsection{Lokalizacja urz¹dzenia} \indent \par
+		\subsection{Zarz¹dzanie zleceniami} \indent \par
+		\subsubsection{Lista zleceñ}
+		\subsubsection{Szczegó³y zlecenia}
+		\subsubsection{Mapa znanych lokalizacji u¿ytkownika}
+		\subsection{Generowanie kodów potwierdzaj¹cych} \indent \par
+
+		\subsection{} \indent \par
+		\subsection{} \indent \par
+		\subsection{} \indent \par
+		\subsection{} \indent \par
+		
 Test test test2
+		\section{Dalszy rozwój systemu} \indent \par

@@ -44,8 +44,24 @@
 \contentsline {subsubsection}{Przyk\IeC {\l }ady implementacji zada\'n w projekcie}{54}{section*.6}
 \contentsline {section}{\numberline {5.2}Aplikacja kliencka}{56}{section.5.2}
 \contentsline {subsection}{\numberline {5.2.1}Struktura projektu}{56}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Wykorzystane technologie i biblioteki}{56}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}Interfejs u\.zytkownika}{56}{subsection.5.2.3}
-\contentsline {chapter}{\chapternumberline {6}Testy systemu}{57}{chapter.6}
-\contentsline {chapter}{Literatura}{58}{section*.8}
-\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{59}{appendix.A}
+\contentsline {subsection}{\numberline {5.2.2}Konfiguracja projektu}{57}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Biblioteki wykorzystane w projekcie}{57}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}Tworzenie interfejsu aplikacji}{57}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}Komunikacja z serwerem}{59}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}Rejestracja konta}{59}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}Logowanie do konta}{59}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}Lokalizacja urz\k adzenia}{59}{subsection.5.2.8}
+\contentsline {subsection}{\numberline {5.2.9}Zarz\k adzanie zleceniami}{59}{subsection.5.2.9}
+\contentsline {subsubsection}{Lista zlece\'n}{60}{section*.7}
+\contentsline {subsubsection}{Szczeg\'o\IeC {\l }y zlecenia}{60}{section*.8}
+\contentsline {subsubsection}{Mapa znanych lokalizacji u\.zytkownika}{60}{section*.9}
+\contentsline {subsection}{\numberline {5.2.10}Generowanie kod\'ow potwierdzaj\k acych}{60}{subsection.5.2.10}
+\contentsline {subsection}{\numberline {5.2.11}}{60}{subsection.5.2.11}
+\contentsline {subsection}{\numberline {5.2.12}}{60}{subsection.5.2.12}
+\contentsline {subsection}{\numberline {5.2.13}}{60}{subsection.5.2.13}
+\contentsline {subsection}{\numberline {5.2.14}}{60}{subsection.5.2.14}
+\contentsline {section}{\numberline {5.3}Dalszy rozw\'oj systemu}{60}{section.5.3}
+\contentsline {chapter}{\chapternumberline {6}Testy systemu}{61}{chapter.6}
+\contentsline {chapter}{\chapternumberline {7}Instrukcja u\.zytkowania aplikacji}{62}{chapter.7}
+\contentsline {chapter}{Literatura}{63}{section*.11}
+\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{64}{appendix.A}

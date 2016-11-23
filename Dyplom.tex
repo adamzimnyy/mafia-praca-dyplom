@@ -103,12 +103,26 @@ language=Java,
   breakatwhitespace=true,
   commentstyle=\color{pgreen},
   keywordstyle=\color{pblue},
-  stringstyle=\color{pred},
+  stringstyle=\color{greentext},
   basicstyle=\footnotesize\ttfamily,
   moredelim=[il][\textcolor{pgrey}]{$$},
   moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }
 
+\lstdefinelanguage{XML}
+{
+  basicstyle=\ttfamily\footnotesize,
+  morestring=[b]",
+  moredelim=[s][\bfseries\color{black}]{<}{\ },
+  moredelim=[s][\bfseries\color{black}]{</}{>},
+  moredelim=[l][\bfseries\color{black}]{/>},
+  moredelim=[l][\bfseries\color{black}]{>},
+  morecomment=[s]{<?}{?>},
+  morecomment=[s]{<!--}{-->},
+  commentstyle=\color{blue},
+  stringstyle=\color{greentext},
+  identifierstyle=\color{blue}
+}
 
 
 % flip the switch if a colon is found in Pmode
@@ -655,6 +669,7 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 \include{rozdzial05}
 \include{rozdzial06}
 \include{rozdzial07}
+\include{rozdzial08}
 %\bibliographystyle{plalpha}
 \bibliographystyle{plabbrv}
 
