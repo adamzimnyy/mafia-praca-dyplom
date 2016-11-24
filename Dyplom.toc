@@ -22,7 +22,6 @@
 \contentsline {section}{\numberline {4.2}Przypadki u\.zycia}{18}{section.4.2}
 \contentsline {section}{\numberline {4.3}Projekt interfejsu}{25}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Aplikacja kliencka}{25}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Panel administracyjny}{29}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Projekt bazy danych}{29}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Model konceptualny}{30}{subsection.4.4.1}
 \contentsline {subsection}{\numberline {4.4.2}Model fizyczny}{31}{subsection.4.4.2}
@@ -34,34 +33,34 @@
 \contentsline {subsection}{\numberline {5.1.1}Wykorzystywane technologie i narz\k edzia}{44}{subsection.5.1.1}
 \contentsline {subsection}{\numberline {5.1.2}Struktura plik\'ow projektu}{44}{subsection.5.1.2}
 \contentsline {subsection}{\numberline {5.1.3}Zabezpieczenie dost\k epu do API}{45}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}Baza danych}{46}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.4}Baza danych}{47}{subsection.5.1.4}
 \contentsline {subsection}{\numberline {5.1.5}Komunikacja i przep\IeC {\l }yw danych}{49}{subsection.5.1.5}
 \contentsline {subsection}{\numberline {5.1.6}Implementacja obs\IeC {\l }ugi wybranych zapyta\'n}{50}{subsection.5.1.6}
 \contentsline {subsubsection}{Rejestracja}{50}{section*.3}
 \contentsline {subsubsection}{Pobranie lokalizacji u\.zytkownika}{51}{section*.4}
 \contentsline {subsubsection}{Potwierdzenie wykonania zlecenia}{52}{section*.5}
 \contentsline {subsection}{\numberline {5.1.7}Automatyzacja dzia\IeC {\l }ania systemu}{53}{subsection.5.1.7}
-\contentsline {subsubsection}{Przyk\IeC {\l }ady implementacji zada\'n w projekcie}{54}{section*.6}
+\contentsline {subsubsection}{Przyk\IeC {\l }ady implementacji zada\'n w projekcie}{54}{section*.7}
 \contentsline {section}{\numberline {5.2}Aplikacja kliencka}{56}{section.5.2}
 \contentsline {subsection}{\numberline {5.2.1}Struktura projektu}{56}{subsection.5.2.1}
 \contentsline {subsection}{\numberline {5.2.2}Konfiguracja projektu}{57}{subsection.5.2.2}
 \contentsline {subsection}{\numberline {5.2.3}Biblioteki wykorzystane w projekcie}{57}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}Tworzenie interfejsu aplikacji}{57}{subsection.5.2.4}
-\contentsline {subsection}{\numberline {5.2.5}Komunikacja z serwerem}{59}{subsection.5.2.5}
-\contentsline {subsection}{\numberline {5.2.6}Rejestracja konta}{59}{subsection.5.2.6}
-\contentsline {subsection}{\numberline {5.2.7}Logowanie do konta}{59}{subsection.5.2.7}
-\contentsline {subsection}{\numberline {5.2.8}Lokalizacja urz\k adzenia}{59}{subsection.5.2.8}
-\contentsline {subsection}{\numberline {5.2.9}Zarz\k adzanie zleceniami}{59}{subsection.5.2.9}
-\contentsline {subsubsection}{Lista zlece\'n}{60}{section*.7}
-\contentsline {subsubsection}{Szczeg\'o\IeC {\l }y zlecenia}{60}{section*.8}
-\contentsline {subsubsection}{Mapa znanych lokalizacji u\.zytkownika}{60}{section*.9}
-\contentsline {subsection}{\numberline {5.2.10}Generowanie kod\'ow potwierdzaj\k acych}{60}{subsection.5.2.10}
-\contentsline {subsection}{\numberline {5.2.11}}{60}{subsection.5.2.11}
-\contentsline {subsection}{\numberline {5.2.12}}{60}{subsection.5.2.12}
-\contentsline {subsection}{\numberline {5.2.13}}{60}{subsection.5.2.13}
-\contentsline {subsection}{\numberline {5.2.14}}{60}{subsection.5.2.14}
-\contentsline {section}{\numberline {5.3}Dalszy rozw\'oj systemu}{60}{section.5.3}
-\contentsline {chapter}{\chapternumberline {6}Testy systemu}{61}{chapter.6}
-\contentsline {chapter}{\chapternumberline {7}Instrukcja u\.zytkowania aplikacji}{62}{chapter.7}
-\contentsline {chapter}{Literatura}{63}{section*.11}
-\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{64}{appendix.A}
+\contentsline {subsection}{\numberline {5.2.4}Tworzenie interfejsu aplikacji}{58}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}Komunikacja z serwerem}{64}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}Rejestracja konta}{67}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}Logowanie do konta}{72}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}Lokalizacja urz\k adzenia}{72}{subsection.5.2.8}
+\contentsline {subsection}{\numberline {5.2.9}Zarz\k adzanie zleceniami}{72}{subsection.5.2.9}
+\contentsline {subsubsection}{Lista zlece\'n}{73}{section*.8}
+\contentsline {subsubsection}{Szczeg\'o\IeC {\l }y zlecenia}{73}{section*.9}
+\contentsline {subsubsection}{Mapa znanych lokalizacji u\.zytkownika}{73}{section*.10}
+\contentsline {subsection}{\numberline {5.2.10}Generowanie kod\'ow potwierdzaj\k acych}{73}{subsection.5.2.10}
+\contentsline {subsection}{\numberline {5.2.11}}{73}{subsection.5.2.11}
+\contentsline {subsection}{\numberline {5.2.12}}{73}{subsection.5.2.12}
+\contentsline {subsection}{\numberline {5.2.13}}{73}{subsection.5.2.13}
+\contentsline {subsection}{\numberline {5.2.14}}{73}{subsection.5.2.14}
+\contentsline {section}{\numberline {5.3}Dalszy rozw\'oj systemu}{73}{section.5.3}
+\contentsline {chapter}{\chapternumberline {6}Testy systemu}{74}{chapter.6}
+\contentsline {chapter}{\chapternumberline {7}Instrukcja u\.zytkowania aplikacji}{75}{chapter.7}
+\contentsline {chapter}{Literatura}{76}{section*.12}
+\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{77}{appendix.A}

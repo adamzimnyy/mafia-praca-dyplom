@@ -202,7 +202,7 @@ $$@Entity
 public class Target {
 
     $$@Id
-    $$@GeneratedValue(strategy= GenerationType.AUTO)
+    %%@GeneratedValue(%%strategy= GenerationType.AUTO%%)%%
     Integer id;
     $$@OneToOne
     User hunted;
@@ -788,16 +788,648 @@ public class GpsActivity extends AppCompatActivity
 }
 \end{lstlisting}
 
-W danym momencie, w aplikacji aktywny mo¿e byæ tylko jeden widok z jednym kontrolerem. Prze³¹czanie pomiêdzy widokami realizowane jest przez intencje (ang. intent).
+W danym momencie, w aplikacji aktywny mo¿e byæ tylko jeden widok z jednym kontrolerem. Prze³¹czanie pomiêdzy widokami realizowane jest przez intencje (ang. intent). Kontrolery widoków, które by³ uruchomione poprzednio w aplikacji pozostaj¹ uruchomione w tle, dziêki czemu mo¿liwy jest powrót do nich. Mo¿liwe jest zakoñczenie pracy kontrolera poprzez wywo³anie metody \texttt{finish()}. 
+
+W projekcie aby zredukowaæ iloœæ powielonego kodu potrzebnego do prze³¹czania aktywnoœci zaimplementowana zosta³a klasa \texttt{IntentHelper} dostarczaj¹ca statycznych metod pozwalaj¹cych na utworzenie intencji zaledwie jedn¹ lini¹ kodu. Kod klasy zaprezentowano na listingu \ref{lst:intent_helper}. 
 
 
-//TODO intent helper, lista aktywnoœci, nawigacja w aplikacji
+\begin{lstlisting}[label={lst:intent_helper},caption={Klasa \texttt{IntentHelper}}]
+
+public class IntentHelper {
+    public final static int FILE_PICK = 1001;
+    public final static int GPS_SETTINGS = 1002;
+    public static final int PERMISSION_GPS = 1003;
+
+    public static void chooseFileIntent(Activity activity){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        activity.startActivityForResult(intent, FILE_PICK);
+    }
+
+    public static void startActivityIntent(Activity source,
+                Class<? extends Activity> nextActivity){
+        Intent  i = new Intent(source,nextActivity);
+        source.startActivity(i);
+    }
+
+    public static void startActivityIntent(Activity source,
+                Class<? extends Activity> nextActivity, Bundle bundle){
+        Intent  i = new Intent(source,nextActivity);
+        i.putExtras(bundle);
+        source.startActivity(i);
+    }
+}
+
+\end{lstlisting}
+
+Jako parametry metod zwartych w klasie nale¿y podaæ kontekst Ÿród³owy, z którego wywo³ywana jest intencja oraz klasê aktywnoœci, która ma zostaæ uruchomiona. Mo¿liwe jest równie¿ podanie dodatkowych danych do uruchamianej aktywnoœci za pomoc¹ klasy \texttt{Bundle}. Wywo³anie przejœcia przedstawia listing \ref{lst:intent_helper_call}. 
 
 
+\begin{lstlisting}[label={lst:intent_helper_call},caption={Wywo³anie metody klasy \texttt{IntentHelper}}]
+
+    public void goToTargets() {
+        IntentHelper.startActivityIntent(this, TargetActivity.class);
+        finish();
+    }
+\end{lstlisting}
+
+Je¿eli po zakoñczeniu pracy kontrolera powinny zostaæ zwrócone jakieœ dane, aktywnoœæ nale¿y wywo³aæ przy pomocy metody \texttt{startActivityForResult}. Wówczas w aktywnoœci Ÿród³owej nale¿y przeci¹¿yæ metodê \texttt{onActivityResult} pozwalaj¹c¹ na odebranie i przetworzenie zwracanych danych. Przyk³ady zastosowania tych funkcjonalnoœci zostan¹ zaprezentowane przy opisie implementacji modu³u rejestracji.
+
+
+W aplikacji zaimplementowane zosta³y nastêpuj¹ce aktywnoœci:
+\begin{itemize}
+	\item CodeActivity - widok pozwalaj¹cy na wygenerowanie kodu potwierdzaj¹cego
+	\item DetailsActivity - widok szczegó³ów zlecenia
+	\item GpsActivity - widok wyœwietlany po zalogowaniu u¿ytkownika wykouj¹cy zapis lokalizacji do bazy, drug¹ jego funkcj¹ jest zablokowanie dostêpu do pozosta³ych funkcji aplikacji
+	\item LoginActivity - widok logowania do konta
+	\item MapActivity - widok mapy z naniesionymi znanymi lokalizacjami u¿ytkownika, wywo³ywany z poziomu szczegó³ów zlecenia
+	\item TargetActivity - wikod listy zleceñ
+	\item RegisterActivity - widok rejestracji konta
+	\item WelcomeActivity - widok startowy aplikacji
+\end{itemize}
+
+Szczegó³y dotycz¹ce implementacji kolejnych aktywnoœci opisuj¹ kolejne sekcje tego rozdzia³u.
+
+Aktywnoœci zadeklarowane w aplikacji musz¹ zostaæ wpisane do pliku \texttt{AndroidManifest.xml}. Plik ten dostarcza niezbêdnych informacji o zawartoœci aplikacji do systemu operacyjnego, takich jak wymagane uprawnienia aplikacji czy wersja systemu operacyjnego. Zwartoœæ tego pliku w projekcie pokazano na listingu \ref{lst:manifest}. Oprócz wymienionych powy¿ej aktywnoœci zadeklarowana zosta³a jedna dodatkowa \texttt{CropImageActivity} pochodz¹ca z biblioteki ImageCropper.
+
+
+
+\begin{lstlisting}[language= XML, label={lst:manifest},caption={Plik \texttt{AndroidManifest.xml}}]
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="mafia.adamzimny.mafia">
+
+ <uses-permission android:name="android.permission.INTERNET"/>
+ <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+ <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+ <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity
+                android:name=".activity.LoginActivity"
+                android:label="Login"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".activity.TargetActivity"
+                android:label="Targets">
+        </activity>
+        <activity
+                android:name=".activity.WelcomeActivity"
+                android:label="Welcome"
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.UglyRegisterActivity">
+        </activity>
+        <activity android:name=".activity.DetailsActivity">
+        </activity>
+
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/google_maps_key"/>
+
+        <activity
+                android:name=".activity.MapActivity"
+                android:label="@string/title_activity_map">
+        </activity>
+        <activity android:name=".activity.GpsActivity">
+        </activity>
+        <activity android:name=".activity.CodeActivity">
+        </activity>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                  android:theme="@style/Base.Theme.AppCompat"/>
+    </application>
+
+</manifest>
+
+\end{lstlisting}
+
+ W pliku manifest zosta³y zadeklarowane uprawnienia aplikacji:
+
+\begin{itemize}
+	\item INTERNET - pozwala na dostêp do internetu
+	\item ACCESS\_FINE\_LOCATION - pozwala na pozyskanielokalizacji przy pomocy modu³u GPS
+	\item ACCESS\_COARSE\_LOCATION - powzwala na pozyskanie lokalizacji przy pomocy modu³u GSM lub Wifi
+	\item READ\_EXTERNAL\_STORAGE - pozwala na odczyt plików z zewnêtrznej karty pamiêci
+\end{itemize}
+
+
+W przypadku braku wymienionych uprawnieñ przy próbie dostêpu do zabezpieczonych zasobów aplikacja zg³osi³aby wyj¹tek \texttt{SecurityException}.
+
+Prze³¹czanie pomiêdzy wybranymi widokami aplikacji odbywa siê za pomoc¹ bocznego panelu nawigacyjnego. Za jego utworzenie odpowiedzialny jest plik interfejsu \texttt{global.xml}, którego zawartoœæ pokazano na listingu \ref{lst:global}. W komponencie \texttt{NavigationView} umieszczono parametr \texttt{app:menu} definiuj¹cy zawartoœæ panelu.
+
+\begin{lstlisting}[language= XML, label={lst:global},caption={Panel nawygacyjny aplikacji}]
+
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <include
+        layout="@layout/activity_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="false"
+        app:headerLayout="@layout/nav_drawer_banner"
+        app:menu="@menu/activity_target_drawer"
+        android:background="@color/gray_item"
+    app:itemTextColor="@color/white" app:itemIconTint="@color/white"/>
+
+</android.support.v4.widget.DrawerLayout>
+
+\end{lstlisting}
+
+\begin{lstlisting}[language= XML, label={lst:global},caption={Lista opcji dostêpna na panelu nawigacyjnym}]
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_targets"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Targets" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_code"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Generate code" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Settings" />
+    </group>
+
+    <item android:title="Developer">
+        <menu>
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Send feedback" />
+            <item
+                    android:id="@+id/nav_bug"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="Report a bug" />
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Rate" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@android:drawable/ic_dialog_info"
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>
+
+\end{lstlisting}
+
+Panel nawigacyjny dostêpny jest tylko z aktywnoœci \texttt{TargetActivity}. Obs³ug¹ klikniêæ w panelu zajmuje siê metoda \texttt{onNavigationItemSelected}. Fragment tej metody pozwalaj¹cy na uruchomienie aktywnoœci \texttt{CodeActivity} przedstawia poni¿szy listing.
+
+
+\begin{lstlisting}[label={lst:navigation_click},caption={Lista opcji dostêpna na panelu nawigacyjnym}]
+    
+		$$@Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_code) {
+            IntentHelper.startActivityIntent(this,CodeActivity.class);
+        }else if (id == R.id.nav_settings) {
+            //...
+        }
+	
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+\end{lstlisting}
+
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[draft=false, width=6cm]{rys05/drawer.png}%
+\caption{Panel nawigacyjny w aplikacji - implementacja}%
+\label{fig:drawer_5}%
+\end{figure}
 
 		\subsection{Komunikacja z serwerem} \indent \par \label{komunikacja_android}
-		\subsection{Rejestracja konta} \indent \par
+		
+		Przesy³anie danych pomiêdzy zaimplementowanym serwerem, a opisywan¹ aplikacj¹ mobiln¹ odbywa siê przy pomocy zapytañ HTTP. Do tworzenia zapytañ wykorzystana zosta³a biblioteka Retrofit rozpowszechniana na licencji Apache 2.0\ref{apache_licence}.
+		Retrofit pozwala na przekszta³cenie API HTTP w interfejs Javy, a nastêpnie przy pomocy metod i adnotacji zdefiniowanie dostêpnych adresów URL. Nastêpnie mo¿liwe jest wygenerowanie implementacji oraz obs³ugê zapytañ wysy³anych z jej pomoc¹. 
+		
+		\begin{lstlisting}[label={lst:retrofit_service}, caption={Przyk³adowe interfejsy zapytañ Retrofit}]
+		
+public interface TargetService {
+
+    %%@GET(%%"api/target"%%)%%
+    Call<List<Target>> getTargetsForUser(%%@Query(%%"user"%%)%% long id, 
+	%%@Header(%%"X-Auth-Token"%%)%% String token);
+
+    %%@PATCH(%%"api/target/confirm"%%)%%
+    Call<Target> confirm(%%@Query(%%"target"%%)%%Integer target, 
+	%%@Query(%%"code"%%)%% String code, %%@Header(%%"X-Auth-Token"%%)%% String token);
+
+    %%@GET(%%"api/target"%%)%%
+    Call<Target> getTargetById(%%@Query(%%"id"%%)%% long id,
+	%%@Header(%%"X-Auth-Token"%%)%% String token);
+}
+
+public interface LocationService {
+
+    %%@GET(%%"/api/location"%%)%%
+    Call<List<Location>> findByUser(%%@Query(%%"user"%%)%% long id,
+%%@Header(%%"X-Auth-Token"%%)%% String token);
+
+    %%@GET(%%"/api/location"%%)%%
+    Call<List<Location>> findByUserAndDateAfter(%%@Query(%%"user"%%)%% long id,
+%%@Query(%%"date"%%)%% RetroDate date, %%@Header(%%"X-Auth-Token"%%)%% String token);
+
+    %%@POST(%%"/api/location"%%)%%
+    Call<Void> save(%%@Body%% Location location, 
+%%@Header(%%"X-Auth-Token"%%)%% String token);
+
+}
+		\end{lstlisting}
+		
+		Adnotacje \texttt{@GET}, \texttt{@POST} oraz \texttt{@PATCH} widoczne na powy¿szym listingu okreœlaj¹ metodê i adres URL wywo³ania. Metody interfejsu zwracaj¹ typ \texttt{Call<?>}, którego parametrem jest typ zwracany przez zapytanie. Adnotacje \texttt{@Query} i \texttt{@Body} pozwalaj¹ na dodanie parametrów do zapytania, a \texttt{@Header} s³u¿y do przes³ania tokena autoryzuj¹cego w nag³ówku. 
+		
+		Sposób generowania implementacji interfejsów przedstawiono na poni¿szym listingu. Podobnie jak w przypadku klasy \texttt{IntentHelper} w celu redukcji powtarzanego kodu stworzono klasê ze statycznymi metodami pozwalaj¹c¹ w prosty sposób wygenerowaæ implementacjê poprzed podanie klasy interfejsu oraz bazowego adresu URL.
+		
+\begin{lstlisting}[label={lst:retrofit_builder}, caption={Klasa wspomagaj¹ca generowanie implementacji interfejsów biblioteki Retrofit}]
+		
+public class RetrofitBuilder {
+    private static boolean useLocalhost = false;
+    public static final String BASE_URL = "http://[...].com/";
+    public static final String IMGUR_URL = "https://api.imgur.com/";
+    public static final String LOCALHOST = "http://192.168.0.103:8080";
+
+    public static Retrofit build(String url) {
+        GsonBuilder builder = new GsonBuilder();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+		.addInterceptor(interceptor).build();
+
+        Gson gson = builder.setDateFormat("yyyy-MM-dd HH:mm:ss Z").
+        create();
+        return new Retrofit.Builder()
+                .client(client)
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+    }
+
+    public static Object getService(Class<?> clas, String url) {
+        if(clas == ImgurService.class)
+            return build(url).create(clas);
+        return build(useLocalhost ? LOCALHOST : url).create(clas);
+    }
+
+}
+\end{lstlisting}
+		
+		Przyk³ad wykorzystania opisanego mechanizmu w praktyce przedstawia listing \ref{lst:retrofit_use}.
+		Po wygenerowaniu implementacji serwisu tworzona jest instancja zapytania \texttt{Call<Void> saveCall}. Nastêpnie przy pomocy metody \texttt{enqueue} dodawana jest ona do kolejki i oczekuje na obs³u¿enie. Odpowiedzi na zapytania tworzone w ten sposób obs³ugiwane s¹ w osobnym w¹tku aplikacji, dlatego konieczne jest opisanie zachowanie aplikacji po otrzymaniu odpowiedzi za pomoc¹ klasy \texttt{Callback}. Metody tej klasy wywo³ywane s¹ w g³ównym w¹tku aplikacji. 
+		
+		\begin{lstlisting}[label={lst:retrofit_use}, caption={U¿ycie biblioteki Retrofit}]
+private void saveLoginLocation() {
+    Log.d("location", "Saving location");
+    LocationService service = (LocationService) RetrofitBuilder
+	.getService(LocationService.class, RetrofitBuilder.BASE_URL);
+    Location loc = LocationHelper.map(lastKnown, Locations.LOGIN);
+    Call<Void> saveCall = service.save(loc, AppVariable.token);
+    saveCall.enqueue(new Callback<Void>() {
+        $$@Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            Log.d("locations", "Response!" + response.code());
+
+            if (response.code() == 200) {
+                Log.d("locations", "Saved!");
+                goToTargets();
+            }
+        }
+
+        $$@Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            Log.d(getClass().getSimpleName(),
+		"Location saving error! " + t.getLocalizedMessage());
+         }
+     });
+}
+		
+\end{lstlisting}
+
+		
+		\subsection{Rejestracja konta} \indent \par \label{rejestracja}
+		
+				Kontrolerem widoku jest klasa \texttt{RegisterActivity}. Rejestracja u¿ytkownika odbywa siê w czterech etapach: 
+		\begin{enumerate}
+			\item Wybór zdjêcia
+			\item Uzupe³nienie formularza
+			\item Przes³anie zdjêcia na serwer hostingowy
+			\item Utworzenie konta
+		\end{enumerate}
+		
+ Na szczycie widoku znajduje siê komponent \texttt{ImageButton}. Po jego klikniêciu uruchomiona zostanie aktywnoœæ wyboru pliku z galerii. Metoda odpowiedzialna za to wywo³anie przedstawiona zosta³a na listingu \ref{lst:choose_file}. Wykorzystuje ona opisan¹ wczeœniej klasê \texttt{IntentHelper} do utworzenia intencji. Widoczna adnotacja \texttt{@OnClick} z biblioteki ButterKnife przypisuje metodê do akcji przycisku. 
+		
+		
+		\begin{lstlisting}[label={lst:choose_file}, caption={Wywo³anie okna wyboru obrazu}]
+		
+%%@OnClick(%%R.id.image_button%%)%%
+public void pickPhoto() {
+    IntentHelper.chooseFileIntent(this);
+}
+		
+\end{lstlisting}
+		
+		
+	Wywo³ywana aktywnoœæ zwraca dane w postaci adresu Uri wybranego obrazu, dlatego musi zostaæ obs³u¿ona w metodzie \texttt{onActivityResult}. Po zakoñczeniu wyboru obrazu jest on przekazywany do biblioteki Image Cropper, która pozwala na przyciêcie zdjêcia. Wynik dzia³ania aktywnoœci przyciêcia ponownie musi zostaæ obs³u¿ony.
+	
+
+				\begin{lstlisting}[label={lst:image_result}, caption={Obs³uga wyników aktywnoœci wyboru zdjêcia}]
+		
+	
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+		Intent data) {
+        if (requestCode == IntentHelper.FILE_PICK 
+		&& resultCode == RESULT_OK) {
+            imageUri = data.getData();
+            CropImage.activity(imageUri).setFixAspectRatio(true)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage
+				.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                ImageLoader imageLoader = ImageLoader.getInstance();
+                imageLoader.displayImage(
+		"file://" + resultUri.getPath(), imageButton);
+
+                try {
+                    croppedImage = MediaStore.Images.Media
+			.getBitmap(this.getContentResolver(), resultUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                FaceDetector faceDetector = new FaceDetector
+		.Builder(this).build();
+                Frame frame = new Frame.Builder()
+		.setBitmap(croppedImage).build();
+                SparseArray<Face> faces = faceDetector.detect(frame);
+                 faceDetector.release();
+
+                if (faces.size() == 0) {
+                    noFaceDetected.setVisibility(View.VISIBLE);
+                } else if (faces.size() > 1) {
+                    multipleFacesDetected.setVisibility(View.VISIBLE);
+                } else if (FaceHelper.getFaceSizePercent(faces.get(0),
+		croppedImage) < Params.FACE_PERCENTAGE) {
+                    faceTooSmall.setVisibility(View.VISIBLE);
+		} else {
+                    faceDetected.setVisibility(View.VISIBLE);}
+            } else if (resultCode == 
+			CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+    }
+
+\end{lstlisting}
+		
+	W celu zabezpieczenia przez wykorzystywaniem przez u¿ytkowników zdjêæ nieprzedstawiaj¹cych osób, wprowadzony zosta³ mechanizm wykrywania twarzy przy pomocy narzêdzia Mobile Vision\ref{bib:mobile_vision}.	Po zakoñczeniu przycinania zdjêcie jest one przekazywane do obiektu \texttt{FaceDetector}, a nastêpnie poddawane analizie. W zale¿noœci od liczby wykrytych twarzy, pod zdjêciem wyœwietlany jest odpowiedni komunikat. 
+	
+	Przyk³ad dzia³ania opisanego procesu zaprezentowano na poni¿szych rysunkach.
+	
+	
+	\begin{figure}[H] 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[draft=false,width=.5\linewidth]{rys05/register1.png} 
+    \caption{Widok formularza rejestracji} 
+    \label{fig7:a} 
+    \vspace{4ex}
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[draft=false,width=.5\linewidth]{rys05/register2.png} 
+    \caption{Okno wyboru pliku} 
+    \label{fig7:b} 
+    \vspace{4ex}
+  \end{subfigure} 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[draft=false,width=.5\linewidth]{rys05/register3.png} 
+    \caption{Przycinanie zdjêcia} 
+    \label{fig7:c} 
+  \end{subfigure}%%
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[draft=false,width=.5\linewidth]{rys05/register4.png}
+    \caption{Efekt po wykryciu twarzy} 
+    \label{fig7:d} 
+  \end{subfigure} 
+  \caption{Przyk³ad przebiegu procesu wyboru zdjêcia}
+  \label{fig7} 
+\end{figure}
+
+	Formularz danych sk³ada siê z szeregu pól tekstowych. Szczególnym przypadkiem jest pole wyboru daty urodzenia, które wyœwietla okno dialogowe kalendarza po kliniêciu na nie. W celu wyœwietlenia okna tworzony jest obiekt \texttt{DatePickerDialog}, a do pola tekstowego dodawany jest \texttt{OnFocusChangeListener}, pozwalaj¹cy na detekcjê zmiany aktywnoœci pola. Wynik wyboru date z kalendarza obs³ugiwany jest przez interfejs \texttt{DatePickerDialog.OnDateSetListener}.
+	
+
+\begin{lstlisting}[label={lst:date_pick}, caption={Wyœwietlanie okna dialogowego kalendarza}]
+$$@Override
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
+        datePickerDialog = createDialog();
+        setTitle("Register");
+        ImageLoaderHelper.initialize(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        birthdayField.setOnFocusChangeListener(
+		new View.OnFocusChangeListener() {
+           $$ @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    datePickerDialog.show();
+                }
+            }
+        });
+        imageButton.requestFocus();
+    }
+	
+	
+public DatePickerDialog createDialog() {
+        // Use the current date as the default date in the picker
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        // Create a new instance of DatePickerDialog and return it
+        return new DatePickerDialog(this, this, year, month, day);
+}
+
+$$@Override
+public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        birthdayField.setText(i + "/" + i1 + "/" + i2);
+}
+	\end{lstlisting}
+	
+	Po wype³nieniu przez u¿ytkownika pól formularza i wciœniêciu przycisku Register u do³y strony, nastêpuje walidacja wprowadzonych danych. W przypadku wykrycia niepoprawnie uzupe³nionych pól zostaj¹ one podœwietlone, a na ekranie pokazuje siê komunikat o b³êdzie. 
+	
+	Je¿eli walidacja zosta³a wykonana poprawnie, konto mo¿e zostaæ utworzone. Wybrany obraz przesy³any jest na zewnêtrzny serwis hostingowy Imgur. Serwis ten zosta³ wybrany do przechowywania zdjêæ ze wzglêdu na ³atwoœæ wykorzystania:
+	\begin{itemize}
+		\item zdjêcia mog¹ byæ przesy³ane w dowolnym formacie
+		\item nie ma koniecznoœci implementacji mechanizmów obs³ugi plików po stronie serwerowej systemu
+		\item plikom automatycznie nadawane s¹ unikatowe identyfikatory, które ³atwo mo¿na zapisaæ w bazie danych
+		\item w ³atwy sposób mo¿na odtworzyæ adres przes³anego pliku na podstawie identyfikatora, bez znajomoœci rozszerzenia pliku
+	\end{itemize}
+	Korzystanie z tego serwisu wymaga rejestracji aplikacji w celu uzyskania klucza dostêpu do API, który nale¿y przes³aæ jako parametr zapytania. Serwis Retrofit zapytañ Imgur przedstawia listing \ref{lst:imgur_api}.
+	
+	\begin{lstlisting}[label={lst:imgur_api}, caption={Interfejs zapytañ serwisu Imgur}]
+	
+	public interface ImgurService {
+	
+    $$@Multipart
+    %%@POST(%%"3/image"%%)%%
+    %%@Headers(%%"Authorization: Client-ID 9df1a76680eff2a"%%)%%
+    Call<ImgurData> uploadImage(%%@Part(%%"image"%%)%% ProgressRequestBody image);
+}
+\end{lstlisting}
+	
+	Do utworzenia konta wymagane jest wykonanie trzech zapytañ http: 
+	\begin{itemize}
+	\item sprawdzaj¹cego dostêpnoœæ nazwy u¿ytkownika
+		\item do serwisu Imgur w celu przes³ania zdjêcia 
+		\item przes³anie danych konta na adres \texttt{/register/}
+	\end{itemize}. 
+	Ze wzglêdu na to, ¿e kolejne zapytanie mo¿e zostaæ wykonane dopiero po uzyskaniu odpowiedzi z poprzedniego, nie mo¿na zastosowaæ metody \texttt{enqueue} do wykonania zapytañ. Aby zapewniæ w³aœciw¹ kolejnoœæ wykonania zapytania zostaj¹ wykonane w zdarzeniu asynchronicznym \texttt{AsyncTask}.
+	
+	Korzystaj¹c z narzêdzia Retrofit tworzone s¹ serwisy, z których nastêpnie pobierane s¹ odpowiednie metody.   Zapytania wykonywane s¹ metod¹ \texttt{execute()}, która gwarantuje wykonanie ich w w¹tku, w którym zostan¹ wywo³ane. Po uzyskaniu odpowiedzi z identyfikatorem przes³anego zdjêcia jest on odzyskiwany przy pomocy metody \texttt{imgurResponse.body().getData().getId()} i przekazywany do obiektu \texttt{UserTemplate}. Po poprawnym wykonaniu zapytania tworz¹cego konto aktywnoœæ jest zamykana w metodzie \texttt{onPostExecute}.
+	
+	
+	\begin{lstlisting}[label={lst:date_pick}, caption={Wyœwietlanie okna dialogowego kalendarza}]
+public class RegisterTask extends AsyncTask<Void, Void, User> {
+
+$$@Override
+    protected void onPostExecute(User user) {
+        progressBar.setVisibility(View.GONE);
+            if (user != null) {
+                Log.d("validator", user.toString());
+                Handler handler = new Handler();
+
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        finish();
+                    }
+                }, 3000);
+            }
+        }
+
+        %%@SuppressWarnings(%%"ConstantConditions"%%)%%
+        $$@Override
+        protected User doInBackground(Void... voids) {
+            ImgurService imgurService = (ImgurService) RetrofitBuilder
+		.getService(ImgurService.class, RetrofitBuilder.IMGUR_URL);
+            UserService userService = (UserService) RetrofitBuilder
+		.getService(UserService.class, RetrofitBuilder.BASE_URL);
+            Call<Boolean> usernameCall = userService
+		.checkUsername(template.getUsername());
+            Response<Boolean> usernameResponse;
+            try {
+                usernameResponse = usernameCall.execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        
+            File file = null;
+            try {
+
+                file = new File(RegisterActivity.this.getCacheDir(), 
+				"temp_profile");
+                file.createNewFile();
+
+//Convert bitmap to byte array
+
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                croppedImage.compress(Bitmap.CompressFormat.PNG, 
+			0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+            ProgressRequestBody pBody = new ProgressRequestBody(file, 
+		RegisterActivity.this);
+            uploadImageCall = imgurService.uploadImage(pBody);
+            Response<ImgurData> imgurResponse;
+            try {
+                imgurResponse = uploadImageCall.execute();
+            } catch (IOException e) {
+                return null;
+            }
+            template.setProfilePicture(imgurResponse.body()
+			.getData().getId());
+            Call<User> userCall = userService.register(template);
+            Response<User> registeredUser;
+            try {
+                registeredUser = userCall.execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+            return registeredUser.body();
+        }
+    }
+	
+	\end{lstlisting}
+	
 		\subsection{Logowanie do konta} \indent \par
+		
+		Logowanie do konta wykonywane jest przy pomocy adresu email oraz has³a podanego przy rejestracji. Obs³ug¹ widoku
+		
 		\subsection{Lokalizacja urz¹dzenia} \indent \par
 		\subsection{Zarz¹dzanie zleceniami} \indent \par
 		\subsubsection{Lista zleceñ}
