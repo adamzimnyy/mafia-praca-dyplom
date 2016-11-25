@@ -23,7 +23,7 @@
 \contentsline {lstlisting}{\numberline {5.23}Plik \texttt {AndroidManifest.xml}}{62}{lstlisting.5.23}
 \contentsline {lstlisting}{\numberline {5.24}Panel nawygacyjny aplikacji}{63}{lstlisting.5.24}
 \contentsline {lstlisting}{\numberline {5.25}Lista opcji dost\k epna na panelu nawigacyjnym}{64}{lstlisting.5.25}
-\contentsline {lstlisting}{\numberline {5.26}Lista opcji dost\k epna na panelu nawigacyjnym}{65}{lstlisting.5.26}
+\contentsline {lstlisting}{\numberline {5.26}Lista opcji dost\k epna na panelu nawigacyjnym}{64}{lstlisting.5.26}
 \contentsline {lstlisting}{\numberline {5.27}Przyk\IeC {\l }adowe interfejsy zapyta\'n Retrofit}{65}{lstlisting.5.27}
 \contentsline {lstlisting}{\numberline {5.28}Klasa wspomagaj\k aca generowanie implementacji interfejs\'ow biblioteki Retrofit}{66}{lstlisting.5.28}
 \contentsline {lstlisting}{\numberline {5.29}U\.zycie biblioteki Retrofit}{67}{lstlisting.5.29}

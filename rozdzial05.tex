@@ -540,7 +540,7 @@ Na przyk³ad:
 \begin{enumerate}
 	\item \textbf{Generowanie nowych zleceñ.} Schemat powtarzania tego zadania okreœla wyra¿enie \texttt{
 	cron = "0 0 0/12 * * ?"}, które interpretowane jest jako "`co 12 godzin, ka¿dego dnia, zaczynaj¹c o pó³nocy"'.
-	Generowanie zleceñ rozpoczyna siê od pobrania z bazy danych listy u¿ytkowników, którzy posiadaj¹ mniej ni¿ maksymalna dozwolona liczba zleceñ prywatnych. Ze wzglêdu na z³o¿onoœæ zapytania, konieczne by³o jego zdefiniowanie rêczne przy pomocy adnotacji \texttt{Query}, co zaprezentowano na listingu \ref{lst:query} w dziale \ref{db} \nameref{db}.
+	Generowanie zleceñ rozpoczyna siê od pobrania z bazy danych listy u¿ytkowników, którzy posiadaj¹ mniej ni¿ maksymalna dozwolona liczba zleceñ prywatnych. Ze wzglêdu na z³o¿onoœæ zapytania, konieczne by³o jego zdefiniowanie rêczne przy pomocy adnotacji \texttt{@Query}, co zaprezentowano na listingu \ref{lst:query} w dziale \ref{db} \nameref{db}.
 	
 	Nastêpnie, dla ka¿dego u¿ytkownika tworzona jest lista u¿ytkowników znajduj¹cych siê w pobli¿u na podstawie zapamiêtanej ostatniej ich lokalizacji. Z utworzonej listy losowanych jest tylu u¿ytkowników, aby uzupe³niæ zlecenia do maksymalnej wartoœci.
 	
@@ -692,7 +692,6 @@ Ta sekcja opisuje proces implementacji aplikacji mobilnej przeznaczonej dla grac
 			\item Okhttp3 Logging Interceptor - rozszerzenie dla biblioteki Retrofit opartej na Okhttp3 pozwalaj¹ce na wyœwietlanie zapytañ HTTP w logach aplikacji i na konsoli
 			\item Number Progress Bar - pasek postêpu z numeryczn¹ reprezentacj¹ poziomu ukoñczenia w procentach
 			\item Play Services - us³ugi dostarczane przez Google, niezbêdne do wykorzystania API Google Maps
-			\item Swipe Reveal Layout - komponent interfejsu pozwalaj¹cy na umieszczenie dwóch widoków ponad sob¹ i odkrywanie ich gestem przeci¹gniêcia po ekranie
 			\item Google Maps - obs³uga Google Maps 
 			\item Circular Progress Bar - pasek postêpu w kszta³cie okrêgu, wykorzystywany jako odliczanie czasu
 			
