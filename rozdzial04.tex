@@ -260,7 +260,7 @@ Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkow
 \begin{figure}[h]
 \centering
 \includegraphics[width=4cm]{rys04/welcome}
-\caption{Ekran startowy aplikacji}
+\caption{Ekran startowy aplikacji, Ÿród³o obrazu: https://www.pexels.com/photo/mafia-boss-man-hat-8190/ Licencja CC0}
 \label{fig:welcome}
 \end{figure}
 
@@ -421,7 +421,7 @@ W celu uzyskania dostêpu do \texttt{/api/*} lub \texttt{/admin/*} wymagane jest 
 \subsection{Œcie¿ki dostêpu API}
 
 
-Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymienione w sekcji Parametry danych lub Zwaracane wartoœci zosta³y przedstawione w kolejnym punkcie.
+Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymienione w sekcji Parametry danych lub Zwaracane wartoœci zosta³y przedstawione w kolejnym punkcie.
 \lstset{style=json_color}
 % ------------------------------------------------------------------------------------------------
 \begin{enumerate}
@@ -442,10 +442,6 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wym
 \color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
 \color{black}
 
-%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
-
-
-
 \begin{adjustwidth}{1cm}{}
 \begin{tabularx}{\textwidth}{L{2cm} L{3cm} X L{2cm}}
 	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
@@ -456,10 +452,6 @@ Planowane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wym
 %\end{tcolorbox}
 \color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
 \color{black}
-
-
-%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
-
 
 \begin{adjustwidth}{1cm}{}
 \begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
@@ -1365,48 +1357,47 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 
 
 \begin{lstlisting}
-   {
-      "username": "string"
-      "password": "string"
-   }
+{
+	"username": "string"
+	"password": "string"
+}
 \end{lstlisting}
 \item AuthentiactionResponse
 
 
 \begin{lstlisting}
-   { 
-      "token": "string",
-      "user": <User>
-   }
+{ 
+	"token": "string",
+	"user": <User>
+}
    \end{lstlisting}
 
 \item Location 
 
-
 \begin{lstlisting}
-      {
-      "date": "2016-11-20T22:03:02.155Z",
-      "id": 0,
-      "latitude": 0,
-      "longitute": 0,
-      "type": "string",
-      "user": <User>
-    }
+{
+	"date": "2016-11-20T22:03:02.155Z",
+	"id": 0,
+	"latitude": 0,
+	"longitute": 0,
+	"type": "string",
+	"user": <User>
+}
    \end{lstlisting}
 
 
 \item Target 
 \begin{lstlisting}
- {
-       "completed": "2016-11-20T22:03:02.153Z",
-       "created": "2016-11-20T22:03:02.153Z",
-       "hunted": <User>,
-       "hunter": <User>,
-       "id": 0,
-       "location": <Location>,
-       "publicTarget": true,
-       "status": "string"
-     }
+{
+	 "completed": "2016-11-20T22:03:02.153Z",
+	 "created": "2016-11-20T22:03:02.153Z",
+	 "hunted": <User>,
+	 "hunter": <User>,
+	 "id": 0,
+	 "location": <Location>,
+	 "publicTarget": true,
+	 "status": "string"
+ }
 		
 		\end{lstlisting} 
 		
@@ -1414,26 +1405,26 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 		
 \item Report 
 \begin{lstlisting}
- {
-       "date": "2016-11-20T22:03:02.153Z",
-       "reported_by": <User>,
-       "id": 0,
-       "player_id": <User>,
-       "description": "string",
-       "reason": "string"
-     }
+{
+	 "date": "2016-11-20T22:03:02.153Z",
+	 "reported_by": <User>,
+	 "id": 0,
+	 "player_id": <User>,
+	 "description": "string",
+	 "reason": "string"
+ }
 		\end{lstlisting} 
 
 \item Reward 
 \begin{lstlisting}
- {
-       "added": "2016-11-20T22:03:02.153Z",
-       "awardedfor": "string",
-       "value": 0,
-       "player_id": <User>,
-       "id": 0,
-       "taget_id": <Target>
-     }
+{
+	 "added": "2016-11-20T22:03:02.153Z",
+	 "awardedfor": "string",
+	 "value": 0,
+	 "player_id": <User>,
+	 "id": 0,
+	 "taget_id": <Target>
+ }
 		
 		\end{lstlisting} 
 
@@ -1444,29 +1435,29 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 		
 
 \begin{lstlisting}
-      {
-         "authorities": "string",
-         "dateOfBirth": "2016-11-19T16:48:15.682Z",
-         "description": "string",
-         "email": "string",
-         "firstName": "string",
-         "gender": "string",
-         "id": 0,
-         "lastActive": "2016-11-19T16:48:15.682Z",
-         "lastName": "string",
-         "latitude": 0,
-         "loginstreak": 0,
-         "longitude": 0,
-         "noTargetSince": "2016-11-19T16:48:15.683Z",
-         "notifications": "string",
-         "password": "string",
-         "profilePicture": "string",
-         "registerDate": "2016-11-19T16:48:15.683Z",
-         "score": 0,
-         "status": "string",
-         "targetDistance": 0,
-         "username": "string"
-      }
+{
+	 "authorities": "string",
+	 "dateOfBirth": "2016-11-19T16:48:15.682Z",
+	 "description": "string",
+	 "email": "string",
+	 "firstName": "string",
+	 "gender": "string",
+	 "id": 0,
+	 "lastActive": "2016-11-19T16:48:15.682Z",
+	 "lastName": "string",
+	 "latitude": 0,
+	 "loginstreak": 0,
+	 "longitude": 0,
+	 "noTargetSince": "2016-11-19T16:48:15.683Z",
+	 "notifications": "string",
+	 "password": "string",
+	 "profilePicture": "string",
+	 "registerDate": "2016-11-19T16:48:15.683Z",
+	 "score": 0,
+	 "status": "string",
+	 "targetDistance": 0,
+	 "username": "string"
+}
    \end{lstlisting}
 
 
@@ -1474,19 +1465,19 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 	
 	
 \begin{lstlisting}
-   {
-      "dateOfBirth": "2016-11-20T21:10:21.927Z",
-      "description": "string",
-      "email": "string",
-      "firstName": "string",
-      "gender": "string",
-      "lastName": "string",
-      "notifications": "string",
-      "password": "string",
-      "profilePicture": "string",
-      "targetDistance": 0,
-      "username": "string"
-   }
+{
+	"dateOfBirth": "2016-11-20T21:10:21.927Z",
+	"description": "string",
+	"email": "string",
+	"firstName": "string",
+	"gender": "string",
+	"lastName": "string",
+	"notifications": "string",
+	"password": "string",
+	"profilePicture": "string",
+	"targetDistance": 0,
+	"username": "string"
+}
 \end{lstlisting}
 
 \end{enumerate}

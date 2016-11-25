@@ -11,14 +11,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=rozdzial08.tex
+Document=rozdzial04.tex
 
 [Frame0_View0,0]
-TopLine=0
-Cursor=43
+TopLine=273
+Cursor=13057
 
 [Frame1]
 Flags=0
@@ -29,14 +29,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=dodatekB.tex
+Document=Dyplom.tex
 
 [Frame1_View0,0]
-TopLine=0
-Cursor=149
+TopLine=660
+Cursor=24182
 
 [Frame2]
 Flags=0
@@ -47,14 +47,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=skroty.tex
+Document=rozdzial02.tex
 
 [Frame2_View0,0]
 TopLine=0
-Cursor=0
+Cursor=4739
 
 [Frame3]
 Flags=0
@@ -65,14 +65,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=rozdzial05.tex
+Document=rozdzial08.tex
 
 [Frame3_View0,0]
-TopLine=1041
-Cursor=47047
+TopLine=0
+Cursor=1546
 
 [Frame4]
 Flags=0
@@ -83,14 +83,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=rozdzial03.tex
+Document=dodatekB.tex
 
 [Frame4_View0,0]
-TopLine=198
-Cursor=16493
+TopLine=0
+Cursor=149
 
 [Frame5]
 Flags=0
@@ -101,14 +101,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
-Class=BibTeXView
-Document=dokumentacja.bib
+Class=LaTeXView
+Document=rozdzial03.tex
 
 [Frame5_View0,0]
-TopLine=2
-Cursor=1457
+TopLine=132
+Cursor=10730
 
 [Frame6]
 Flags=0
@@ -119,14 +119,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=rozdzial04.tex
+Document=skroty.tex
 
 [Frame6_View0,0]
-TopLine=2
-Cursor=1648
+TopLine=0
+Cursor=688
 
 [Frame7]
 Flags=0
@@ -137,14 +137,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=Dyplom.tex
+Document=rozdzial01.tex
 
 [Frame7_View0,0]
-TopLine=95
-Cursor=5074
+TopLine=0
+Cursor=1237
 
 [Frame8]
 Flags=0
@@ -155,14 +155,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
-Class=LaTeXView
-Document=rozdzial01.tex
+Class=BibTeXView
+Document=dokumentacja.bib
 
 [Frame8_View0,0]
 TopLine=0
-Cursor=1237
+Cursor=0
 
 [Frame9]
 Flags=0
@@ -173,14 +173,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
-Document=rozdzial02.tex
+Document=rozdzial05.tex
 
 [Frame9_View0,0]
-TopLine=72
-Cursor=4168
+TopLine=1486
+Cursor=66611
 
 [Frame10]
 Flags=0
@@ -191,7 +191,7 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=944
+NormalPos.right=933
 NormalPos.bottom=884
 Class=LaTeXView
 Document=rozdzial06.tex
@@ -202,7 +202,7 @@ Cursor=25
 
 [SessionInfo]
 FrameCount=11
-ActiveFrame=3
+ActiveFrame=0
 
 [Bookmarks]
 Dyplom.tex=46 93 

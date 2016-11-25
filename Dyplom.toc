@@ -1,66 +1,60 @@
 \select@language {polish}
 \contentsline {chapter}{Spis tabel}{5}{Doc-Start}
 \contentsline {chapter}{Spis listing\'ow}{6}{Doc-Start}
-\contentsline {chapter}{\chapternumberline {1}Wst\k ep}{8}{chapter.1}
-\contentsline {section}{\numberline {1.1}Cel projektu}{8}{section.1.1}
-\contentsline {section}{\numberline {1.2}Zakres projektu}{8}{section.1.2}
-\contentsline {section}{\numberline {1.3}Uk\IeC {\l }ad pracy}{8}{section.1.3}
-\contentsline {chapter}{\chapternumberline {2}Zasady gry}{9}{chapter.2}
-\contentsline {section}{\numberline {2.1}Zlecenia}{9}{section.2.1}
-\contentsline {section}{\numberline {2.2}Lokalizacja gracza}{10}{section.2.2}
-\contentsline {section}{\numberline {2.3}Punktacja}{10}{section.2.3}
-\contentsline {section}{\numberline {2.4}Rejestracja do gry}{10}{section.2.4}
-\contentsline {section}{\numberline {2.5}S\IeC {\l }ownik poj\k e\'c}{11}{section.2.5}
-\contentsline {chapter}{\chapternumberline {3}Analiza wymaga\'n systemu}{12}{chapter.3}
-\contentsline {section}{\numberline {3.1}Wymagania funkcjonalne}{12}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Aplikacja kliencka}{12}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Aplikacja serwerowa}{14}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}Panel administracyjny}{16}{subsection.3.1.3}
-\contentsline {section}{\numberline {3.2}Konfigurowalne parametry systemu}{16}{section.3.2}
-\contentsline {chapter}{\chapternumberline {4}Projekt systemu}{18}{chapter.4}
-\contentsline {section}{\numberline {4.1}Architektura systemu}{18}{section.4.1}
-\contentsline {section}{\numberline {4.2}Przypadki u\.zycia}{18}{section.4.2}
-\contentsline {section}{\numberline {4.3}Projekt interfejsu}{25}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Aplikacja kliencka}{25}{subsection.4.3.1}
-\contentsline {section}{\numberline {4.4}Projekt bazy danych}{29}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Model konceptualny}{30}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Model fizyczny}{31}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Protok\'o\IeC {\l } komunikacji w systemie}{31}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}\'Scie\.zki dost\k epu API}{32}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Struktury danych}{42}{subsection.4.5.2}
-\contentsline {chapter}{\chapternumberline {5}Implementacja systemu}{44}{chapter.5}
-\contentsline {section}{\numberline {5.1}Aplikacja serwerowa}{44}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Wykorzystywane technologie i narz\k edzia}{44}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}Struktura plik\'ow projektu}{44}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}Zabezpieczenie dost\k epu do API}{45}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}Baza danych}{47}{subsection.5.1.4}
-\contentsline {subsection}{\numberline {5.1.5}Komunikacja i przep\IeC {\l }yw danych}{49}{subsection.5.1.5}
-\contentsline {subsection}{\numberline {5.1.6}Implementacja obs\IeC {\l }ugi wybranych zapyta\'n}{50}{subsection.5.1.6}
-\contentsline {subsubsection}{Rejestracja}{50}{section*.3}
-\contentsline {subsubsection}{Pobranie lokalizacji u\.zytkownika}{51}{section*.4}
-\contentsline {subsubsection}{Potwierdzenie wykonania zlecenia}{52}{section*.5}
-\contentsline {subsection}{\numberline {5.1.7}Automatyzacja dzia\IeC {\l }ania systemu}{53}{subsection.5.1.7}
-\contentsline {subsubsection}{Przyk\IeC {\l }ady implementacji zada\'n w projekcie}{54}{section*.7}
-\contentsline {section}{\numberline {5.2}Aplikacja kliencka}{56}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Struktura projektu}{56}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Konfiguracja projektu}{57}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}Biblioteki wykorzystane w projekcie}{57}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}Tworzenie interfejsu aplikacji}{58}{subsection.5.2.4}
-\contentsline {subsection}{\numberline {5.2.5}Komunikacja z serwerem}{64}{subsection.5.2.5}
-\contentsline {subsection}{\numberline {5.2.6}Rejestracja konta}{67}{subsection.5.2.6}
-\contentsline {subsection}{\numberline {5.2.7}Logowanie do konta}{72}{subsection.5.2.7}
-\contentsline {subsection}{\numberline {5.2.8}Lokalizacja urz\k adzenia}{72}{subsection.5.2.8}
-\contentsline {subsection}{\numberline {5.2.9}Zarz\k adzanie zleceniami}{72}{subsection.5.2.9}
-\contentsline {subsubsection}{Lista zlece\'n}{73}{section*.8}
-\contentsline {subsubsection}{Szczeg\'o\IeC {\l }y zlecenia}{73}{section*.9}
-\contentsline {subsubsection}{Mapa znanych lokalizacji u\.zytkownika}{73}{section*.10}
-\contentsline {subsection}{\numberline {5.2.10}Generowanie kod\'ow potwierdzaj\k acych}{73}{subsection.5.2.10}
-\contentsline {subsection}{\numberline {5.2.11}}{73}{subsection.5.2.11}
-\contentsline {subsection}{\numberline {5.2.12}}{73}{subsection.5.2.12}
-\contentsline {subsection}{\numberline {5.2.13}}{73}{subsection.5.2.13}
-\contentsline {subsection}{\numberline {5.2.14}}{73}{subsection.5.2.14}
-\contentsline {section}{\numberline {5.3}Dalszy rozw\'oj systemu}{73}{section.5.3}
-\contentsline {chapter}{\chapternumberline {6}Testy systemu}{74}{chapter.6}
-\contentsline {chapter}{\chapternumberline {7}Instrukcja u\.zytkowania aplikacji}{75}{chapter.7}
-\contentsline {chapter}{Literatura}{76}{section*.12}
-\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{77}{appendix.A}
+\contentsline {chapter}{\chapternumberline {1}Wst\k ep}{9}{chapter.1}
+\contentsline {section}{\numberline {1.1}Cel projektu}{9}{section.1.1}
+\contentsline {section}{\numberline {1.2}Zakres projektu}{9}{section.1.2}
+\contentsline {section}{\numberline {1.3}Uk\IeC {\l }ad pracy}{9}{section.1.3}
+\contentsline {chapter}{\chapternumberline {2}Zasady gry}{10}{chapter.2}
+\contentsline {section}{\numberline {2.1}Zlecenia}{10}{section.2.1}
+\contentsline {section}{\numberline {2.2}Lokalizacja gracza}{11}{section.2.2}
+\contentsline {section}{\numberline {2.3}Punktacja}{11}{section.2.3}
+\contentsline {section}{\numberline {2.4}Rejestracja do gry}{11}{section.2.4}
+\contentsline {section}{\numberline {2.5}S\IeC {\l }ownik poj\k e\'c}{12}{section.2.5}
+\contentsline {chapter}{\chapternumberline {3}Analiza wymaga\'n systemu}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}Wymagania funkcjonalne}{13}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Aplikacja kliencka}{13}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Aplikacja serwerowa}{15}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Panel administracyjny}{17}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}Konfigurowalne parametry systemu}{17}{section.3.2}
+\contentsline {chapter}{\chapternumberline {4}Projekt systemu}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Architektura systemu}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Przypadki u\.zycia}{19}{section.4.2}
+\contentsline {section}{\numberline {4.3}Projekt interfejsu}{26}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Aplikacja kliencka}{26}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}Projekt bazy danych}{30}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Model konceptualny}{31}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Model fizyczny}{32}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Protok\'o\IeC {\l } komunikacji w systemie}{32}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}\'Scie\.zki dost\k epu API}{33}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Struktury danych}{43}{subsection.4.5.2}
+\contentsline {chapter}{\chapternumberline {5}Implementacja systemu}{45}{chapter.5}
+\contentsline {section}{\numberline {5.1}Aplikacja serwerowa}{45}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Wykorzystywane technologie i narz\k edzia}{45}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Struktura plik\'ow projektu}{45}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Zabezpieczenie dost\k epu do API}{46}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Baza danych}{48}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}Komunikacja i przep\IeC {\l }yw danych}{50}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}Implementacja obs\IeC {\l }ugi wybranych zapyta\'n}{51}{subsection.5.1.6}
+\contentsline {subsubsection}{Rejestracja}{51}{section*.3}
+\contentsline {subsubsection}{Pobranie lokalizacji u\.zytkownika}{52}{section*.4}
+\contentsline {subsubsection}{Potwierdzenie wykonania zlecenia}{53}{section*.5}
+\contentsline {subsection}{\numberline {5.1.7}Automatyzacja dzia\IeC {\l }ania systemu}{54}{subsection.5.1.7}
+\contentsline {subsubsection}{Przyk\IeC {\l }ady implementacji zada\'n w projekcie}{55}{section*.7}
+\contentsline {section}{\numberline {5.2}Aplikacja kliencka}{57}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Struktura projektu}{57}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Biblioteki wykorzystane w projekcie}{58}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Tworzenie interfejsu aplikacji}{59}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}Komunikacja z serwerem}{65}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}Rejestracja konta}{67}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}Logowanie do konta}{73}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}Lokalizacja urz\k adzenia}{75}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}Lista zlece\'n}{78}{subsection.5.2.8}
+\contentsline {subsection}{\numberline {5.2.9}Szczeg\'o\IeC {\l }y zlecenia}{83}{subsection.5.2.9}
+\contentsline {subsection}{\numberline {5.2.10}Mapa znanych lokalizacji u\.zytkownika}{85}{subsection.5.2.10}
+\contentsline {subsection}{\numberline {5.2.11}Generowanie kod\'ow potwierdzaj\k acych}{86}{subsection.5.2.11}
+\contentsline {chapter}{\chapternumberline {6}Testy systemu}{90}{chapter.6}
+\contentsline {chapter}{\chapternumberline {7}Instrukcja u\.zytkowania aplikacji}{91}{chapter.7}
+\contentsline {chapter}{\chapternumberline {8}Podsumowanie}{92}{chapter.8}
+\contentsline {chapter}{Literatura}{93}{section*.9}
+\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{94}{appendix.A}

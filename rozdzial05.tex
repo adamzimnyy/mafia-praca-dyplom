@@ -671,7 +671,6 @@ Ta sekcja opisuje proces implementacji aplikacji mobilnej przeznaczonej dla grac
 		
 		Oprócz  opisanych powy¿ej plików istotn¹ rolê w projekcie pe³ni¹ dwa pliki \texttt{build.gradle} pozwalaj¹ce na konfiguracje projektu oraz do³¹czanie bibliotek.
 		
-		\subsection{Konfiguracja projektu}\indent \par
 		\subsection{Biblioteki wykorzystane w projekcie}\indent \par
 		
 		W celu poszerzenia funkcjonalnoœci dostêpnych w projektach Androida i zaoszczêdzenia czasu programowania stosuje siê biblioteki do³¹czane poprzez plik \texttt{gradle.build}. Biblioteki do³¹cza siê poprzez podanie zale¿noœci w sekcji \texttt{dependencies\{\}}. 
@@ -1236,6 +1235,7 @@ public void pickPhoto() {
 	
 	
 	\begin{figure}[H] 
+	\centering
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[draft=false,width=.5\linewidth]{rys05/register1.png} 
@@ -1428,19 +1428,760 @@ $$@Override
 	
 		\subsection{Logowanie do konta} \indent \par
 		
-		Logowanie do konta wykonywane jest przy pomocy adresu email oraz has³a podanego przy rejestracji. Obs³ug¹ widoku
+		Logowanie do konta wykonywane jest przy pomocy adresu email oraz has³a podanego przy rejestracji. Obs³ug¹ widoku logowania zajmuje siê klasa \texttt{LoginActivity}. Po wprowadzeniu danych i naciœniêciu przycisku "`Log in"' walidowane s¹ pola danych, a nastêpnie przesy³ane na serwer z u¿yciem serwisu. Retrofit. W odpowiedzi na zapytanie przesy³any jest token dotêpu do API serwera, który zapamiêtywany jest w statycznym polu klasy \texttt{AppVariable}, aby móg³ zostaæ wykorzystany w kolejnych zapytaniach. Po poprawnym zalogowaniu aplikacji przechodzi do aktywnoœci \texttt{GpsActivity}.
+		
+\begin{lstlisting}[label={lst:login}, caption={Logowanie do konta}]
+private void attemptLogin() {
+    // Reset errors.
+    usernameField.setError(null);
+    passwordField.setError(null);
+
+    // Store values at the time of the login attempt.
+    String username = usernameField.getText().toString();
+    String password = passwordField.getText().toString();
+
+    boolean cancel = false;
+    View focusView = null;
+
+    // Check for a valid password, if the user entered one.
+    if (TextUtils.isEmpty(password)) {
+        passwordField.setError(getString(R.string.error_invalid_password));
+        focusView = passwordField;
+        cancel = true;
+    }
+
+    // Check for a valid email address.
+    if (TextUtils.isEmpty(username)) {
+        usernameField.setError(getString(R.string.error_field_required));
+        focusView = usernameField;
+        cancel = true;
+    }
+
+    if (cancel) {
+        focusView.requestFocus();
+    } else {
+        showProgress(true);
+        final AuthService authService = (AuthService) RetrofitBuilder
+		.getService(AuthService.class, RetrofitBuilder.BASE_URL);
+        Call<AuthenticationResponse> authCall;
+        authCall = authService.authenticate(
+		new AuthenticationRequest(username, password));
+        authCall.enqueue(new Callback<AuthenticationResponse>() {
+        @Override
+        public void onResponse(Call<AuthenticationResponse> call, 
+				Response<AuthenticationResponse> response) {
+
+	if (response.code() == 200) {
+
+		AppVariable.token = response.body().getToken();
+		AppVariable.loggedUser = response.body().getUser();
+		Toast.makeText(LoginActivity.this, 
+		    "Login success", Toast.LENGTH_LONG).show();
+		IntentHelper.startActivityIntent(LoginActivity.this,
+		GpsActivity.class);
+		finish();
+	// }
+	} else {
+		AppVariable.token = "";
+		AppVariable.loggedUser = null;
+		passwordField.setError(getString(
+			R.string.error_incorrect_password));
+		passwordField.requestFocus();
+		showProgress(false);
+	}
+}
+}
+		\end{lstlisting} 
 		
 		\subsection{Lokalizacja urz¹dzenia} \indent \par
-		\subsection{Zarz¹dzanie zleceniami} \indent \par
-		\subsubsection{Lista zleceñ}
-		\subsubsection{Szczegó³y zlecenia}
-		\subsubsection{Mapa znanych lokalizacji u¿ytkownika}
-		\subsection{Generowanie kodów potwierdzaj¹cych} \indent \par
-
-		\subsection{} \indent \par
-		\subsection{} \indent \par
-		\subsection{} \indent \par
-		\subsection{} \indent \par
 		
-Test test test2
-		\section{Dalszy rozwój systemu} \indent \par
+		Po zalogowaniu aplikacja przechodzi do zapisu lokalizacji. Na ekranie wyœwietlony zostaje widok \texttt{activity\_gps.xml} obs³ugiwany przez \texttt{GpsActivity}. 
+		
+		Po utworzeniu widoku w metodzie \texttt{onCreate} pobierana jest instancja klasy \texttt{LocationManager} pozwalaj¹ca na nas³uchiwanie aktualizacji lokalizacyjnych telefonu. Przed rozpoczêciem aktualizacji nale¿y sprawdziæ czy modu³ GPS zosta³ w³¹czony w ustawieniach oraz czy aplikacji ma uprawnienia dostêpu. Je¿eli wymagane jest w³¹czenie którejœ z tych opcji w aplikacji pokazane zostanie stosowne okno dialogowe. Implementacja opisanego procesu zaprezentowana zosta³a na poni¿szym listingu.
+		
+\begin{lstlisting}[label={lst:gps}, caption={Sprawdzenie wymagañ u¿ycia modu³u GPS}]
+public class GpsActivity extends AppCompatActivity 
+		implements LocationListener {
+
+android.location.Location lastKnown;
+
+%%@BindView(%%R.id.settings%%)%%
+Button settingsButton;
+
+%%@BindView(%%R.id.status_text%%)%%
+TextView statusText;
+
+$$@Override
+protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_gps);
+		ButterKnife.bind(this);
+		AppVariable.locationManager = (LocationManager) 
+			getSystemService(Context.LOCATION_SERVICE);
+		AppVariable.locationListener = this;
+		getLocation();
+}
+
+private void getLocation() {
+	//TODO zmieniæ UI odpowiednio do wykonywanej czêœci
+
+
+	boolean gpsPermission = checkPermissions();
+	if (!gpsPermission) {
+			Log.d(getClass().getSimpleName(), 
+				"No GPS permissions!");
+			requestPemissions();
+			return;
+	}
+	boolean gpsEnabled = checkSettings();
+	if (!gpsEnabled) {
+			Log.d(getClass().getSimpleName(),
+				"GPS not enabled!");
+			buildAlertMessageNoGps();
+			return;
+	}
+	//  subscribeForLocation(25f, this);
+	getLocationUpdates();
+}
+
+private void requestPemissions() {
+	Log.d(getClass().getSimpleName(), "Requesting permissions...");
+	statusText.setText("Requesting permissions...");
+	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+		requestPermissions(new String[]{
+		Manifest.permission.ACCESS_FINE_LOCATION,
+		Manifest.permission.ACCESS_COARSE_LOCATION},
+		IntentHelper.PERMISSION_GPS);
+	}
+
+	Log.d(getClass().getSimpleName(), "Done.");
+
+}
+
+private boolean checkSettings() {
+	statusText.setText("Checking settings...");
+	Log.d(getClass().getSimpleName(), "Checking settings...");
+	return AppVariable.locationManager
+	.isProviderEnabled(LocationManager.GPS_PROVIDER);
+}
+
+private boolean checkPermissions() {
+	statusText.setText("Checking permissions...");
+	Log.d(getClass().getSimpleName(), "Checking permissions...");
+	
+	return ActivityCompat.checkSelfPermission(this,
+	Manifest.permission.ACCESS_FINE_LOCATION) == 
+	PackageManager.PERMISSION_GRANTED &&
+	ActivityCompat.checkSelfPermission(this, 
+	Manifest.permission.ACCESS_COARSE_LOCATION) ==
+	PackageManager.PERMISSION_GRANTED;
+}
+
+private void buildAlertMessageNoGps() {
+	Log.d(getClass().getSimpleName(), "Showing GPS settings alert...");
+	statusText.setText("Enable GPS to continue.");
+
+	final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	builder.setMessage("Your GPS seems to be disabled, 
+				do you want to enable it?")
+	  .setCancelable(false)
+	  .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	  public void onClick(final DialogInterface dialog, final int id) {
+		startActivityForResult(new Intent(
+		android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),
+		IntentHelper.GPS_SETTINGS);
+			}
+		})
+[...]
+	});
+	final AlertDialog alert = builder.create();
+	alert.show();
+}
+\end{lstlisting} 
+
+
+
+Jeœli modu³ GPS jest gotowy do u¿ycia, mo¿liwe jest rozpoczêcie nas³uchiwania. Android dostarcza dwóch metod lokalizacyjnych, za pomoc¹ GPS oraz na podstawie nadajników GSM. W aplikacji wykorzystywana jest g³ównie ta druga ze wzglêdu na szybsze aktualizacje, jednak uatywnione zostaj¹ obie. Przed wykonaniem dowolnej operacji korzystaj¹cej z obiekty \texttt{LocationManager}, konieczne jest wykonanie sprawdzenia uprawnieñ, w sposób pokazany metodzie \texttt{checkPermissions} na listingu \ref{lst:gps}.
+
+\begin{lstlisting}[label={lst:gps2}, caption={Rozpoczêcie aktuazliacji GPS}]
+public void getLocationUpdates() {
+	statusText.setText("Waiting on GPS fix...");
+
+  [...] // sprawdzenie uprawnieñ
+	
+	AppVariable.locationManager.requestLocationUpdates(
+		LocationManager.NETWORK_PROVIDER, 0, 0, this);
+	AppVariable.locationManager.requestLocationUpdates(
+		LocationManager.GPS_PROVIDER, 0, 0, this);
+}
+
+\end{lstlisting} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=6cm]{rys05/gps.png}%
+\caption{Ekran zapisu lokalizacji - implementacja}%
+\label{fig:gps_impl}%
+\end{figure}	
+		
+		Aktualizacje lokalizacji otrzymywane s¹ przed zaimplementowany interfejs \texttt{LocationListener}. W trakcie oczekiwania na ekranie wyœwietlany jest stosowny komunikat, co pokazano na rysunku \ref{fig:gps_impl}. Je¿eli po aktualizacji dok³adnoœæ pozycji osi¹gnie wymagany poziom, wykonywany jest zapis do bazy z u¿yciem serwisu Retrofit, a lokalizacja zapamiêtywana jest w klasie \texttt{AppVariable}, aby przyspieszyæ jej pobieranie w kolejnych zapytaniach. Po wykonaniu zapisu wywo³ywana jest aktywnoœæ \texttt{TargetActivity}.
+		
+		
+\begin{lstlisting}[label={lst:gps3}, caption={Obs³uga aktualizacji i zapis do bazy}]
+private void saveLoginLocation() {
+	Log.d("location", "Saving location");
+	LocationService service = (LocationService) RetrofitBuilder
+		.getService(LocationService.class, RetrofitBuilder.BASE_URL);
+	Location loc = LocationHelper.map(lastKnown, Locations.LOGIN);
+	Call<Void> saveCall = service.save(loc, AppVariable.token);
+	saveCall.enqueue(new Callback<Void>() {
+		$$@Override
+		public void onResponse(Call<Void> call, 
+				Response<Void> response) {
+			if (response.code() == 200) {
+				goToTargets();
+			}
+		}
+	}
+
+$$@Override
+public void onLocationChanged(android.location.Location location) {
+	if (location.getAccuracy() < Params.LOCATION_ACCURACY) {
+		AppVariable.lastKnownLocation = new Location(
+			location.getLatitude(), location.getLongitude());
+		AppVariable.lastKnownLocationDate = new Date();
+		lastKnown = location;
+		if (!AppVariable.loginLocationSaved) {
+			saveLoginLocation();
+			AppVariable.loginLocationSaved = true;
+		}
+	}
+}
+\end{lstlisting} 
+
+
+		\subsection{Lista zleceñ} \indent \par \label{lista_zlecen}
+		
+Organizacja widoki listy zleceñ jest inna od pozosta³ych aktywnoœci w aplikacji. Aby umo¿liwiæ podzia³ na dwie zak³adki zastosowane zosta³y komponenty \texttt{TabLayout} oraz \texttt{ViewPager} pozwalaj¹ce na zmianê widoku przeci¹gniêciem w poziomie po ekranie. Zawartoœæ poszczególnych widoków przeniesiona zosta³a do fragmentów. W przeciwieñstwie do aktywnoœci, fragemnty nie mog¹ wystêpowaæ samodzielnie w aplikacji, musz¹ byæ czêœci¹ jakiejœ aktywnoœci. Mo¿liwe jest jednak posiadanie wielu fragmentów jednoczeœnie w ramach jednego widoku.
+
+Zasób widoków, jakie mog¹ zostaæ wyœwietlone na kartach definiuje siê w adapterze komponentu \texttt{ViewPager}. Zastosowan¹ klasê adaptera przedstawia listing \ref{lst:adapter}. Zdefiniowane zosta³y dwie karty o tytu³ach "`Private"' oraz "`Public"'.
+
+		
+\begin{lstlisting}[label={lst:adapter}, caption={Adapter fragmentów widoku zleceñ}]
+public class TargetPageAdapter extends FragmentPagerAdapter {
+
+    final int PAGE_COUNT = 2;
+    private String tabTitles[] = new String[]{"Private", "Public"};
+    private Context context;
+
+    public TargetPageAdapter(FragmentManager fm, Context context) {
+        super(fm);
+        this.context = context;
+    }
+
+    $$@Override
+    public int getCount() {
+        return PAGE_COUNT;
+    }
+
+    $$@Override
+    public Fragment getItem(int position) {
+        return TargetsPageFragment.newInstance(position, position != 0);
+    }
+   $$ @Override
+    public CharSequence getPageTitle(int position) {
+        // Generate title based on item position
+        return tabTitles[position];
+    }
+}
+
+\end{lstlisting}
+
+Fragmenty umieszczane na kartach sk³adaj¹ siê z komponentu \texttt{RecyclerView} wyœwietlaj¹cego listê zleceñ zawartego w widoku \texttt{SwipeRefreshLayout}. Widok ten pozwala na wykonanie wybranej akcji gestem poci¹gniêcia w dó³.
+
+Lista \texttt{RecyclerView} korzysta z kontenerów nazywanych \texttt{ViewHolder} do wyœwietlania elementów. Konieczne jest zdefiniowanie pliku interfejsu okreœlaj¹cego wygl¹d elementu, a nastêpnie stworzenie zmiennych w klasie ViewHolder, które zostan¹ póŸniej wykorzystane ustawienia wyœwietlanych danych, i powi¹zanie ich z widokiem. W implementowanej liœcie pojedynczy element sk³ada siê ze zdjêcia, kilku elementów tekstowych oraz kolorowego paska statusu.
+
+\begin{lstlisting}[label={lst:view_holder}, caption={Adapter fragmentów widoku zleceñ}]
+protected static class ViewHolder extends RecyclerView.ViewHolder {
+
+	%%@BindView(%%R.id.name%%)%%
+	protected TextView name;
+
+	%%@BindView(%%R.id.profile_image%%)%%
+	ImageView profileImage;
+
+	%%@BindView(%%R.id.text_distance%%)%%
+	TextView distance;
+
+	%%@BindView(%%R.id.text_time_left%%)%%
+	TextView timeLeft;
+
+	%%@BindView(%%R.id.status_view%%)%%
+	View statusBarView;
+
+	public ViewHolder(View view) {
+		super(view);
+		ButterKnife.bind(this, view);
+	}
+}
+\end{lstlisting}
+
+Listy \texttt{RecyclerView} podobnie jak \texttt{ViewPager} korzystaj¹ z adaptera do zarz¹dzania wyœwietlanymi danymi. Ze wzglêdu na to, ¿e proces jego implementacji mo¿e byæ skomplikowany, stworzone zosta³y liczne biblioteki maj¹ce na celu uproszczenie tego procesu. Biblioteka wykorzystana w tym projekcie to FastAdapter stworzona przez u¿ytkownika mikepenz serwisu GitHub, rozpowszechniana na licencji Apache 2.0. W tej implementacji wymagane jest jedynie stworzenie klasy modelu danych rozszerzaj¹cej dostarczon¹ w bibliotece klasê \texttt{AbstractItem}. 
+
+W klasie nale¿y okreœliæ wykorzystywany plik interfejsu oraz przekazaæ dane do wyœwietlenia na dostarczonym obiekcie \texttt{ViewHolder} w metodzie \texttt{onBindViewHolder}. 
+
+
+
+\begin{lstlisting}[label={lst:target_item}, caption={Adapter fragmentów widoku zleceñ}]
+public class TargetItem extends AbstractItem<TargetItem, 
+			TargetItem.ViewHolder> {
+	Target target;
+	Context context;
+	//The unique ID for this type of item
+	CountDownTimer timer;
+
+	public TargetItem withTarget(Target target) {
+		this.target = target;
+		return this;
+	}
+
+	public TargetItem withContext(Context context) {
+		this.context = context;
+		return this;
+	}
+
+	$$@Override
+	public int getType() {
+		return R.id.target_list_item;
+	}
+
+	//The layout to be used for this type of item
+	$$@Override
+	public int getLayoutRes() {
+		return R.layout.list_element;
+	}
+
+	public Target getTarget() {
+		return target;
+	}
+
+	public void stopTimer() {
+		Log.d("timer","stopTimer");
+		if (timer != null)
+			timer.cancel();
+	}
+
+//The logic to bind your data to the view
+$$@Override
+public void bindView(final ViewHolder viewHolder) {
+    //call super so the selection is already handled for you
+    super.bindView(viewHolder);
+
+    viewHolder.name.setText(target.getHunted().getFirstName() + " " +
+    target.getHunted().getLastName() + ", " +
+    DateUtils.getAgeFromBirthDate(target.getHunted().getDateOfBirth()));
+    ImageLoader imageLoader = ImageLoader.getInstance();
+    imageLoader.displayImage(ImgurHelper.compileUrl(
+        target.getHunted().getProfilePicture()), viewHolder.profileImage);
+    viewHolder.distance.setText(String.valueOf(
+                          LocationHelper.distance(target)));
+    switch (target.getStatus()) {
+        case Targets.ACTIVE:
+            timer = new CountDownTimer(
+                DateUtils.timeLeftOnTargetFromCreatedDateAsSeconds(
+								                         target.getCreated()), 1000) {
+                public void onTick(long millisUntilFinished) {
+                    viewHolder.timeLeft.setText(
+                        DateUtils.timeLeftOnTargetFromCreatedDate(
+                             target.getCreated()));
+                }};
+            timer.start();
+            viewHolder.statusBarView.setBackgroundColor(
+                ContextCompat.getColor(context, R.color.target_yellow));
+            break;
+        case Targets.FAILED:
+            viewHolder.timeLeft.setText(Targets.FAILED);
+            viewHolder.statusBarView.setBackgroundColor(
+                ContextCompat.getColor(context, R.color.target_red));
+            if (timer != null) timer.cancel();
+             break;
+        case Targets.COMPLETED:
+            viewHolder.timeLeft.setText(Targets.COMPLETED);
+            viewHolder.statusBarView.setBackgroundColor(
+                ContextCompat.getColor(context, R.color.target_green));
+            if (timer != null) timer.cancel();
+            break;
+    }
+}
+\end{lstlisting}
+
+Do tworzonego obiektu \texttt{TargetItem} przekazywany jest równie¿ pobrany z bazy danych obiekt \texttt{Target} zawieraj¹cy dane do wyœwietlenia. W metodzie \texttt{onBindViewHolder} ustawiane jest wyœwietlane zdjêcie, oraz w zale¿noœci od statusu tekst oraz kolor bocznego paska elementu. Je¿eli zlecenie pozostaje aktywne uruchamiane jest odliczanie, które co sekundê aktualizuje czas pozosta³y jego wykonanie. 
+
+\
+
+Pobieranie danych o zleceniach realizowane jest w klasie \texttt{TargetsPageFragment}. Metod¹ odpowiedzialn¹ za t¹ operacjê jest \texttt{refresh}. Na pocz¹tku zatrzymywane s¹ wszystkie zegary jakie mog¹ znajdowaæ siê na istniej¹cych elementach listy, a nastêpnie listy s¹ czyszczone. Przy u¿yciu Retrofit wykoywane jest zapytanie do serwera, a po otrzymaniu wyników, dla ka¿dego rekordu tworzony jest obiekt opisanej wczeœniej klasy \texttt{TargetItem}. Stworzone obiekty s¹ dodawane do adaptera w celu wyœwietlenia.
+
+
+\begin{lstlisting}[label={lst:target_refresh}, caption={Metoda odœwie¿ania listy zleceñ}]
+private void refresh() {
+for (TargetItem t : recyclerItems) {
+	t.stopTimer();
+}
+    recyclerItems.clear();
+    fastAdapter.clear();
+    targetCall = targetService.getTargetsForUser(
+                 AppVariable.loggedUser.getId(), AppVariable.token);
+    targetCall.enqueue(new Callback<List<Target>>() {
+        @Override
+        public void onResponse(Call<List<Target>> call,
+				Response<List<Target>> response) {
+            if (response.code() == 200) {
+                List<Target> targets = response.body();
+                Collections.sort(targets);
+                List<TargetItem> items = new ArrayList<>();
+                for (Target t : targets) {
+                    if(t.isPublicTarget() == isPublic)
+                         items.add(new TargetItem()
+                          .withTarget(t)
+                          .withContext(getActivity()));
+                }
+                refreshLayout.setRefreshing(false);
+                recyclerItems.addAll(items);
+                fastAdapter.add(items);
+                fastAdapter.notifyDataSetChanged();
+            }
+        }
+     );
+}
+\end{lstlisting}
+
+Aby umo¿liwiæ odœwie¿anie listy z wykorzystaniem widoku \texttt{SwipeRefreshLayout} wymagane jest dodanie s³uchacza \texttt{OnRefreshLayout}. Po klikniêciu elementu listy powinna zostaæ uruchomiona aktywnoœæ szczegó³ów zlecenia. Przy u¿yciu biblioteki FastAdapter mo¿liwe jest dodanie s³uchacza \texttt{OnClickListener} do ka¿dego z elementów listy. Operacje te wykoywane s¹ w metodzie \texttt{onCreateView}.
+
+\begin{lstlisting}[label={lst:listeners_target}, caption={Konfiguracja s³uchaczy klasy \texttt{TargetsPageFragment}}]
+$$@Override
+public View onCreateView(LayoutInflater inflater, ViewGroup container,
+ Bundle savedInstanceState) {
+
+    View view = inflater.inflate(R.layout.content_targets_recycler,
+		container, false);
+    ButterKnife.bind(this, view);
+    fastAdapter = new FastItemAdapter();
+    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    recyclerView.setAdapter(fastAdapter);
+    fastAdapter.withSelectable(true);
+    fastAdapter.withOnClickListener(new FastAdapter
+			.OnClickListener<TargetItem>() {
+        $$@Override
+        public boolean onClick(View v, IAdapter<TargetItem> adapter, 
+                         TargetItem item, int position)    {
+            openDetails(item.getTarget());
+            return true;
+        }
+    });
+    refreshLayout.setOnRefreshListener(
+        new SwipeRefreshLayout.OnRefreshListener() {
+            $$@Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+    refresh();
+    return view;
+}
+		
+\end{lstlisting}
+
+W metodzie \texttt{openDetais} dane modelu z wybranego elementu listy przekazywane s¹ przez klasê \texttt{Bundle} do aktywnoœci \texttt{DetailsActivity}.
+
+\begin{lstlisting}[label={lst:open_details}, caption={Metoda uruchamiaj¹ca aktywnoœæ szczegó³ów zlecenia}]
+private void openDetails(Target target) {
+	Bundle bundle = new Bundle();
+	bundle.putSerializable("target",target);
+	IntentHelper.startActivityIntent(getActivity(),
+		DetailsActivity.class,bundle);
+}
+	
+\end{lstlisting}
+		\subsection{Szczegó³y zlecenia}\indent \par
+		
+		Aktywnoœci¹ obs³uguj¹c¹ ekran szczegó³ów zlecenia jest \texttt{DetailsActivity}. Dane o wyœwietlanym zleceniu przekazywane s¹ w intencji przez klasê \texttt{Bundle}. Na widoku znajduje siê ten sam zestaw danych, co na elemencie listy opisanym w punkcie \ref{lista_zlecen}, zatem metoda inicjalizuj¹ca komponenty widoku jest zbli¿ona do tej przedstawionej na listingu \ref{lst:adapter}.	Zasadnicz¹ ró¿nic¹ jest sposób pobrania danych do inicjalizacji. Nie s¹ one przekazywane w konstruktorze, lecz musz¹ zostaæ pobrane z intencji. Widok inicjalizowany jest na podstawie otrzymanej klasy modelu \texttt{Target}.
+		
+\begin{lstlisting}[label={lst:init_view}, caption={Pobranie danych inicjalizuj¹cych z intencji}]	
+private void initView(Target t) {
+    target = t == null ? (Target) getIntent()
+		.getSerializableExtra("target") : t;
+
+    [...] // ustawienie wartoœci pól
+
+}
+\end{lstlisting}
+
+Z poziomu widoku szczegó³ów zlecenia mo¿liwe jest wprowadzenie kodu potwierdzaj¹cego. U do³u ekranu znajduje siê pole tekstowe \texttt{codeField} oraz przycisk zatwierdzaj¹cy \texttt{sendButton}, co pokazano na rysunku \ref{fig:details_impl}. Metoda wysy³aj¹ca dane przypisana zosta³a za pomoc¹ adnotacji ButterKnife. Po naciœniêciu przycisku tworzone jest zapytanie z u¿yciem narzêdzia Retrofit, a nastêpnie przesy³ane na serwer. Po otrzymaniu odpowiedzi z serwera, widok jest ponownie inicjalizowany nowymi danymi. Je¿eli wprowadzony kod by³ niepoprawny, przycisk wysy³aj¹cy kod zostanie zablokowany na 10 sekund. Tworzony jest zegar, który odlicza czas i aktualizuje tekst wyœwietlany na przycisku co sekundê. 
+	
+		
+\begin{lstlisting}[label={lst:init_view}, caption={Pobranie danych inicjalizuj¹cych z intencji}]	
+%%@OnClick(%%R.id.send_button%%)%%
+public void confirmTarget() {
+    TargetService service = (TargetService) RetrofitBuilder
+	.getService(TargetService.class, RetrofitBuilder.BASE_URL);
+    Call<Target> confirmCall = service.confirm(target.getId(), 
+	codeField.getText().toString().trim(), AppVariable.token);
+    confirmCall.enqueue(new Callback<Target>() {
+      $$@Override
+      public void onResponse(Call<Target> call, Response<Target> response) {
+            if (response.code() == 200 && 
+		    response.body().getCompleted() != null) {
+                target = response.body();
+                initView(target);
+            } else {
+                sendButton.setEnabled(false);
+                sendButton.setTextColor(ContextCompat.getColor(
+		    DetailsActivity.this, R.color.placeholder_text));
+                CountDownTimer timer = new CountDownTimer(
+		    Params.WRONG_CODE_RETRY_TIME_SECONDS * 1000, 1000){
+                $$@Override
+                    public void onTick(long l) {
+                      sendButton.setText(DateUtils.formatMillisAsYMDHMS(l));
+                      sendButton.invalidate();
+                    }
+
+                $$@Override
+                    public void onFinish() {
+                        sendButton.setText(R.string.button_code_send);
+                        sendButton.setEnabled(true); 
+                        sendButton.setTextColor(ContextCompat.getColor(
+			DetailsActivity.this, R.color.white));
+                        sendButton.invalidate();
+                    }
+                 };
+                 timer.start();
+             }          
+         }
+    });
+}
+
+\end{lstlisting}
+
+\begin{figure}[H]
+\centering
+\includegraphics[draft=false,width=6cm]{rys05/details.png}%
+\caption{Widok szczegó³ów zlecenia - implementacja}%
+\label{fig:details_impl}%
+\end{figure}
+
+
+Na górnym pasku aplikacji znajduje siê przycisk z ikon¹ mapy. Po jego klikniêciu otwarta zostaje aktywnoœæ \texttt{MapActivity} wyœwietlaj¹ca znane lokalizacje gracza. Ponownie dane zlecenia przekazywane s¹ przez obiekt \texttt{Bundle}. Ze wzglêdu na to, ¿e przycisk ten nie nale¿y do klasy \texttt{Button}, lecz jest elementem menu kontekstowego, za jego obs³ugê odpowiedzialna jest metoda \texttt{onOptionsItemSelected}. 
+
+\begin{lstlisting}[label={lst:map_options}, caption={Obs³uga wywo³ania aktywnoœci mapy}]	
+$$@Override
+public boolean onOptionsItemSelected(MenuItem menuItem) {
+    if (menuItem.getItemId() == android.R.id.home) {
+        finish();
+    }
+    if (menuItem.getItemId() == R.id.action_map) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("target", target);
+        IntentHelper.startActivityIntent(this, MapActivity.class, bundle);
+    }
+    return super.onOptionsItemSelected(menuItem);
+}
+\end{lstlisting}
+
+		
+		\subsection{Mapa znanych lokalizacji u¿ytkownika}\indent \par
+		
+Umieszczenie mapy Google wewn¹trz widoku odbywa siê poprzez dodanie do pliku interfejsu fragmentu z ustawionym parametrem \texttt{android:name="com.google.android.gms.maps.MapFragment"}. Pod zadany widok zostanie podpiêta instancja klasy \texttt{MapFragment}. Kontroler aktywnoœci musi implementowaæ interfejs \texttt{OnMapReadyCallback}. Po utworzeniu widoku mapa jest pobierana metod¹ \texttt{getMapAsync}. Nastepnie z serwera pobierane s¹ punkty lokalizacyjne za pomoc¹ interfejsu Retrofit.
+
+\begin{lstlisting}[language=XML, label={lst:map_xml}, caption={Fragment pliku interfejsu aktywnoœci \texttt{MapActivity}}]	
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	xmlns:map="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:id="@+id/map"
+	tools:context="mafia.adamzimny.mafia.activity.MapActivity"
+	android:name="com.google.android.gms.maps.SupportMapFragment"/>
+		\end{lstlisting}
+
+
+Narzêdzie Google Maps oferuje mo¿liwoœæ grupowania znaczników znajduj¹cych siê blisko siebie w celu zwiêkszenia przejrzystoœci mapy. Grupowanie wymaga utworzenia obiektu \texttt{ClusterManager}, którzy zarz¹dza wyœwietlanymi znacznikami. W przypadku wyœwietlania bez grupowania znaczniki dodawaæ mo¿na bezpoœrednio do obiektu mapy. Po pobraniu danych o lokalizacji znaczniki dodawane s¹ w jeden z opisanych wy¿ej sposobów zaleznie od ustawionych preferencji. Znacznikow przypisywane s¹ dodatkowe informacje \texttt{title} oraz \texttt{snippet} wyœwietlane po klikniêciu na znacznik. Dla lokalizacji zapisanych mniej ni¿ tydzieñ temu w tytule zamiast pe³nej daty wyœwietlony zostanie wzglêdny czas utworzenia. Na rysunku \ref{fig:map_4} przedstawiono efekt dodania znaczników dla przyk³adowych danych.
+
+\begin{lstlisting}[label={lst:map_options}, caption={Obs³uga wywo³ania aktywnoœci mapy}]	
+
+$$@Override
+public void onMapReady(GoogleMap googleMap) {
+		map = googleMap;
+		setUpClusterer();
+}
+
+private void setUpClusterer() {
+	mClusterManager = new ClusterManager<>(this, map);
+	map.setOnCameraIdleListener(mClusterManager);
+	map.setOnMarkerClickListener(mClusterManager);
+	mClusterManager.setRenderer(new OwnRendring(
+		getApplicationContext(), map, mClusterManager));
+}
+
+
+public void getHuntedLocations() {
+
+    [...]   // Retrofit call
+
+    for (Location l : list) {
+      if (DateUtils.daysSince(l.getDate().getTime()) > 6) {
+        if (AppVariable.useMarkerClusters) {
+          mClusterManager.addItem(new MapMarker(l.getLatitude(),
+            l.getLongitude(), DateUtils.date(l.getDate().getTime()),
+             DateUtils.hour(l.getDate().getTime())));
+        } else {
+           map.addMarker(new MarkerOptions()
+             .position(new LatLng(l.getLatitude(), l.getLongitude()))
+             .title(DateUtils.date(l.getDate().getTime()))
+             .snippet(DateUtils.hour(l.getDate().getTime())));
+       }} else {
+          if (AppVariable.useMarkerClusters) {
+             mClusterManager.addItem(new MapMarker(l.getLatitude(),
+               l.getLongitude(), android.text.format.DateUtils
+               .getRelativeTimeSpanString(
+           l.getDate().getTime()) + "",
+             DateUtils.format(l.getDate().getTime())));
+          } else {
+             map.addMarker(new MarkerOptions()
+             .position(new LatLng(l.getLatitude(), l.getLongitude()))
+             .title(android.text.format.DateUtils.getRelativeTimeSpanString(
+                l.getDate().getTime()) + "")
+             .snippet( DateUtils.format(l.getDate().getTime())));
+          }
+       }
+    }
+}
+\end{lstlisting}
+
+		
+		
+\begin{figure}[H] 
+\centering
+\begin{subfigure}[b]{0.33\linewidth}
+	\centering
+	\includegraphics[draft=false,width=.8\linewidth]{rys05/map2.png} 
+	\caption{Znaczniki lokalizacji} 
+	\label{fig7:a} 
+\end{subfigure}%% 
+\begin{subfigure}[b]{0.33\linewidth}
+	\centering
+	\includegraphics[draft=false,width=.8\linewidth]{rys05/map1.png} 
+	\caption{Grupa znaczników} 
+	\label{fig7:b} 
+\end{subfigure} 
+\begin{subfigure}[b]{0.33\linewidth}
+	\centering
+	\includegraphics[draft=false,width=.8\linewidth]{rys05/map3.png} 
+	\caption{Okno z danymi o znaczniku} 
+	\label{fig7:c} 
+\end{subfigure}%%
+\caption{Mapa lokalizacji u¿ytkownika po dodaniu znaczników}
+\label{fig:map_4} 
+\end{figure}
+		
+		
+		
+		\subsection{Generowanie kodów potwierdzaj¹cych} \indent \par
+		
+Do aktywnoœci generowania kodu przejœæ mo¿na z bocznego panelu nawigacyjnego. Kontrolerem aktywnoœci jest klasa \texttt{CodeActivity}. Do generowania kodu wykorzystywany jest przycisk utworzony przy pomocy biblioteki HoldToLoadLayout. Podczas przytrzymania przycisku wyœwietlany jest pasek ³adowania. Biblioteka wymaga zaimplementowania metod wywo³ywanych po ukoñczeniu ³adowania. Po utworzeniu widoku, w metodzie \texttt{onCreateView} przypisywana jest instancja s³uchacza wyzwalaj¹cego zdarzenia po osi¹gniêciu stanu pe³nego i pustego paska ³adowania. Wygl¹d interfejsu podczas ³adowania przedstawiono na rysunku \ref{fig:code_layout}.
+
+\begin{lstlisting}[label={lst:hold_layout}, caption={Obs³uga zdarzeñ przycisku wykorzystuj¹cego \texttt{HoldToLoadLayout}}]	
+button.setFillListener(new HoldToLoadLayout.FillListener() {
+	$$@Override
+	public void onFull() {
+		if (canSendRequests) {
+			generateCode();
+			codeField.setText(codeString);
+			progressBar.setProgress(0);
+			canSendRequests = false;
+		}
+		button.setStrokeColor(R.color.target_green);
+		button.setDuration(750);
+	}
+
+	[...] // onEmpty(), onAngleChanged()
+	
+});
+\end{lstlisting}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[draft=false, width=6cm]{rys05/code.png}%
+\caption{Widok generowania kodu podczas ³adowania przycisku}%
+\label{fig:code_layout}%
+\end{figure}
+
+
+
+Po ukoñczeniu ³adowania przycisku wywo³ywana jest metoda \texttt{generateCode} tworz¹ca losowy ci¹g znaków i wykonuj¹ca zapis do bazy przez zapytanie http. Tworzony jest równie¿ zegar aktualizuj¹cy interfejs co sekundê w celu wizualizacji pozosta³ego czasu aktywnoœci kodu. Metoda \texttt{setDuration} pozwala zmieniæ czas potrzebny na wype³nienie ³adowania.
+
+
+\begin{lstlisting}[label={lst:code_gen}, caption={Generowanie kodu}]	
+private void generateCode() {
+    codeString = nextString(Params.CODE_LENGTH);
+    AppVariable.code = codeString;
+    Log.d("code", "Code generated! " + codeString);
+    if (timer != null) timer.cancel();
+    timer = new CountDownTimer(TWO_MINUTES, 1000) {
+        public void onTick(long millisUntilFinished) {
+            AppVariable.codeTimeLeft = millisUntilFinished;
+            time.setText(DateUtils.formatMillisAsYMDHMS(millisUntilFinished));
+            progressBar.setProgressWithAnimation(
+		millisUntilFinished * 100f / TWO_MINUTES, 2000);
+        }
+
+        public void onFinish() {
+            codeField.setText("Code expired!");
+            progressBar.setProgress(0);
+            time.setText("0m 00s");
+        }
+
+    };
+    timer.start();
+		
+    Location codeLocation = AppVariable.lastKnownLocation;
+    codeLocation.setType(Locations.CODE);
+    Code code = Code.Builder
+        .create()
+        .withCode(codeString)
+        .withCreated(new Date())
+        .withLocation(codeLocation)
+        .withUser(AppVariable.loggedUser)
+        .build();
+
+    CodeService service = (CodeService) RetrofitBuilder
+        .getService(CodeService.class, RetrofitBuilder.BASE_URL);
+    Call<String> call = service.createNewCode(AppVariable.token, code);
+    call.enqueue( [...] );
+}
+
+\end{lstlisting}
+
+Do generowania kodów wykorzystana zosta³a metoda \texttt{nextString}, której parametrem jest d³ugoœæ ci¹gu znaków. Kody sk³adaj¹ siê z du¿ych liter i cyfr.
+
+\begin{lstlisting}[label={lst:code_gen}, caption={Generowanie losowego ci¹gu znaków}]	
+
+private final Random random = new Random();
+
+public String nextString(int len) {
+	StringBuilder tmp;
+
+	tmp = new StringBuilder();
+	for (char ch = '0'; ch <= '9'; ++ch)
+	tmp.append(ch);
+	for (char ch = 'A'; ch <= 'Z'; ++ch)
+	tmp.append(ch);
+	char[] symbols = tmp.toString().toCharArray();
+	tmp.setLength(0);
+
+	for (int i = 0; i < len; i++)
+		tmp.append(symbols[random.nextInt(symbols.length)]);
+	return tmp.toString();
+}
+
+\end{lstlisting}

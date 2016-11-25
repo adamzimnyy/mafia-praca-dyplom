@@ -1,1 +1,9 @@
-\chapter{Instrukcja u¿ytkowania aplikacji}
+\chapter{Podsumowanie} \indent \par 
+
+Celem pracy by³o zaprojektowanie oraz zaimplementowanie systemu do organizacji gry miejskiem oraz brania w niej udzia³u. W ramach realizacji projektu wykonana zosta³a aplikacja serwerowa pozwalaj¹ca na prowadzenie gry, baza danych przechowuj¹ca dane u¿ytkowników oraz aplikacja mobilna na systemy Android pe³ni¹ca rolê klienta gry.
+
+Podstawowym celem gry jest odnajdywanie innych graczy w rzezywistym œwiecie na podstawie informacji udzielanych przez nich przy rejestracji oraz danych lokalizacyjnych rejestrowanych przez aplikacjê mobiln¹.
+
+Aplikacja serwerowa opracowana zosta³a w jêzyku Java 8 z wykorzystaniem technologii Spring Framework, w oparciu o styl architektury REST pozwalaj¹cy na komunikacjê z pozosta³ymi uczestnikami systemu poprzez zapytania HTTP. Baza danych zosta³a wykonana w systemie Postre SQL. Dziêki wykorzystaniu narzêdzia do mapowania obiektowo-relacyjnego Hibernate mo¿liwe by³o utworzenie schematu bazy danych na podstawie zaimplementowanych klas w jêzyku Java. Stworzona aplikacja serwerowa pozwala na tworzenie kont u¿ytkowników i logowanie do nich, pobieranie danych uzytkowników, zleceñ oraz lokalizacji, potwierdzanie wykonywania zadañ gry, modyfikacjê parametrów gry oraz zarz¹dzanie kontami u¿ytkowników. Okreœlone zosta³y dwie grupy u¿ytkowników systemu posiadaj¹ca ró¿ne poziomy uprawnieñ: gracz i administrator. Zaimplementowany zosta³ modu³ automatycznego prowadzenia gry bez koniecznoœci nadzoru przez administracjê.
+
+Klient gry na systemy Android wykonany równie¿ wykonany zosta³ z wykorzystaniem jêzyka Java, bêd¹cego podstawowym sposobem implementacji tego typu aplikacji. Do komunikacji z serwerem wykorzystana zosta³a biblioteka Retrofit, pozwalaj¹ca na generowanie implementacji serwisów zapytañ HTTP na podstawie zdefiniowanych interfejsów.
