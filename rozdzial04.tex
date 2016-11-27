@@ -256,7 +256,7 @@ Zmiany w profilu u¿ytkownika zosta³y zapisane.
 
 Projekt interfejsu aplikacji mobilnej zosta³ wykonany w oparciu o wskazówki \textit{Material design}\ref{material_design} opracowane przez Google. Po implementacji niektóre elementy interfejsu mog¹ ró¿niæ siê nieznacznie od zaprojektowanych, zale¿nie od dostêpnych 
 
-Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkownik mo¿e przejœæ do logowania lub rejestracji do gry. Z poziomu ekranu powitalnego jest równie¿ mo¿liwoœæ wyœwietlenia zasad gry. Po klikniêcie przycisku Login, wyœwietlony zostaje ekran logowania widoczny na rysunku \ref{fig:login}, a po klikniêciu przycisku Register ekran Rejestracja ( rysunek \ref{fig:register} a) ).
+Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkownik mo¿e przejœæ do logowania lub rejestracji do gry. Z poziomu ekranu powitalnego jest równie¿ mo¿liwoœæ wyœwietlenia zasad gry. Po klikniêcie przycisku Login, wyœwietlony zostaje ekran logowania widoczny na rysunku \ref{fig:login}, a po klikniêciu przycisku Register ekran Rejestracja ( rysunek \ref{fig:register} ).
 \begin{figure}[h]
 \centering
 \includegraphics[width=4cm]{rys04/welcome}
@@ -268,18 +268,25 @@ Na ekranie rejestracji wyœwietlone s¹ w kolumnie pola tekstowe na informacje o u
 
  U góry ekranu znajduje siê miejsce na zdjêcie profilowe u¿ytkownika. Po klikniêciu wewn¹trz ramki u¿ytkownik zostanie przekierowany do odpowiedniej dla jego urz¹dzenia aplikacji galerii w celu wyboru zdjêcia. Po wyborze aplikacja poprosi u¿ytkownika o przyciêcie wybranego zdjêcia do interesuj¹cych rozmiarów. Zdjêcia profilowe muszê byæ kwadratowe. Po zakoñczeniu wybrane zdjêcie zostanie wyœwietlone wewn¹trz ramki.
 
-Po klikniêciu przez uzytkownika w pole \textit{data urodzenia} zamiast standardowej klawiatury wyœwietlone zostanie okno dialogowe z kalendarzem widoczne na rysunku \ref{fig:register} b).
+Po klikniêciu przez uzytkownika w pole \textit{data urodzenia} zamiast standardowej klawiatury wyœwietlone zostanie okno dialogowe z kalendarzem widoczne na rysunku \ref{fig:reg2}.
 
 Na górnej krawêdzi ekranu znajduje siê pasek nawigacyjny pozwalaj¹cy na powrót do ekranu startowego aplikacji.
 
 \begin{figure}[h]
 \centering
-\begin{tabular}{@{}ll@{}}
-a) & b) \\
-\includegraphics[width=4cm]{rys04/register} &
+\begin{subfigure}[b]{0.4\linewidth}
+\centering
+\includegraphics[width=4cm]{rys04/register} 
+\caption{ Formularz rejestracji}
+\label{fig:reg}
+\end{subfigure}
+\begin{subfigure}[b]{0.4\linewidth}
+\centering
 \includegraphics[width=4cm]{rys04/register2}
-\end{tabular}
-\caption{a) Ekran rejestracji b) Okno dialogowe kalendarza}
+\caption{Okno dialogowe kalendarza}
+\label{fig:reg2}
+\end{subfigure}
+\caption{Ekran rejestracji}
 \label{fig:register}
 \end{figure}
 
@@ -319,16 +326,25 @@ Na górnym pasku nawigacyjnym znajduje siê przycisk pozwalaj¹cy na pokazanie bocz
 
 G³ówym elementem widoku szczegó³ów zlecenia zajmuj¹cym znacz¹c¹ czêœæ ekranu jest zdjêcie profilowe u¿ytkownika. Pod nim znajduj¹ siê dane osobowe szukanego gracza, a tak¿e informacje o statusie zlecenia. Na dole ekranu znajduje siê formaularz do wprowadzenia kodu potwierdzaj¹cego wykonanie zlecenia. Górny pasek aplikacji zawiera przycisk powrotu do listy zleceñ oraz przycisk do zg³aszania z³amania przez gracza zasad gry. Po naciœniêciu tego przycisku w aplikacji wyœwietlone zostanie okno dialogowe widoczne na rysunku \ref{fig:details} b).
 
-\begin{figure}[H]
+
+\begin{figure}[h]
 \centering
-\begin{tabular}{@{}ll@{}}
-a) & b) \\
-\includegraphics[width=4cm]{rys04/details3} &
+\begin{subfigure}[b]{0.4\linewidth}
+\centering
+\includegraphics[width=4cm]{rys04/details3} 
+\caption{ Widok szczegó³ów zlecenia}
+\label{fig:det}
+\end{subfigure}
+\begin{subfigure}[b]{0.4\linewidth}
+\centering
 \includegraphics[width=4cm]{rys04/report}
-\end{tabular}
-\caption{a) Widok szczegó³ów zlecenia b) Okno dialogowe zg³aszania z³amania zasad}
+\caption{Okno dialogowe zg³aszania z³amania zasad}
+\label{fig:det2}
+\end{subfigure}
+\caption{Ekran rejestracji}
 \label{fig:details}
 \end{figure}
+
 
 Po wykonaniu gestu przeci¹gniêcia w dó³ na ekranie szczegó³ów zlecenia wyœwietlona zostaje mapa z naniesonymi znacznikami oznaczaj¹cymi znane lokalizacje szukanego gracza. Po klikniêciu na znacznik pokazana zostanie data i godzina zarejestrowania tej lokalizacji.
 

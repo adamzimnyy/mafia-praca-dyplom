@@ -42,9 +42,11 @@ Oprócz plików z kodem Ÿród³owym programu wa¿nym plikiem jest \texttt{pom.xml} po
 		\subsection{Zabezpieczenie dostêpu do API}\indent \par \label{zabezpieczenia}
 Jako podstawê implementacji serwera wykorzystano projekt demonstracyjny Cerberus\ref{tech:cerberus} dostêpny na repozytorium GitHub na licencji MIT\ref{tech:mit}.  Konfiguracjê zabezpieczeñ tworzy siê poprzez utworzenie klasy rozszerzaj¹cej \texttt{WebSecurityConfigurerAdapter}. W tej klasie nadpisuje siê metodê \texttt{configure()}, a w niej tworzy politykê zabezpieczeñ dostêpu do API. Na listingu widocznym poni¿ej przedstawiono fragment konfiguracji, która okreœla trzy poziomy dostêpu dla ró¿nych adresów URL w zaleznoœci od zadeklarowanej grupy u¿ytkownika: 
 
-\begin{enumerate}
+\begin{itemize}
 	\item \texttt{USER}
-\end{enumerate}
+	\item \texttt{ADMIN}
+	\item pozosta³e
+\end{itemize}
 
 Nad deklaracj¹ klasy widnieje adnotacja \texttt{@Configuration} wskazuj¹ca na to, ¿e metody klasy mog¹ byæ wykorzystane przez Spring do tworzenia obiektów podczas uruchomienia programu.
 
@@ -253,7 +255,7 @@ Mechanizm tworzenia zapytañ jest jednak ograniczony do jednej tabeli. Je¿eli zap
 
 Komunikacja pomiêdzy serwerem a aplikacjami mobilnymi realizowana jest przy pomocy zapytañ HTTP. Po poprawnym przetworzeniu zapytania wys³anego przez aplikacjê klienck¹, serwer odpowiada danymi zapisywanymi w formacie JSON.
 
-Aplikacje tworzone przy pomocy frameworka spring cechuj¹ siê wspóln¹ architektur¹ warstwow¹ definiuj¹c¹ przep³yw informacji w systemie. Po otrzymaniu zapytania HTTP przez aplikacjê przekazywane jest ono do odpowiedniego kontrolera. Adresy obs³ugiwane przez kontroler lub jego metody okreœla siê przy pomocy adnotacji \texttt{@RequestMapping}, co pokazane na listingu \ref{lst:controller}. 
+Aplikacje tworzone przy pomocy frameworka Spring cechuj¹ siê wspóln¹ architektur¹ warstwow¹ definiuj¹c¹ przep³yw informacji w systemie. Po otrzymaniu zapytania HTTP przez aplikacjê przekazywane jest ono do odpowiedniego kontrolera. Adresy obs³ugiwane przez kontroler lub jego metody okreœla siê przy pomocy adnotacji \texttt{@RequestMapping}, co pokazane na listingu \ref{lst:controller}. 
 
 \begin{lstlisting}[label=lst:controller, caption=Przyk³adowy kontroler]
 $$@EnableAutoConfiguration
