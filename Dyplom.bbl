@@ -1,3 +1,309 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{gra_miejska}
+{Gra miejska}.
+\newblock {\em {Wikipedia, wolna encyklopedia}}, 2016.
+\newblock \url{https://pl.wikipedia.org/wiki/Gra_miejska} [dostêp
+  27.11.2016r.].
+
+\bibitem{holdtoload}
+M.~Aksoy.
+\newblock {A layout that creates a loading-like progress around it's child (
+  circle ), inspired from Destiny's ( PS4 ) accept mechanism}.
+\newblock {\em {HoldToLoadLayout.}}, 2016.
+\newblock \url{https://github.com/melihaksoy/HoldToLoadLayout}[dostêp
+  27.11.2016r.].
+
+\bibitem{cropper}
+I.~Arthur~Teplitzki, Edmodo.
+\newblock {Image Cropping Library for Android, optimized for Camera / Gallery.}
+\newblock {\em {Android Image Cropper}}, 2013.
+\newblock \url{https://github.com/ArthurHub/Android-Image-Cropper} [dostêp
+  27.11.2016r.].
+
+\bibitem{jwt}
+Auth0.
+\newblock {JSON Web Tokens}.
+\newblock 2016.
+\newblock \url{https://jwt.io/} [dostêp 27.11.2016r.].
+
+\bibitem{json}
+M.~Bickley,  C.~Slominski.
+\newblock {JSON}.
+\newblock {\em { JavaScript Object Notation}}, 2016.
+\newblock \url{http://www.json.org/} [dostêp 27.11.2016r.].
+
+\bibitem{cerberus}
+brahalla.
+\newblock {A demonstration of a completely stateless and RESTful token-based
+  authorization system using JSON Web Tokens (JWT) and Spring Security.}
+\newblock \url{https://github.com/brahalla/Cerberus} [dostêp 27.11.2016r.].
+
+\bibitem{progressbar}
+daimajia.
+\newblock { A beautiful, slim Android ProgressBar.}
+\newblock {\em {NumberProgressBar}}, 2014.
+\newblock \url{https://github.com/daimajia/NumberProgressBar} [dostêp
+  27.11.2016r.].
+
+\bibitem{apache}
+T.~A.~S. Foundation.
+\newblock {APACHE LICENSE, VERSION 2.0}.
+\newblock 2016.
+\newblock \url{http://www.apache.org/licenses/LICENSE-2.0.html} [dostêp
+  27.11.2016r.].
+
+\bibitem{distance}
+D.~George.
+\newblock 2016.
+\newblock
+  \url{http://stackoverflow.com/questions/3694380/calculating-distance-between-two-points-using-latitude-longitude-what-am-i-doi}
+  [dostêp 27.11.2016r.].
+
+\bibitem{manifest}
+I.~Google.
+\newblock {App Manifest}.
+\newblock 2007.
+\newblock
+  \url{https://developer.android.com/guide/topics/manifest/manifest-intro.html}
+  [dostêp 27.11.2016r.].
+
+\bibitem{gson}
+I.~Google.
+\newblock {A Java serialization/deserialization library that can convert Java
+  Objects into JSON and back.}
+\newblock {\em {Gson}}, 2016.
+\newblock \url{https://github.com/google/gson}[dostêp 27.11.2016r.].
+
+\bibitem{swipe}
+I.~Google.
+\newblock {Adding Swipe-to-Refresh To Your App}.
+\newblock 2016.
+\newblock
+  \url{https://developer.android.com/training/swipe/add-swipe-interface.html}
+  [dostêp 27.11.2016r.].
+
+\bibitem{studio}
+I.~Google.
+\newblock {Android Studio,The Official IDE for Android}.
+\newblock 2016.
+\newblock \url{https://developer.android.com/studio/index.html} [dostêp
+  27.11.2016r.].
+
+\bibitem{vision}
+I.~Google.
+\newblock {Face Detection Concepts Overview}.
+\newblock 2016.
+\newblock
+  \url{https://developers.google.com/vision/face-detection-concepts}[dostêp
+  27.11.2016r.].
+
+\bibitem{maps}
+I.~Google.
+\newblock {Google Maps for every platform}.
+\newblock 2016.
+\newblock \url{https://developers.google.com/maps/} [dostêp 27.11.2016r.].
+
+\bibitem{store}
+I.~Google.
+\newblock {Google Play}.
+\newblock 2016.
+\newblock \url{https://play.google.com/store?hl=pl} [dostêp 20.10.2016r.].
+
+\bibitem{maps_fragment}
+I.~Google.
+\newblock {Map Objects}.
+\newblock 2016.
+\newblock
+  \url{https://developers.google.com/maps/documentation/android-api/map}
+  [dostêp 27.11.2016r.].
+
+\bibitem{design}
+I.~Google.
+\newblock {Material design guidelines}.
+\newblock 2016.
+\newblock \url{https://material.google.com/} [dostêp 20.06.2016r.].
+
+\bibitem{play}
+I.~Google.
+\newblock {Overview of Google Play Services}.
+\newblock 2016.
+\newblock \url{https://developers.google.com/android/guides/overview} [dostêp
+  27.11.2016r.].
+
+\bibitem{permissions}
+I.~Google.
+\newblock {Requesting Permissions at Run Time}.
+\newblock {\em {Proceedings of ICALEPCS07}}, 2016.
+\newblock
+  \url{https://developer.android.com/training/permissions/requesting.html}
+  [dostêp 24.11.2016r.].
+
+\bibitem{appcompat}
+I.~Google.
+\newblock {Support Library}.
+\newblock 2016.
+\newblock
+  \url{https://developer.android.com/topic/libraries/support-library/index.html}[dostêp
+  27.11.2016r.].
+
+\bibitem{jdbc}
+T.~P. G.~D. Group.
+\newblock {PostgreSQL JDBC Driver}.
+\newblock 1996-2016.
+\newblock \url{https://jdbc.postgresql.org/} [dostêp 27.11.2016r.].
+
+\bibitem{postgres}
+T.~P. G.~D. Group.
+\newblock {PostgreSQL: The world's most advanced open source database}.
+\newblock 1996-2016.
+\newblock \url{https://postgresql.org/} [dostêp 27.11.2016r.].
+
+\bibitem{hibernate}
+R.~Hat.
+\newblock {Idiomatic persistence for Java and relational databases.}
+\newblock {\em {Hibernate ORM}}.
+\newblock \url{http://hibernate.org/orm/}[dostêp 27.11.2016r.].
+
+\bibitem{imgur}
+I.~Imgur.
+\newblock {Imgur API Version 3}.
+\newblock 2016.
+\newblock \url{https://api.imgur.com/} [dostêp 24.11.2016r.].
+
+\bibitem{mit}
+O.~S. Initiative.
+\newblock {The MIT License (MIT)}.
+\newblock \url{https://opensource.org/licenses/mit-license.php} [dostêp
+  27.11.2016r.].
+
+\bibitem{idea}
+JetBrains.
+\newblock {IntelliJ IDEA the Java IDE}.
+\newblock 2016.
+\newblock \url{https://www.jetbrains.com/idea/} [dostêp 27.11.2016r.].
+
+\bibitem{joda}
+Joda.org.
+\newblock {Joda Time}.
+\newblock 2002-2016.
+\newblock \url{http://www.joda.org/joda-time/} [dostêp 27.11.2016r.].
+
+\bibitem{circular_bar}
+L.~Mikhael.
+\newblock {Create circular progressBar in android}.
+\newblock {\em {CircularProgressBar}}, 2015.
+\newblock \url{https://github.com/lopspower/CircularProgressBar} [dostêp
+  27.11.2016r.].
+
+\bibitem{circular}
+L.~Mikhael.
+\newblock {Create circular ImageView in Android in the simplest way possible.}
+\newblock {\em {CircularImageView}}, 2016.
+\newblock \url{https://github.com/lopspower/CircularImageView} [dostêp
+  27.11.2016r.].
+
+\bibitem{maven_repo}
+MvnRepository.
+\newblock {Maven Repository: Search/Browse/Explore}.
+\newblock \url{https://mvnrepository.com/} [dostêp 27.11.2016r.].
+
+\bibitem{boss}
+L.~of~Pix.
+\newblock 2016.
+\newblock \url{https://www.pexels.com/photo/mafia-boss-man-hat-8190/} [dost?p
+  dnia 20 czerwca 2015].
+
+\bibitem{fastadapter}
+M.~Penz.
+\newblock {The bullet proof, fast and easy to use adapter library, which
+  minimizes developing time to a fraction.}
+\newblock {\em {FastAdapter}}, 2016.
+\newblock \url{https://github.com/mikepenz/FastAdapter} [dostêp 27.11.2016r.].
+
+\bibitem{scheduler}
+I.~Pivotal~Software.
+\newblock {Scheduling Tasks}.
+\newblock 2016.
+\newblock \url{https://spring.io/guides/gs/scheduling-tasks/} [dostêp
+  27.11.2016r.].
+
+\bibitem{boot}
+I.~Pivotal~Software.
+\newblock {Spring Boot}.
+\newblock 2016.
+\newblock \url{https://projects.spring.io/spring-boot/} [dostêp 27.11.2016r.].
+
+\bibitem{spring}
+I.~Pivotal~Software.
+\newblock {Spring Framework}.
+\newblock 2016.
+\newblock \url{https://spring.io/docs/reference}[dostêp 27.11.2016r.].
+
+\bibitem{security}
+I.~Pivotal~Software.
+\newblock {Spring Security}.
+\newblock 2016.
+\newblock \url{http://projects.spring.io/spring-security/} [dostêp
+  27.11.2016r.].
+
+\bibitem{annotations}
+I.~Pivotal~Software.
+\newblock {Task Execution and Scheduling}.
+\newblock 2016.
+\newblock
+  \url{http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html}
+  [dostêp 27.11.2016r.].
+
+\bibitem{maven}
+A.~M. Project.
+\newblock \url{https://maven.apache.org/} [dostêp 27.11.2016r.].
+
+\bibitem{swagger}
+S.~Software.
+\newblock {Swagger UI}.
+\newblock 2016.
+\newblock \url{http://swagger.io/swagger-ui/} [dostêp 27.11.2016r.].
+
+\bibitem{retrofit}
+I.~Square.
+\newblock {A type-safe HTTP client for Android and Java}.
+\newblock {\em {Retrofit}}, 2016.
+\newblock \url{https://square.github.io/retrofit/} [dostêp 27.11.2016r.].
+
+\bibitem{okhttp}
+I.~Square.
+\newblock {An HTTP and HTTP/2 client for Android and Java applications}.
+\newblock {\em {OkHttp}}, 2016.
+\newblock \url{http://square.github.io/okhttp/} [dostêp 24.11.2016r.].
+
+\bibitem{imageloader}
+S.~Tarasevich.
+\newblock {Powerful and flexible library for loading, caching and displaying
+  images on Android.}
+\newblock {\em {Android Universal Image Loader}}, 2011-2015.
+\newblock \url{https://github.com/nostra13/Android-Universal-Image-Loader}
+  [dostêp 27.11.2016r.].
+
+\bibitem{cron}
+I.~Terracotta.
+\newblock {Cron Trigger Tutorial}.
+\newblock
+  \url{http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html}
+  [dostêp 27.11.2016r.].
+
+\bibitem{pu}
+H.~Weso³owska.
+\newblock {Jak opisywaæ przypadki u¿ycia?}
+\newblock Paz. 2012.
+\newblock \url{http://analizait.pl/2012/jak-opisywac-przypadki-uzycia/} [dostêp
+  27.11.2016r.].
+
+\bibitem{butterknife}
+J.~Wharton.
+\newblock {Field and method binding for Android views}.
+\newblock {\em {Butter Knife}}, 2013.
+\newblock \url{http://jakewharton.github.io/butterknife/} [dostêp
+  27.11.2016r.].
 
 \end{thebibliography}

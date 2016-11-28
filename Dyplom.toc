@@ -55,4 +55,4 @@
 \contentsline {chapter}{\chapternumberline {6}Testy systemu}{90}{chapter.6}
 \contentsline {chapter}{\chapternumberline {7}Podsumowanie}{91}{chapter.7}
 \contentsline {chapter}{Literatura}{92}{section*.9}
-\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{93}{appendix.A}
+\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{95}{appendix.A}

@@ -11,6 +11,48 @@ A level-1 auxiliary file: rozdzial08.aux
 A level-1 auxiliary file: rozdzial09.aux
 The style file: plabbrv.bst
 A level-1 auxiliary file: dodatekB.aux
-I found no \citation commands---while reading file Dyplom.aux
 Database file #1: dokumentacja.bib
-(There was 1 error message)
+Warning--I didn't find a database entry for "play_store"
+Warning--to sort, need author or key in gra_miejska
+Warning--empty author in gra_miejska
+Warning--empty booktitle in jwt
+Warning--empty booktitle in cerberus
+Warning--empty year in cerberus
+Warning--empty booktitle in apache
+Warning--empty title in distance
+Warning--empty booktitle in distance
+Warning--empty booktitle in manifest
+Warning--empty booktitle in swipe
+Warning--empty booktitle in studio
+Warning--empty booktitle in vision
+Warning--empty booktitle in maps
+Warning--empty booktitle in store
+Warning--empty booktitle in maps_fragment
+Warning--empty booktitle in design
+Warning--empty booktitle in play
+Warning--empty booktitle in appcompat
+Warning--empty booktitle in jdbc
+Warning--empty booktitle in postgres
+Warning--empty year in hibernate
+Warning--empty booktitle in imgur
+Warning--empty booktitle in mit
+Warning--empty year in mit
+Warning--empty booktitle in idea
+Warning--empty booktitle in joda
+Warning--empty booktitle in maven_repo
+Warning--empty year in maven_repo
+Warning--empty title in boss
+Warning--empty booktitle in boss
+Warning--empty booktitle in scheduler
+Warning--empty booktitle in boot
+Warning--empty booktitle in spring
+Warning--empty booktitle in security
+Warning--empty booktitle in annotations
+Warning--empty title in maven
+Warning--empty booktitle in maven
+Warning--empty year in maven
+Warning--empty booktitle in swagger
+Warning--empty booktitle in cron
+Warning--empty year in cron
+Warning--empty booktitle in pu
+(There were 43 warnings)
