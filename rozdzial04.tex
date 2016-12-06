@@ -1,40 +1,24 @@
 \chapter{Projekt systemu}
 
-\section{Architektura systemu}
-\indent \par
-System zostanie podzielony na cztery czêœci:
-\begin{itemize}[leftmargin=+2cm]
-	\item aplikacjê mobiln¹ na telefony z systemem Android,
-	\item aplikacjê internetow¹ realizuj¹c¹ funkcje konsoli administracyjnej 
-	\item serwer prowadz¹cy grê
-	\item bazê danych
-	
-\end{itemize}
 
-Aplikacja mobilna bêdzie pe³niæ rolê klienta gry i przeznaczona bêdzie dla graczy. Z jej pomoc¹ u¿ytkownicy bêd¹ mogli odczytywaæ i wykonywaæ przydzielone im zlecenia, edytowaæ swój profil, przegl¹daæ ranking i zarz¹dzaæ swoim kontem. Urz¹dzenie mobilne zostanie wykorzystane do okreœlenia lokalizacji u¿ytkowników na potrzeby gry. 
-
-	Konsola administracyjna s³u¿yæ bêdzie administratorom gry to obserwowania jej przebiegu i modyfikowania parametrów, a tak¿e zarz¹dzania kontami u¿ytkowników. 
-	
-	Zadaniem serwera jest automatyczne prowadzenie gry bez koniecznoœci udzia³u administratorów systemu. W ramach pracy serwera powinny byæ generowane lub usuwane zlecenia prywatne i publiczne, wysy³ane powiadomienia do graczy, a tak¿e monitorowana aktywnoœæ graczy. Serwer wykorzystywany bêdzie tak¿e do stworzenia interfejsu komunikacyjnego pomiêdzy aplikacjami klienckimi lub konsol¹ administracyjn¹ a baz¹ danych. 
 \section{Przypadki u¿ycia} 
-\indent \par
-Na podstawie sprecyzowanych powy¿ej zasad gry i opisu dzia³ania systemu opracowano przypadki u¿ycia systemu. Diagramy przypadków u¿ycia przedstawiaj¹ rysunki \ref{fig:usecase_1} oraz \ref{fig:usecase_2}.
+Na podstawie sprecyzowanych powy¿ej zasad gry i opisu dzia³ania systemu opracowano przypadki u¿ycia systemu. Diagramy przypadków u¿ycia przedstawiono na rysunkach \ref{fig:usecase_1} oraz \ref{fig:usecase_2}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{rys04/usecase1.jpg}
-\caption{Diagram przypadków u¿ycia po stronie aplikacji mobilnej}
+\caption{Diagram przypadków u¿ycia dla aplikacji mobilnej}
 \label{fig:usecase_1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{rys04/usecase2.jpg}
-\caption{Diagram przypadków u¿ycia po stronie aplikacji serwerowej}
+\caption{Diagram przypadków u¿ycia dla aplikacji serwerowej}
 \label{fig:usecase_2}
 \end{figure}
 
-Poni¿ej znajduj¹ siê przyk³adowe scenariusze opisuj¹ce dzia³ania u¿ytkownika, jakie mog¹ zajœæ podczas korzystania systemu. Ze wzglêdu na zautomatyzowan¹ naturê czêœci serwerowej systemu, opis scenariuszy skupia siê g³ównie na czynnoœciach wykonywanych przez u¿ytkownika aplikacji mobilnej. W scenariuszach zosta³y wyszczególnione sytuacje wyj¹tkowe oznaczaj¹ce b³¹d w podstawowym przebiegu interakcji prowadz¹cy do jej niepoprawnego zakoñczenia oraz przebiegi alternatywne opisuj¹ce inny zestaw kroków prowadz¹cy do tego samego wyniku. 
+Poni¿ej znajduj¹ siê przyk³adowe scenariusze opisuj¹ce dzia³ania u¿ytkownika, jakie mog¹ zajœæ podczas korzystania z systemu.\cite{pu} Ze wzglêdu na zautomatyzowan¹ naturê czêœci serwerowej systemu, opis scenariuszy skupia siê g³ównie na czynnoœciach wykonywanych przez u¿ytkownika aplikacji mobilnej. W scenariuszach zosta³y wyszczególnione sytuacje wyj¹tkowe oznaczaj¹ce b³¹d w podstawowym przebiegu interakcji prowadz¹cy do jej niepoprawnego zakoñczenia oraz przebiegi alternatywne opisuj¹ce inny zestaw kroków prowadz¹cy do tego samego wyniku. 
 \begin{enumerate}
 
 \item Rejestracja
@@ -42,31 +26,31 @@ Poni¿ej znajduj¹ siê przyk³adowe scenariusze opisuj¹ce dzia³ania u¿ytkownika, ja
 \item[Aktor] \hfill \\
  Niezarejestrowany u¿ytkownik aplikacji
 \item[Zdarzenie inicjuj¹ce] \hfill \\
-U¿ytkownik bêd¹c na ekranie startowym aplikacji klikn¹³ przycisk „Rejestracja”.
+U¿ytkownik bêd¹c na ekranie startowym aplikacji klikn¹³ przycisk "`Rejestracja"'.
 \item[Warunki pocz¹tkowe] \hfill \\
 brak
 \item[Opis przebiegu interakcji] \hfill \\
 \begin{enumerate}
-\item W aplikacji wyœwietlany jest ekran Rejestracja.
-\item	U¿ytkownik klika przycisk „Wybór zdjêcia”.
+\item W aplikacji wyœwietlany jest ekran "`Rejestracja"'.
+\item	U¿ytkownik klika przycisk "`Wybór zdjêcia"'.
 		\begin{enumerate}[label*=\arabic*.]
-		\item	Na telefonie zostaje otwarta aplikacja do wyboru obrazu
-		\item	U¿ytkownik wybiera obraz
-		\item	Aplikacja wyœwietla widok pozwalaj¹cy na przyciêcie zdjêcia
-		\item	U¿ytkownik ustawia przyciêcie i potwierdza
-		\item	Przyciête zdjêcie wyœwietla siê w miejscu przycisku na 	ekranie Rejestracja
-		\item	Na zdjêciu wykrywana jest twarz i wyœwietlana jest informacja potwierdzaj¹ca wykrycie twarzy
+		\item	Na telefonie zostaje otwarta aplikacja do wyboru obrazu.
+		\item	U¿ytkownik wybiera obraz.
+		\item	Aplikacja wyœwietla widok pozwalaj¹cy na przyciêcie zdjêcia.
+		\item	U¿ytkownik ustawia przyciêcie i zatwierdza wybór.
+		\item	Przyciête zdjêcie wyœwietla siê w miejscu przycisku na ekranie "`Rejestracja"'.
+		\item	Na zdjêciu wykrywana jest twarz i wyœwietlana jest informacja potwierdzaj¹ca wykrycie twarzy.
 		\end{enumerate}
-\item	U¿ytkownik wype³nia pola tekstowe szablonu rejestracyjnego
+		\item	U¿ytkownik wype³nia pola tekstowe szablonu rejestracyjnego.
 		\begin{enumerate}[label*=\arabic*.]
-		\item	Po klikniêciu w pole „Data urodzenia” zamiast klawiatury wyœwietla siê kalendarz.
+		\item	Po klikniêciu w pole "`Data urodzenia"' zamiast klawiatury wyœwietla siê kalendarz.
 		\item	U¿ytkownik wybiera datê z kalendarza i potwierdza przyciskiem Ok.
-		\item	Data zostaje wpisana w polu „Data urodzenia”.
+		\item	Data zostaje wpisana w polu "`Data urodzenia"'.
 		\end{enumerate}
-\item	U¿ytkownik zaznacza pole wyboru „Akceptujê zasady gry”.
-\item	U¿ytkownik klika przycisk „Rejestruj”.
+\item	U¿ytkownik zaznacza pole wyboru "`Akceptujê zasady gry"'.
+\item	U¿ytkownik klika przycisk "`Rejestruj"'.
 \item	Zdjêcie u¿ytkownika jest przesy³ane na serwer.
-\item	W miejscu przycisku „Rejestruj” wyœwietlony zostaje pasek postêpu przesy³ania.
+\item	W miejscu przycisku "`Rejestruj"' wyœwietlony zostaje pasek postêpu przesy³ania.
 \item	Po przes³aniu zdjêcia otrzymywany jest jego identyfikator.
 \item	Dane z szablonu wraz z identyfikatorem zdjêcia przesy³ane s¹ na serwer.
 \item	Okno rejestracji zamyka siê automatycznie po 4 sekundach i aplikacja powraca do ekranu startowego.
@@ -78,12 +62,11 @@ Ad. 8. Przes³anie zdjêcia nie powiod³o siê. Wyœwietlany jest komunikat o b³êdzie
 \begin{enumerate}
 \item	Punkty 2., 3. oraz 4. mog¹ zostaæ wykonane w dowolnej kolejnoœci.
  \item	W dowolnym momencie rejestracji u¿ytkownik mo¿e wyœwietliæ zasady gry. Wyœwietlenie zasad nie ma wp³ywu na resztê przebiegu rejestracji. Scenariusz zostaje rozszerzony o kroki:
-\begin{enumerate}
-\item	U¿ytkownik klika w przycisk „Zasady gry”. 
+\begin{enumerate}[label*=\arabic*.]
+\item	U¿ytkownik klika w przycisk "`Zasady gry"'. 
 \item	Wyœwietlone zostaje okno z zasadami. 
-\item	U¿ytkownik czyta zasady i klika przycisk „Ok”.
+\item	U¿ytkownik czyta zasady i klika przycisk "`Ok"'.
 \item	 Okno z zasadami zamyka siê.
-
 \end{enumerate}
 \end{enumerate}
 
@@ -104,17 +87,17 @@ Zarejestrowane zosta³o nowe konto u¿ytkownika.
 U¿ytkownik posiada konto w aplikacji (jest zarejestrowany).
 \item [Opis przebiegu interakcji]\hfill
 \begin{enumerate}
-\item	W aplikacji wyœwietlany jest ekran Logowanie.
-\item	U¿ytkownik uzupe³nia pola „nazwa u¿ytkownika” i „has³o”.
-\item	U¿ytkownik klika przycisk „Zaloguj”.
+\item	W aplikacji wyœwietlany jest ekran "`Logowanie"'.
+\item	U¿ytkownik uzupe³nia pola "`nazwa u¿ytkownika"' i "`has³o"'.
+\item	U¿ytkownik klika przycisk "`Zaloguj"'.
 \item	Pola tekstowe i przycisk zastêpowane s¹ przez wskaŸnik postêpu.
 \item	Dane logowania przesy³ane s¹ przez aplikacjê na serwer.
 \item	Serwer sprawdza poprawnoœæ wprowadzonych danych.
 \item	Aplikacja otrzymuje token uwierzytelniaj¹cy u¿ytkownika.
-\item	Aplikacja przechodzi do widoku Zapis lokalizacji.
+\item	Aplikacja przechodzi do widoku "`Zapis lokalizacji"'.
 \end{enumerate}
 \item [Sytuacje wyj¹tkowe ]\hfill \\
-Ad. 4. Wprowadzone dane s¹ niepoprawne. Wyœwietlony zostaje komunikat „Niepoprawne dane logowania”. Nastêpuje powrót do kroku 2.
+Ad. 4. Wprowadzone dane s¹ niepoprawne. Wyœwietlony zostaje komunikat "`Niepoprawne dane logowania"'. Nastêpuje powrót do kroku 2.
 \item [Przebiegi alternatywne ]\hfill \\
 	brak
 \item [Warunki koñcowe]\hfill \\
@@ -131,20 +114,20 @@ Ad. 4. Wprowadzone dane s¹ niepoprawne. Wyœwietlony zostaje komunikat „Niepopraw
 \item [Warunki pocz¹tkowe] \hfill \\ brak
 \item [Opis przebiegu interakcji]  \hfill
 \begin{enumerate}
-	\item	W aplikacji wyœwietlony zostaje ekran Zapis lokalizacji
-	\item	Wyœwietlony zostaje komunikat „Sprawdzanie uprawnieñ”
+	\item	W aplikacji wyœwietlony zostaje ekran "`Zapis lokalizacji"'.
+	\item	Wyœwietlony zostaje komunikat "`Sprawdzanie uprawnieñ"'.
 	\item	Aplikacja sprawdza uprawnienia dostêpu do modu³u GPS telefonu.
-	\item	Wyœwietlony zostaje komunikat „Sprawdzanie ustawieñ”
+	\item	Wyœwietlony zostaje komunikat "`Sprawdzanie ustawieñ"'.
 	\item	Aplikacja sprawdza, czy w telefonie w³¹czone s¹ us³ugi lokalizacyjne. 
-	\item	Wyœwietlony zostaje komunikat „Oczekiwanie na lokalizacjê”
+	\item	Wyœwietlony zostaje komunikat "`Oczekiwanie na lokalizacjê"'.
 	\item	Aplikacja rozpoczyna nas³uchiwanie aktualizacji lokalizacji.
 	\item	Gdy dok³adnoœæ lokalizacji osi¹gnie 25 m informacje o lokalizacji s¹ przesy³ane na serwer.
 	\item	Serwer zapisuje dane do bazy.
-	\item	Aplikacja przechodzi do widoku Zlecenia.
+	\item	Aplikacja przechodzi do widoku "`Zlecenia"'.
 \end{enumerate}
 
 \item [Sytuacje wyj¹tkowe]  \hfill \\
-Ad. 8.	Nie uda³o siê ustaliæ dok³adnej lokalizacji przez okres 30 sekund. Wyœwietlany jest komunikat „Nie uda³o siê ustaliæ lokalizacji. Spróbuj ponownie póŸniej”.
+Ad. 8.	Nie uda³o siê ustaliæ dok³adnej lokalizacji przez okres 30 sekund. Wyœwietlany jest komunikat "`Nie uda³o siê ustaliæ lokalizacji. Spróbuj ponownie póŸniej"'.
 \item [Przebiegi alternatywne]  \hfill \\
 Ad. 3. Aplikacja nie ma uprawnieñ do modu³u GPS telefonu. \\*
 Wyœwietlane jest okno dialogowe z proœb¹ o uprawnienia. Nastêpuje powrót do kroku 3.\\*
@@ -170,17 +153,17 @@ Wyœwietlane jest okno dialogowe z proœb¹ o zmianê ustawieñ. Otwarte zostaj¹ usta
 Zlecenie ma status Aktywny
 \item [Opis przebiegu interakcji]  \hfill
 \begin{enumerate}
-	\item	U¿ytkownik wprowadza kod uzyskany od znalezionego u¿ytkownika w odpowiednie pole w widoku Szczegó³y zlecenia
-	\item	U¿ytkownik zatwierdza kod przyciskiem Wyœlij
-	\item	Aplikacja pobiera lokalizacjê u¿ytkownika i razem z kodem przesy³a dane na serwer
-	\item	Na serwerze nastêpuje sprawdzenie, czy wprowadzony kod jest poprawny oraz czy lokalizacje generowania i wprowadzenia kodu znajduj¹ siê w pobli¿u
-	\item	Jeœli kod jest poprawny, zlecenie zostaje zatwierdzone. Aplikacja ponownie pobiera zmienione ju¿ dane o zleceniu
-	\item	Widok Szczegó³ów zlecenia jest aktualizowany nowymi danymi
+	\item	U¿ytkownik wprowadza kod uzyskany od znalezionego u¿ytkownika w odpowiednie pole w widoku "`Szczegó³y zlecenia"'.
+	\item	U¿ytkownik zatwierdza kod przyciskiem "`Wyœlij"'.
+	\item	Aplikacja pobiera lokalizacjê u¿ytkownika i razem z kodem przesy³a dane na serwer.
+	\item	Na serwerze nastêpuje sprawdzenie, czy wprowadzony kod jest poprawny oraz czy lokalizacje generowania i wprowadzenia kodu znajduj¹ siê w pobli¿u siebie.
+	\item	Jeœli kod jest poprawny, zlecenie zostaje zatwierdzone. Aplikacja ponownie pobiera zmienione ju¿ dane o zleceniu.
+	\item	Widok "`Szczegó³y zlecenia"' jest aktualizowany nowymi danymi.
 \end{enumerate}
 
 \item [Sytuacje wyj¹tkowe]  \hfill \\
 Ad. 3. Aktualna lokalizacja u¿ytkownika nie jest dostêpna – przesy³ana jest ostatnia lokalizacja logowania u¿ytkownika.  \\*
-Ad 5. Kod jest niepoprawny – przycisk Wyœlij zostaje zablokowany na 10 sekund. W miejscu przycisku pokazuje siê odliczanie czasu. W Zleceniu nie nastêpuj¹ ¿adne zmiany.  \\*
+Ad 5. Kod jest niepoprawny – przycisk "`Wyœlij"' zostaje zablokowany na 10 sekund. W miejscu przycisku pokazuje siê odliczanie czasu. W zleceniu nie nastêpuj¹ ¿adne zmiany.  \\*
 
 \item [Warunki koñcowe] \hfill \\
 Zlecenie zosta³o oznaczone jako wykonane.
@@ -193,14 +176,14 @@ Zlecenie zosta³o oznaczone jako wykonane.
 \item [Aktor]\hfill \\
 	U¿ytkownik 
 \item [Zdarzenie inicjuj¹ce] \hfill \\
-	U¿ytkownik wybra³ pozycjê „Generuj kod” z menu nawigacyjnego aplikacji
+	U¿ytkownik wybra³ pozycjê "`Generuj kod"' z menu nawigacyjnego aplikacji
 \item [Warunki pocz¹tkowe] \hfill \\ 
 brak
 \item [Opis przebiegu interakcji]  \hfill
 \begin{enumerate}
-\item	W aplikacji wyœwietlony zostaje widok Generator kodów.
+\item	W aplikacji wyœwietlony zostaje widok "`Generowanie kodu"'.
 \item U¿ytkownik przytrzymuje przycisk z ikon¹ kostki do gry.
-\item W czasie trzymania przycisku wyœwietlana jest animacja ³adowania wokó³ przycisku
+\item W czasie trzymania przycisku wyœwietlana jest animacja ³adowania wokó³ przycisku.
 \item	Po zakoñczeniu ³adowania generowany jest losowy 6-cyfrowy ci¹g znaków z³o¿ony z du¿ych liter i cyfr.
 \item	Wygenerowany kod wyœwietlany jest w odpowiednim polu w aplikacji.
 \item	Pobierana jest lokalizacja u¿ytkownika i wraz z wygenerowanym kodem przesy³ana jest na serwer i zapisywana w bazie danych.
@@ -221,25 +204,25 @@ Na ekranie aplikacji wyœwietlony zosta³ wygenerowany kod.
 \item [Aktor]\hfill \\
 	U¿ytkownik 
 \item [Zdarzenie inicjuj¹ce] \hfill \\
-	U¿ytkownik klikn¹³ przycisk Edycja profilu w widoku Profil u¿ytkownika
+	U¿ytkownik klikn¹³ przycisk "`Edycja profilu"' w widoku "`Profil u¿ytkownika"'.
 \item [Warunki pocz¹tkowe] \hfill \\ 
 brak
 \item [Opis przebiegu interakcji]  \hfill
 \begin{enumerate}
-\item	Pola z informacjami o u¿ytkowniku w aplikacji staj¹ siê edytowalne
-\item	Przycisk Edycja profilu zamienia siê w „Zapisz”.
-\item	U¿ytkownik zmienia interesuj¹ce go pola
-\item	U¿ytkownik zatwierdza zmiany wciskaj¹c przycisk Zapisz
+\item	Pola z informacjami o u¿ytkowniku w aplikacji staj¹ siê edytowalne.
+\item	Przycisk Edycja profilu zamienia siê w "`Zapisz"'.
+\item	U¿ytkownik zmienia interesuj¹ce go pola.
+\item	U¿ytkownik zatwierdza zmiany wciskaj¹c przycisk "`Zapisz"'.
 \item	Zmiany s¹ weryfikowane pod k¹tem poprawnoœci podobnie jak przy rejestracji.
 \item	Zmiany zostaj¹ przes³ane na serwer i zapisane do bazy danych.
-\item	Pola z informacjami ponownie stajê siê nieedytowalne 
+\item	Pola z informacjami ponownie staj¹ siê nieedytowalne.
 
 \end{enumerate}
 
 \item [Sytuacje wyj¹tkowe]  \hfill \\
 Ad 5. Weryfikacja poprawnoœci danych nie powiod³a siê – b³êdnie wprowadzone pola zostaj¹ zaznaczone kolorem czerwonym. Nastêpuje powrót do kroku 3. \\*
 	Ad. 6. Nie uda³o siê nawi¹zaæ po³¹czenia z serwerem – wyœwietlony jest komunikat o b³êdzie po³¹czenia. Nastêpuje powrót do kroku 4.\\*
-	U¿ytkownik opuœci³ widok Profil u¿ytkownika przed zapisaniem zmian – Wprowadzone zmiany zostaj¹ utracone.\\*
+	U¿ytkownik opuœci³ widok "`Profil u¿ytkownika"' przed zapisaniem zmian. Wprowadzone zmiany zostaj¹ utracone.\\*
 
 \item [Warunki koñcowe] \hfill \\
 Zmiany w profilu u¿ytkownika zosta³y zapisane.
@@ -254,9 +237,9 @@ Zmiany w profilu u¿ytkownika zosta³y zapisane.
 
 \subsection{Aplikacja kliencka}\indent \par
 
-Projekt interfejsu aplikacji mobilnej zosta³ wykonany w oparciu o wskazówki Material design\cite{design} opracowane przez Google. Po implementacji niektóre elementy interfejsu mog¹ ró¿niæ siê nieznacznie od zaprojektowanych, zale¿nie od dostêpnych 
+Projekt interfejsu aplikacji mobilnej zosta³ wykonany w oparciu o wskazówki \textit{Material design}\cite{design} opracowane przez Google. Projekt wykonany zosta³ w programie graficznym bez uwzglêdnienia dostêpnych technologii. Po implementacji niektóre elementy interfejsu mog¹ ró¿niæ siê nieznacznie od zaprojektowanych.
 
-Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkownik mo¿e przejœæ do logowania lub rejestracji do gry. Z poziomu ekranu powitalnego jest równie¿ mo¿liwoœæ wyœwietlenia zasad gry. Po klikniêcie przycisku Login, wyœwietlony zostaje ekran logowania widoczny na rysunku \ref{fig:login}, a po klikniêciu przycisku Register ekran Rejestracja ( rysunek \ref{fig:register} ).
+Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkownik mo¿e przejœæ do logowania lub rejestracji do gry. Z poziomu ekranu powitalnego jest równie¿ mo¿liwoœæ wyœwietlenia zasad gry. Po klikniêcie przycisku "`Login"', wyœwietlony zostaje ekran "`Logowanie"' widoczny na rysunku \ref{fig:login}, a po klikniêciu przycisku "`Register"' ekran "`Rejestracja"' (rys. \ref{fig:register}).
 \begin{figure}[h]
 \centering
 \includegraphics[width=4cm]{rys04/welcome}
@@ -264,11 +247,11 @@ Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkow
 \label{fig:welcome}
 \end{figure}
 
-Na ekranie rejestracji wyœwietlone s¹ w kolumnie pola tekstowe na informacje o u¿ytkowniku. Pole do wpisania has³a domyœlnie nie pokazuje jawnie wpisywanego tekstu, lecz zastêpuje go kropkami. Na prawo od pola has³a znajduje siê przycisk z ikon¹ oka, po jego naciœniêciu znaki has³a zostan¹ pokazane.
+Na ekranie rejestracji formularz na informacje o u¿ytkowniku. Tekst wpisywany pole has³a nie jest wyœwietlany jawnie, lecz zastêpowany kropkami. Na prawo od pola has³a znajduje siê przycisk z ikon¹ oka, po jego naciœniêciu znaki has³a zostan¹ pokazane.
 
- U góry ekranu znajduje siê miejsce na zdjêcie profilowe u¿ytkownika. Po klikniêciu wewn¹trz ramki u¿ytkownik zostanie przekierowany do odpowiedniej dla jego urz¹dzenia aplikacji galerii w celu wyboru zdjêcia. Po wyborze aplikacja poprosi u¿ytkownika o przyciêcie wybranego zdjêcia do interesuj¹cych rozmiarów. Zdjêcia profilowe muszê byæ kwadratowe. Po zakoñczeniu wybrane zdjêcie zostanie wyœwietlone wewn¹trz ramki.
+U góry ekranu znajduje siê miejsce na zdjêcie profilowe u¿ytkownika. Po klikniêciu wewn¹trz widocznej na rysunku \ref{fig:register} ramki u¿ytkownik zostanie przekierowany do odpowiedniej dla jego urz¹dzenia aplikacji galerii w celu wyboru zdjêcia. Po wyborze zdjêcia aplikacja poprosi u¿ytkownika o przyciêcie go do zadanych rozmiarów. Zdjêcia profilowe musz¹ byæ kwadratowe. Po zakoñczeniu procesu przycinania wybrane zdjêcie zostanie wyœwietlone wewn¹trz ramki.
 
-Po klikniêciu przez uzytkownika w pole \textit{data urodzenia} zamiast standardowej klawiatury wyœwietlone zostanie okno dialogowe z kalendarzem widoczne na rysunku \ref{fig:reg2}.
+Po klikniêciu przez uzytkownika w pole "`data urodzenia"' zamiast standardowej klawiatury wyœwietlone zostanie okno dialogowe z kalendarzem widoczne na rysunku \ref{fig:reg2}.
 
 Na górnej krawêdzi ekranu znajduje siê pasek nawigacyjny pozwalaj¹cy na powrót do ekranu startowego aplikacji.
 
@@ -290,7 +273,7 @@ Na górnej krawêdzi ekranu znajduje siê pasek nawigacyjny pozwalaj¹cy na powrót d
 \label{fig:register}
 \end{figure}
 
-Ekran logowania zawiera dwa podstawowe pola tekstowe, nazwa u¿ytkownika oraz has³o oraz przycisk logowania. Pod przyciskiem znajduje siê pole wyboru pozwalaj¹ce zapamiêtaæ wpisane dane. Po naciœniêciu przycisku formularz logowania znika, a w jego miejscu pojawia siê wskaŸnik ³adowania. W przypadku b³êdnych danych wyœwietlony zostaje komunikat o b³êdzie. Po poprawnym logowaniu w aplikacji zostaje wyœwietlony ekran Zapis lokalizacji widoczny na rysunku \ref{fig:gps}.
+Ekran "`Logowanie"' zawiera dwa podstawowe pola tekstowe, nazwa u¿ytkownika i has³o oraz przycisk logowania. Pod przyciskiem znajduje siê pole wyboru pozwalaj¹ce zapamiêtaæ wpisane dane. Po naciœniêciu przycisku formularz logowania znika, a w jego miejscu pojawia siê wskaŸnik ³adowania. W przypadku b³êdnych danych wyœwietlony zostaje komunikat o b³êdzie. Po poprawnym logowaniu w aplikacji zostaje wyœwietlony ekran "`Zapis lokalizacji"' widoczny na rysunku \ref{fig:gps}.
 
 Ponownie umieszczono na górnej krawêdzi ekranu pasek nawigacyjny pozwalaj¹cy na powrót do ekranu startowego aplikacji.
 
@@ -302,7 +285,7 @@ Ponownie umieszczono na górnej krawêdzi ekranu pasek nawigacyjny pozwalaj¹cy na 
 \end{figure}
 
 
-Na ekranie Zapis lokalizacji pod umieszczon¹ grafik¹ wyœwietlany jest komunikat o aktualnie wykonywanym zadaniu lub informacja dla u¿ytkownika o dodatkowych czynnoœciach, które nale¿y wykonaæ np. w³¹czenie GPS. Pod komunikatem znajduje siê przycisk pozwalaj¹cy na otwarcie ustawieñ systemowych telefonu, w przypadku gdy u¿ytkownik zamkn¹³ okno dialogowe informuj¹ce o koniecznoœci uaktywnienia modu³u GPS telefonu.
+Na ekranie "`Zapis lokalizacji"' pod umieszczon¹ grafik¹ wyœwietlany jest komunikat o aktualnie wykonywanym zadaniu lub informacja dla u¿ytkownika o dodatkowych czynnoœciach, które nale¿y wykonaæ np. w³¹czenie GPS. Pod komunikatem znajduje siê przycisk pozwalaj¹cy na otwarcie ustawieñ systemowych telefonu, w przypadku gdy u¿ytkownik zamkn¹³ okno dialogowe informuj¹ce o koniecznoœci uaktywnienia modu³u GPS telefonu.
 
 \begin{figure}[H]
 \centering
@@ -312,7 +295,7 @@ Na ekranie Zapis lokalizacji pod umieszczon¹ grafik¹ wyœwietlany jest komunikat 
 \end{figure}
 
 
-Widok listy zleceñ u¿ytkownika wyœwietlany po zakoñczeniu zapisu lokalizacji podzielony jest na dwie jednakowe sekcje: prywatne i publiczne. W ka¿dej z sekcji znajduje siê lista zleceñ danego typu. Elementy listy zawieraj¹ informacje o u¿ytkowniku bêd¹cym celem zlecenia oraz jego status. Po klikniêciu elementu listy otwarty zostaje widok Szczegó³y zlecenia widoczny na rysku \ref{fig:details}. 
+Widok "`Lista zleceñ"' wyœwietlany po zakoñczeniu zapisu lokalizacji podzielony jest na dwie jednakowe sekcje: prywatn¹ i publiczn¹. W ka¿dej z sekcji znajduje siê lista zleceñ danego typu. Elementy listy zawieraj¹ informacje o u¿ytkowniku bêd¹cym celem zlecenia oraz jego status. Po klikniêciu elementu listy otwarty zostaje widok "`Szczegó³y zlecenia"' widoczny na rysunku \ref{fig:details}. 
 
 Na górnym pasku nawigacyjnym znajduje siê przycisk pozwalaj¹cy na pokazanie bocznego panelu nawigacyjnego. Panel nawigacyjny mo¿e te¿ zostaæ przywo³any poprzez przeci¹gniêcie w prawo po ekranie. Wysuniêty panel nawigacyjny widoczny jest na rysunku \ref{fig:drawer}.
 
@@ -324,7 +307,7 @@ Na górnym pasku nawigacyjnym znajduje siê przycisk pozwalaj¹cy na pokazanie bocz
 \end{figure}
 
 
-G³ówym elementem widoku szczegó³ów zlecenia zajmuj¹cym znacz¹c¹ czêœæ ekranu jest zdjêcie profilowe u¿ytkownika. Pod nim znajduj¹ siê dane osobowe szukanego gracza, a tak¿e informacje o statusie zlecenia. Na dole ekranu znajduje siê formaularz do wprowadzenia kodu potwierdzaj¹cego wykonanie zlecenia. Górny pasek aplikacji zawiera przycisk powrotu do listy zleceñ oraz przycisk do zg³aszania z³amania przez gracza zasad gry. Po naciœniêciu tego przycisku w aplikacji wyœwietlone zostanie okno dialogowe widoczne na rysunku \ref{fig:details} b).
+G³ówym elementem widoku "`Szczegó³y zlecenia"' zajmuj¹cym znacz¹c¹ czêœæ ekranu jest zdjêcie profilowe u¿ytkownika. Pod nim znajduj¹ siê dane osobowe szukanego gracza, a tak¿e informacje o statusie zlecenia. Na dole ekranu znajduje siê formaularz do wprowadzenia kodu potwierdzaj¹cego wykonanie zlecenia. Górny pasek aplikacji zawiera przycisk powrotu do listy zleceñ oraz przycisk do zg³aszania z³amania przez gracza zasad gry. Po naciœniêciu tego przycisku w aplikacji wyœwietlone zostanie okno dialogowe widoczne na rysunku \ref{fig:details} b).
 
 
 \begin{figure}[h]
@@ -341,12 +324,12 @@ G³ówym elementem widoku szczegó³ów zlecenia zajmuj¹cym znacz¹c¹ czêœæ ekranu jes
 \caption{Okno dialogowe zg³aszania z³amania zasad}
 \label{fig:det2}
 \end{subfigure}
-\caption{Ekran rejestracji}
+\caption{Ekran "`Szczegó³y zlecenia"'}
 \label{fig:details}
 \end{figure}
 
 
-Po wykonaniu gestu przeci¹gniêcia w dó³ na ekranie szczegó³ów zlecenia wyœwietlona zostaje mapa z naniesonymi znacznikami oznaczaj¹cymi znane lokalizacje szukanego gracza. Po klikniêciu na znacznik pokazana zostanie data i godzina zarejestrowania tej lokalizacji.
+Po wykonaniu gestu przeci¹gniêcia w dó³ na ekranie szczegó³ów zlecenia wyœwietlona zostaje "`Mapa"' (rys. \ref{fig:map}), na którym znajduje siê mapa z naniesonymi znacznikami oznaczaj¹cymi znane lokalizacje szukanego gracza. Po klikniêciu na znacznik pokazana zostanie data i godzina zarejestrowania tej lokalizacji.
 
 
 \begin{figure}[H]
@@ -357,7 +340,7 @@ Po wykonaniu gestu przeci¹gniêcia w dó³ na ekranie szczegó³ów zlecenia wyœwietlo
 \end{figure}
 
 
-Boczne menu nawygacyjne przywo³ywane poprzez naciœniêcie przycisku nawygacyjnego lub przeci¹gniêcie w prawo na ekranie listy zleceñ pozwala na prze³¹czanie pomiêdzy kolejnymi ekranami aplikacji. U do³u menu nawigacyjnego znajduj¹ siê równie¿ przyciski pozwalaj¹ce na kontakt z twórc¹ aplikacji oraz otwarcie strony aplikacji w sklepie Google Play.
+Boczne menu nawigacyjne pokazane na rysunku \ref{fig:drawer} przywo³ywane jest poprzez naciœniêcie przycisku nawygacyjnego lub przeci¹gniêcie w prawo na ekranie "`Lista zleceñ"'. Pozwala ono na prze³¹czanie pomiêdzy kolejnymi ekranami aplikacji. U do³u menu nawigacyjnego znajduj¹ siê równie¿ przyciski pozwalaj¹ce na kontakt z twórc¹ aplikacji oraz otwarcie strony aplikacji w sklepie Google Play.
 
 \begin{figure}[H]
 \centering
@@ -366,7 +349,7 @@ Boczne menu nawygacyjne przywo³ywane poprzez naciœniêcie przycisku nawygacyjnego
 \label{fig:drawer}
 \end{figure}
 
-Na ekran generowania kodu potwierdzaj¹cego sk³ada siê zegar wraz z okr¹g³ym paskiem postêpu, pole tekstowe oraz przycisk. W celu wygenerowania kodu u¿ytkownik musi przytrzymaæ przycisk a¿ to na³adowania do pe³na wskaŸnika, który pojawi siê wokól przycisku. Po na³adowaniu generowany kod pojawi siê w polu tekstowym, a zegar zacznie odliczaæ czas do koñca wa¿noœci kodu.
+Na ekran "`Generowanie kodu"' sk³ada siê zegar wraz z okr¹g³ym paskiem postêpu, pole tekstowe oraz przycisk. W celu wygenerowania kodu u¿ytkownik musi przytrzymaæ przycisk a¿ to na³adowania do pe³na wskaŸnika, który pojawi siê wokól przycisku. Po na³adowaniu generowany kod pojawi siê w polu tekstowym, a zegar zacznie odliczaæ czas do koñca wa¿noœci kodu, co pokazano na rysunku \ref{fig:code}.
 
 
 \begin{figure}[H]
@@ -376,24 +359,22 @@ Na ekran generowania kodu potwierdzaj¹cego sk³ada siê zegar wraz z okr¹g³ym pask
 \label{fig:code}
 \end{figure}
 
-\section{Projekt bazy danych}\indent \par
-
+\section{Projekt bazy danych}
 W tym rozdziale przedstawiony zosta³ model konceptualny oraz fizyczny bazy danych wykorzystywanej w systemie. 
 
-\subsection{Model konceptualny}\indent \par
-
-Poni¿ej zaprozentowano diagram zwi¹zków encji w bazie danych prezentuj¹cy relacje pomiêdzy poszczególnymi tabelami.
+\subsection{Model konceptualny}
+Poni¿ej zaprezentowano diagram zwi¹zków encji w bazie danych prezentuj¹cy relacje pomiêdzy poszczególnymi tabelami (rys. \ref{fig:model_k}).
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=8cm]{rys04/db3.jpg}%
 \caption{Model konceptualny bazy danych}%
-\label{}%
+\label{fig:model_k}%
 \end{figure}
 
 Podstawow¹ tabel¹ w bazie jest tabela \texttt{users} przechowuj¹ca konta uzytkowników. Ka¿dy z u¿ytkowników mo¿e posiadaæ zero lub wiêcej zleceñ (\texttt{targets}). Zlecenie mo¿e byæ przypisane jednemu u¿ytkownikowi w przypadku zleceñ prywatnych, lub nieprzypisane w przypadku zleceñ publicznych. Ka¿de zlecenie musi posiadaæ dok³adnie jednego u¿ytkownika bêd¹cego Szukanym. Zlecenia mog¹ mieæ przypisan¹ lokalizacjê, w której zosta³y wykonane.
 
-Kod generowany w aplikacji musi byæ przypisany do uzytkownika generuj¹cego go. U¿ytkownik mo¿e nie posiadaæ wygenerowanych kodów, lub posiadaæ dok³adnie jeden, jednak to ograniczenie  nie zosta³o uzglêdnione w relacjach encji z za³o¿eniem, ¿e zostanie wporwadzone na etapie implementacji. 
+Kod generowany w aplikacji musi byæ przypisany do uzytkownika generuj¹cego go. U¿ytkownik mo¿e nie posiadaæ wygenerowanych kodów, lub posiadaæ dok³adnie jeden, jednak to ograniczenie nie zosta³o uzglêdnione w relacjach encji z za³o¿eniem, ¿e zostanie wprowadzone na etapie implementacji. 
 
 Kod musi posiadaæ lokalizacjê, w której zosta³ wygenerowany. Lokalizacja musi byæ przypisana do dok³adnie jednego u¿ytkownika. U¿ytkownik mo¿e posiadaæ wiele lokalizacji.
 
@@ -406,8 +387,10 @@ Punkty (\texttt{rewards}) otrzymywane s¹ za wykonynanie konkrentnego zlecenia i 
 \centering
 \includegraphics[width=\columnwidth]{rys04/db2.jpg}%
 \caption{Model fizyczny bazy danych}%
-\label{}%
+\label{fig:model_f}%
 \end{figure}
+
+Na rysunku \ref{fig:model_f} zaprezentowano model fizyczny bazy danych.
 
 Tabela users zawiera istotne informacje personalne u¿ytkownika, takie jak imiê, nazwisko, datê urodzenia, a tak¿e wybrane przez uzytkownika dane logowania. Tabela zosta³a rozszerzona o dane statystyczne o uzytkowniku, m.in. datê ostatniego logowania, datê rejestracji. Pole \texttt{authorities} okreœla rolê u¿ytkownika (gracz, administrator) i jest wykorzystywane w metodach autoryzacji, co zostanie omówione w póŸniejszych rozdzia³ach.
 
@@ -421,8 +404,7 @@ W tabeli report przechowywane s¹ zg³oszenia o z³amaniu zasad sk³adaj¹ce siê z po
 
 Tabela reward przechowuje informacje o zdobywanych przez u¿ytkowników punktach. Wpis sk³ada siê z wartoœci punktowej, daty dodania, opisu s³ownego mówi¹cego o tym, za co punkty zosta³y przyznane oraz informacji o u¿ytkowniku otrzymuj¹cym je.
 
-\section{Protokó³ komunikacji w systemie}\indent \par \label{prot_kom}
-
+\section{Protokó³ komunikacji w systemie} \label{prot_kom}
 Korzystaj¹c z przygotowanych wymagañ funkcjonalnych oraz przypadków u¿ycia aplikacji opracowano protokó³ komunikacyjny w systemie. Komunikacja pomiêdzy serwerem a aplikacjami dostêpnymi dla u¿ytkowników systemu bêdzie odbywaæ siê poprzez zapytania HTTP. Do wymiany danych zastosowany zostanie format JSON (ang. JavaScript Object Notation)\cite{json}.
 
 W planowanej koncepcji protoko³u komunikacyjnego adresy zosta³y podzielone na trzy grupy ró¿ni¹ce siê uprawnieniami dostêpu:
@@ -432,12 +414,10 @@ W planowanej koncepcji protoko³u komunikacyjnego adresy zosta³y podzielone na tr
 	\item pozosta³e - adresy dostêpne dla wszyskich
 \end{itemize}
 
-W celu uzyskania dostêpu do \texttt{/api/*} lub \texttt{/admin/*} wymagane jest przes³anie wraz z zapytaniem nag³ówka \texttt{X-Auth-Token} zawieraj¹cego informacje o uprawnieniach. Szczegó³y dotycz¹ce tego zabezpieczenia opisane zosta³y w sekcji \ref{token}.
+W celu uzyskania dostêpu do \texttt{/api/*} lub \texttt{/admin/*} wymagane jest przes³anie wraz z zapytaniem nag³ówka \texttt{X-Auth-Token} zawieraj¹cego informacje o uprawnieniach. Szczegó³y dotycz¹ce tego zabezpieczenia opisane zosta³y w sekcji \ref{zabezpieczenia}.
 
 \subsection{Œcie¿ki dostêpu API}
-
-
-Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymienione w sekcji Parametry danych lub Zwaracane wartoœci zosta³y przedstawione w kolejnym punkcie.
+Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymienione w sekcjach "`Parametry danych"' i "`Zwaracane wartoœci"' zosta³y przedstawione w kolejnym punkcie.
 \lstset{style=json_color}
 % ------------------------------------------------------------------------------------------------
 \begin{enumerate}
@@ -480,9 +460,10 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \quad
 %\end{tcolorbox}
 \end{mybox}
+
 % ----------------------------------------------------------------------------------
 
-	\item Logowanie
+	\newpage \item Logowanie
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -583,7 +564,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \end{mybox}
 % ----------------------------------------------------------------------------------
 
-\item Pobranie konta u¿ytkownika
+\newpage \item Pobranie konta u¿ytkownika
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -675,7 +656,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 
 
 
-\item	Pobranie lokalizacji  u¿ytkownika
+\newpage \item	Pobranie lokalizacji  u¿ytkownika
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -763,7 +744,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \end{mybox}
 % ----------------------------------------------------------------------------------
 
-\item	Zapis kodu
+\newpage \item	Zapis kodu
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -851,7 +832,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \end{mybox}
 % ----------------------------------------------------------------------------------
 
-\item	Pobranie najbardziej aktualnej lokalizacji 
+\newpage \item	Pobranie najbardziej aktualnej lokalizacji 
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -939,7 +920,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \end{mybox}
 % ----------------------------------------------------------------------------------
 
-\item Zg³oszenie z³amania zasad
+\newpage \item Zg³oszenie z³amania zasad
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -1025,7 +1006,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \end{mybox}
 % ----------------------------------------------------------------------------------
 
-\item	Usuniêcie konta u¿ytkownika
+\newpage \item	Usuniêcie konta u¿ytkownika
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -1232,7 +1213,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \end{mybox}
 % ----------------------------------------------------------------------------------
 
-	\item Pobranie listy u¿ytkowników
+\newpage	\item Pobranie listy u¿ytkowników
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -1320,7 +1301,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 \end{mybox}
 % ----------------------------------------------------------------------------------
 
-	\item Nadanie lub odebranie uprawnieñ administracyjnych 
+\newpage	\item Nadanie lub odebranie uprawnieñ administracyjnych 
 
 \begin{mybox}
 \renewcommand{\arraystretch}{1.4}
@@ -1366,7 +1347,7 @@ Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymie
 
 \subsection{Struktury danych}
  
-Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas komunikacji pomiêdzy serwerem a aplikacjami klienckimi. W celu uproszczenia opisu struktury zagnie¿dzone zosta³y zast¹pione ich nazw¹, np. \texttt{<User>}.
+Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas komunikacji pomiêdzy serwerem a aplikacjami klienckimi. W celu uproszczenia opisu zagnie¿dzone struktury  zosta³y zast¹pione ich nazw¹, np. \texttt{<User>}, a wartoœci numeryczne ich typem.
 \begin{enumerate}
 
 \item AuthenticationRequest 
@@ -1393,9 +1374,9 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 \begin{lstlisting}
 {
 	"date": "2016-11-20T22:03:02.155Z",
-	"id": 0,
-	"latitude": 0,
-	"longitute": 0,
+	"id": integer,
+	"latitude": double,
+	"longitute": double,
 	"type": "string",
 	"user": <User>
 }
@@ -1409,7 +1390,7 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 	 "created": "2016-11-20T22:03:02.153Z",
 	 "hunted": <User>,
 	 "hunter": <User>,
-	 "id": 0,
+	 "id": integer,
 	 "location": <Location>,
 	 "publicTarget": true,
 	 "status": "string"
@@ -1436,9 +1417,9 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 {
 	 "added": "2016-11-20T22:03:02.153Z",
 	 "awardedfor": "string",
-	 "value": 0,
+	 "value": integer,
 	 "player_id": <User>,
-	 "id": 0,
+	 "id": integer,
 	 "taget_id": <Target>
  }
 		
@@ -1458,20 +1439,20 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 	 "email": "string",
 	 "firstName": "string",
 	 "gender": "string",
-	 "id": 0,
+	 "id": long,
 	 "lastActive": "2016-11-19T16:48:15.682Z",
 	 "lastName": "string",
-	 "latitude": 0,
-	 "loginstreak": 0,
-	 "longitude": 0,
+	 "latitude": double,
+	 "loginstreak": integer,
+	 "longitude": double,
 	 "noTargetSince": "2016-11-19T16:48:15.683Z",
 	 "notifications": "string",
 	 "password": "string",
 	 "profilePicture": "string",
 	 "registerDate": "2016-11-19T16:48:15.683Z",
-	 "score": 0,
+	 "score": integer,
 	 "status": "string",
-	 "targetDistance": 0,
+	 "targetDistance": double,
 	 "username": "string"
 }
    \end{lstlisting}
@@ -1491,7 +1472,7 @@ Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas ko
 	"notifications": "string",
 	"password": "string",
 	"profilePicture": "string",
-	"targetDistance": 0,
+	"targetDistance": double,
 	"username": "string"
 }
 \end{lstlisting}

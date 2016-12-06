@@ -327,7 +327,7 @@ language=Java,
 %\pdftrue \fi
 %\ifpdf
  \usepackage[pdftex,bookmarks,breaklinks,unicode]{hyperref}
- \usepackage[pdftex]{graphicx} % draft
+ \usepackage[draft, pdftex]{graphicx} % draft
  \DeclareGraphicsExtensions{.pdf,.jpg,.mps,.png}
 \pdfcompresslevel=9
 \pdfoutput=1
@@ -596,7 +596,7 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 \title{System wspomagaj¹cy organizacjê gry miejskiej wykorzystuj¹cej urz¹dzenia z systemem Android}
 \titleShort{System wspomagaj¹cy organizacjê gry miejskiej wykorzystuj¹cej urz¹dzenia z systemem Android}
 \titleEN{Management system for location-based game for Android devices}
-\author{Adam Zimny, 209787}
+\author{Adam Zimny}
 \uczelnia{POLITECHNIKA WROC£AWSKA}
 \wydzial{WYDZIA£ ELEKTRONIKI}
 \kierunek{INFORMATYKA}
@@ -642,7 +642,7 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 
 \newpage
 \mbox{}\pdfbookmark[0]{Spis rysunków}{spisRysunkow.1}
-%\addcontentsline{toc}{chapter}{Spis rysunków}
+\addcontentsline{toc}{chapter}{Spis rysunków}
 \listoffigures*
 \begin{flushleft}
 
@@ -680,7 +680,6 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 %UWAGA: bibliotekê referencji nale¿y przygotowaæ samemu. Dobrym do tego narzêdziem jest JabRef.
 %       Nazwê przygotowanej biblioteki wpisuje siê poni¿ej bez rozszerzenia 
 %       (w tym przypadku jest to "dokumentacja.bib")
-\nocite{*}
 \bibliography{dokumentacja}
 \appendix
 \include{dodatekB}

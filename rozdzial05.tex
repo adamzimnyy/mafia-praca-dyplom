@@ -1,23 +1,23 @@
-\chapter{Implementacja systemu}\indent \par
+\chapter{Implementacja systemu}
 
-W tym rozdziale opisana zosta³a implementacja wybranych elementów zaprojektowanego systemu.
+W tym rozdziale opisana zosta³a implementacja zaprojektowanego systemu. Ze wzglêdu na ograniczony czas i szeroko zdefiniowany zakres projektu faz¹ implementacji nie zosta³y objête wybrane wymagania funkcjonalne pe³ni¹ce mniej istotne role w dzia³aniu systemu.
 
+\section{Aplikacja serwerowa}
 
-\section{Aplikacja serwerowa}\indent \par
-
-\subsection{Wykorzystywane technologie i narzêdzia}\indent \par 
+\subsection{Wykorzystywane technologie i narzêdzia}
 
 Podczas realizacji systemu wykorzystano nastêpuj¹ce technologie: 
 
 \begin{enumerate}
-	\item Java 1.8
-	\item Spring Framework\cite{spring} - jest to szkielet tworzenia aplikacji internetowych w jêzyku Javy dla platformy Enterprise Edition. Obecnie jest jedn¹ z najbardziej popularnych technologii na rynku ze wzglêdu na wsparcie twórców i spo³ecznoœci oraz du¿e mo¿liwoœci konfiguracyjne, po pozwala ³atwo dostosowaæ go do w³asnych potrzeb
-	\item Spring Boot\cite{boot} - rozszerzenie framworka Spring pozwalaj¹ce na uruchomienie aplikacji jak wykonywalnego programu Javy
-	\item Spring Security\cite{security} - rozszerzenie skupiaj¹ce siê na dostarczeniu funkcjonalnoœci autentykowania i autoryzacji u¿ytkowników w aplikacjach Spring
-	\item Hibernate\cite{hibernate}- narzêdzie do realizacji warstwy dostêpu do danych, pozwala na przenoszenie danych pomiêdzy relacyjn¹ baz¹ danych a obiektami Javy 
-	\item Swagger UI\cite{swagger} - narzêdzie generuj¹ce dokumentacjê API dostêpn¹ pod wybranym adresem URL wewn¹trz aplikacji internetowej
-	\item JSON Web Token\cite{jwt} - metoda reprezentowania deklaracji uprawnie¿ u¿ytkowników pozwalaj¹ca na bezpieczne przesy³anie informacji pomiêdzy dwoma stronami
+	\item Java 1.8;
+	\item Spring Framework\cite{spring} - jest to szkielet tworzenia aplikacji internetowych w jêzyku Javy dla platformy Enterprise Edition. Obecnie jest jedn¹ z najbardziej popularnych technologii na rynku ze wzglêdu na wsparcie twórców i spo³ecznoœci oraz du¿e mo¿liwoœci konfiguracyjne, co pozwala ³atwo dostosowaæ go do w³asnych potrzeb;
+	\item Spring Boot\cite{boot} - rozszerzenie framworka Spring pozwalaj¹ce na uruchomienie aplikacji jak wykonywalnego programu Javy;
+	\item Spring Security\cite{security} - rozszerzenie skupiaj¹ce siê na dostarczeniu funkcjonalnoœci autentykowania i autoryzacji u¿ytkowników w aplikacjach Spring;
+	\item Hibernate\cite{hibernate}- narzêdzie do realizacji warstwy dostêpu do danych, pozwala na przenoszenie danych pomiêdzy relacyjn¹ baz¹ danych a obiektami Javy;
+	\item Swagger UI\cite{swagger} - narzêdzie generuj¹ce dokumentacjê API dostêpn¹ pod wybranym adresem URL wewn¹trz aplikacji internetowej;
+	\item JSON Web Token\cite{jwt} - metoda reprezentowania deklaracji uprawnie¿ u¿ytkowników pozwalaj¹ca na bezpieczne przesy³anie informacji pomiêdzy dwoma stronami;
 	\item projekt Cerberus\cite{cerberus} - w ramach tego projektu zaprezentowano implementacjê systemu bezstanowej autoryzacji u¿ytkowników z wykorzystaniem Spring Security oraz JSON Web Token.
+	\item Maven\cite{maven} - narzêdzie automatyzuj¹ce budowê oprogramowania na platformê Java.
 \end{enumerate}
 \subsection{Struktura plików projektu}
 
@@ -25,20 +25,20 @@ Projekt zosta³ wykonany w œrodowisku Intellij IDEA w wersji 2016.2 Ultimate\cite
 Pliki klas projektu podzielone zosta³y na paczki zgodnie z ich zastosowaniem: 
 
 \begin{itemize}
-	\item config - zawiera pliki konfiguracyjne frameworka Spring, oznaczone adnotacj¹ \texttt{@Configuration}
-	\item constant - zawiera klasy definiuj¹ce sta³e u¿ywane w projekcie
-	\item controller - zawiera klasy kontrolerów, które obs³uguj¹ zapytania http wysy³ane na przypisane im adresy URL i poprzez klasy service zwracaj¹ u¿ytkownikowi dane z bazy danych
-	\item mapper - zawiera klasy pozwalaj¹ce na konwersje pomiêdzy klasami modelu
-	\item model - zawiera definicje obiektów reprezentuj¹cych rzeczywiste dane, na których operuje system
-	\item repository - zawiera interfejsy dostêpu do bazy danych (ang. DAO - database access object), w których zdefiniowane s¹ zapytania wywo³ywane przez aplikacje
-	\item security - pochodz¹ce z projektu Cerberus klasy wspomagaj¹ce obs³ugê autoryzacji przy pomocy tokena
-	\item service - zawiera klasy przetwarzaj¹ce dane pobrane z bazy danych przez DAO przed przekazaniem ich do kontrolera
-	\item task - zawiera klasy automatyzuj¹ce zadania wykonywane przez aplikacje poprzez okresowe wywo³ywanie metod
+	\item config - zawiera pliki konfiguracyjne frameworka Spring, oznaczone adnotacj¹ \texttt{@Configuration},
+	\item constant - zawiera klasy definiuj¹ce sta³e u¿ywane w projekcie,
+	\item controller - zawiera klasy kontrolerów, które obs³uguj¹ zapytania http wysy³ane na przypisane im adresy URL i poprzez klasy service zwracaj¹ u¿ytkownikowi dane z bazy danych,
+	\item mapper - zawiera klasy pozwalaj¹ce na konwersje pomiêdzy klasami modelu,
+	\item model - zawiera definicje obiektów reprezentuj¹cych rzeczywiste dane, na których operuje system,
+	\item repository - zawiera interfejsy dostêpu do bazy danych (ang. DAO - database access object), w których zdefiniowane s¹ zapytania wywo³ywane przez aplikacje,
+	\item security - pochodz¹ce z projektu Cerberus klasy wspomagaj¹ce obs³ugê autoryzacji przy pomocy tokena,
+	\item service - zawiera klasy przetwarzaj¹ce dane pobrane z bazy danych przez DAO przed przekazaniem ich do kontrolera,
+	\item task - zawiera klasy automatyzuj¹ce zadania wykonywane przez aplikacje poprzez okresowe wywo³ywanie metod.
 \end{itemize}
 
-Oprócz plików z kodem Ÿród³owym programu wa¿nym plikiem jest \texttt{pom.xml} pozwalaj¹cy na do³¹czanie do projektu zewnêtrznych bibliotek pobieranych z odpowiednich serwisów, np. Maven Repository\ref{tech:maven_repo}.
+Oprócz plików z kodem Ÿród³owym programu wa¿nym plikiem jest \texttt{pom.xml} pozwalaj¹cy na do³¹czanie do projektu zewnêtrznych bibliotek pobieranych z odpowiednich serwisów, np. Maven Repository\cite{maven_repo}.
 
-		\subsection{Zabezpieczenie dostêpu do API}\indent \par \label{zabezpieczenia}
+\subsection{Zabezpieczenie dostêpu do API} \label{zabezpieczenia}
 Jako podstawê implementacji serwera wykorzystano projekt demonstracyjny Cerberus dostêpny na repozytorium GitHub na licencji MIT\cite{mit}. Konfiguracjê zabezpieczeñ tworzy siê poprzez utworzenie klasy rozszerzaj¹cej \texttt{WebSecurityConfigurerAdapter}. W tej klasie nadpisuje siê metodê \texttt{configure()}, a w niej tworzy politykê zabezpieczeñ dostêpu do API. Na listingu widocznym poni¿ej przedstawiono fragment konfiguracji, która okreœla trzy poziomy dostêpu dla ró¿nych adresów URL w zaleznoœci od zadeklarowanej grupy u¿ytkownika: 
 
 \begin{itemize}
@@ -53,7 +53,6 @@ Nad deklaracj¹ klasy widnieje adnotacja \texttt{@Configuration} wskazuj¹ca na to
 
 
 \begin{lstlisting}[caption=Konfiguracja Spring Security]
-
 $$@Configuration
 $$@EnableWebSecurity
 $$@EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -85,8 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 W celu uaktywnienia filtrowania zapytañ, przed ka¿dym zapytaniem wywo³ywany jest filtr sprawdzaj¹cy obecnoœæ tokena w nag³ówku \texttt{X-Auth-Token} zapytania. Z uzyskanego tokena odczytywane s¹ dane u¿ytkownika, które nastêpnie przekazywane s¹ do filtra autoryzuj¹cego zapytania. W przypadku braku obecnoœci poprawnego tokena u¿ytkownik zostanie przekierowany na adres \texttt{/error/}.
 
-\begin{lstlisting} 
-
+\begin{lstlisting}[caption=Filtr odczytuj¹cy token z zapytañ HTTP] 
 public class AuthenticationTokenFilter 
 	extends UsernamePasswordAuthenticationFilter {
 
@@ -124,15 +122,12 @@ public class AuthenticationTokenFilter
 
     chain.doFilter(request, response);
   }
-
-}
 \end{lstlisting}
 
 		
-\subsection{Baza danych} \indent \par \label{db}
-Jako technologiê wykonania bazy danych wybrano Postgre SQL\cite{postgres}. Po³¹czenie z baz¹ danych realizowane jest przy pomocy sterownika JDBC\cite{jdbc}. Parametry po³¹czenia i konfiguracja bazy danych okreœla klasa \texttt{DatabaseConfig} przedstawiona na listingu \ref{lst:db_config}. W konfiguracji definiowane jest obiekt \texttt{dataSource}, w którym zawarty jest adres bazy danych oraz dane logowania, a tak¿e dodatkowe ustawienia powi¹zane z frameworkiem Hibernate, w szczególnoœci okreœlana jest platforma bazy danych. W konfiguracji obiektu \texttt{EntityManagerFactory} odpowiedzialnego za tworzenie po³¹czeñ z baz¹ danych przekazywane s¹ ustalone wczeœniej parametry po³¹czenia, a tak¿e okreœlana jest œcie¿ka do modelu danych.
+\subsection{Baza danych} \label{db}
+Jako technologiê wykonania bazy danych wybrano PostgreSQL\cite{postgres}. Po³¹czenie z baz¹ danych realizowane jest przy pomocy sterownika JDBC\cite{jdbc}. Parametry po³¹czenia i konfiguracja bazy danych okreœla klasa \texttt{DatabaseConfig} przedstawiona na listingu \ref{lst:db_config}. W konfiguracji definiowane jest obiekt \texttt{dataSource}, w którym zawarty jest adres bazy danych oraz dane logowania, a tak¿e dodatkowe ustawienia powi¹zane z frameworkiem Hibernate, w szczególnoœci okreœlana jest platforma bazy danych. W konfiguracji obiektu \texttt{EntityManagerFactory} odpowiedzialnego za tworzenie po³¹czeñ z baz¹ danych przekazywane s¹ ustalone wczeœniej parametry po³¹czenia, a tak¿e okreœlana jest œcie¿ka do modelu danych.
 \begin{lstlisting}[label=lst:db_config,caption=Konfiguracja bazy danych]
-
 $$@Configuration
 $$@EnableTransactionManagement
 %%@EnableJpaRepositories(%%"adamzimny.repository"%%)%%
@@ -250,9 +245,9 @@ Mechanizm tworzenia zapytañ jest jednak ograniczony do jednej tabeli. Je¿eli zap
 \end{lstlisting}
 
 
-\subsection{Komunikacja i przep³yw danych} \indent \par
+\subsection{Komunikacja i przep³yw danych} 
 
-Komunikacja pomiêdzy serwerem a aplikacjami mobilnymi realizowana jest przy pomocy zapytañ HTTP. Po poprawnym przetworzeniu zapytania wys³anego przez aplikacjê klienck¹, serwer odpowiada danymi zapisywanymi w formacie JSON.
+Komunikacja pomiêdzy serwerem i aplikacjami mobilnymi realizowana jest przy pomocy zapytañ HTTP. Po poprawnym przetworzeniu zapytania wys³anego przez aplikacjê klienck¹ serwer odpowiada danymi zapisywanymi w formacie JSON.
 
 Aplikacje tworzone przy pomocy frameworka Spring cechuj¹ siê wspóln¹ architektur¹ warstwow¹ definiuj¹c¹ przep³yw informacji w systemie. Po otrzymaniu zapytania HTTP przez aplikacjê przekazywane jest ono do odpowiedniego kontrolera. Adresy obs³ugiwane przez kontroler lub jego metody okreœla siê przy pomocy adnotacji \texttt{@RequestMapping}, co pokazane na listingu \ref{lst:controller}. 
 
@@ -296,18 +291,17 @@ public class UserService {
 
 \end{lstlisting}
 
-Po zwróceniu danych z bazy w kontrolerze tworzona jest odpowiedŸ na zapytanie. Zale¿nie od przebiegu obs³ugi zapytania, ustawiany jest status odpowiedzi, a w przypadku zapytañ poprawnych (ze statusem \texttt{200 Ok}) w cia³o odpowiedzi wpisywane s¹ pobrane z bazy danych wyniki.
+Po zwróceniu danych z bazy w kontrolerze tworzona jest odpowiedŸ na zapytanie. Zale¿nie od przebiegu obs³ugi zapytania ustawiany jest status odpowiedzi, a w przypadku zapytañ poprawnych (ze statusem \texttt{200 Ok}) w cia³o odpowiedzi wpisywane s¹ pobrane z bazy danych wyniki.
 
 \subsection{Implementacja obs³ugi wybranych zapytañ}
 
 Obs³uga zapytañ przez serwer jest w wielu przypadkach bardzo zbli¿ona. W tym dziale przedstawione zosta³y przyk³adowe realizacje wybranych wymagañ funkcjonalnych. 
 
-\subsubsection{Rejestracja}\indent \par
+\subsubsection{Rejestracja}
 
 Tworzenie nowych obiektów w konwencji REST realizwane jest przez zapytania typu \texttt{POST}. Rejestracja nowego konta u¿ytkownika rozpoczyna siê od przes³ania zapytania  na adres \texttt{/register/}. Zapytania wysy³ane na ten adres nale¿¹ do trzeciej grupy opisanej w punkcie \ref{prot_kom} i nie musz¹ posiadaæ tokena.
 
 \begin{lstlisting}[label={lst:register_controller},caption={Kontroler rejestracji}]
-
 $$@RestController
 public class RegisterController {
 
@@ -331,24 +325,22 @@ W kontrolerze pobierany jest przes³any parametr \texttt{userTemplate}. Przy wyko
 Has³o przes³ane przez u¿ytkownika jest szyfrowane, aby nie zosta³o zapisane jawnym tekstem w bazie danych. Po zaszyfrowaniu has³a obiekt przekazywany jest do serwisu. 
 
 \begin{lstlisting}[label={lst:user_service},caption={Metoda rejestracji u¿ytkownika w klasie \texttt{UserService}}]
+public User register(User user) {
+    user.setRegisterDate(new Date());
+    user.setStatus("ACTIVE");
+    user.setAuthorities("ROLE_USER");
 
-    public User register(User user) {
-        user.setRegisterDate(new Date());
-        user.setStatus("ACTIVE");
-        user.setAuthorities("ROLE_USER");
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date d;
-        try {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    Date d;
+    try{
             d = sdf.parse("01/01/1980");
-        } catch (ParseException e) {
+       } catch (ParseException e) {
             d = new Date();
-        }
-        user.setNoTargetSince(d);
-
-        userDAO.save(user);
-        return user;
-    }
+	     }
+    user.setNoTargetSince(d);
+    userDAO.save(user);
+    return user;
+}
 		
 \end{lstlisting}
 
@@ -356,7 +348,7 @@ Serwis zajmuje siê przygotowaniem obiektu do zapisu w bazie danych. Ustawiana je
 
 Po wykonaniu tych operacji obiekt jest zapisywany w bazie danych metod¹ \texttt{save()} klasy \texttt{UserDAO} i zwracany do kontrolera. W kontrolerze tworzona jest odpowiedŸ na zapytanie o statusie \texttt{200 Ok} informuj¹cym o poprawnym wykonaniu rejestracji, a nowo utworzony obiekt u¿ytkownika jest zwracany jako w odpowiedzi.
 
-\subsubsection{Pobranie lokalizacji u¿ytkownika}\indent \par
+\subsubsection{Pobranie lokalizacji u¿ytkownika}
 
 Jako zapytania zwracaj¹ce dane uzytkownikowi przyj¹to zapytania \texttt{GET}. Parametrami zapytania s¹ id uzytkownika oraz data, od której nale¿y wyszukaæ lokalizacje. W sygnaturze metody przed drugim parametrem znajduje siê dopisek \texttt{required = false}. Oznacza to, ¿e parametr ten jest opcjonalny, czyli zapytanie wys³ane na adres \texttt{/api/location?user=1} równie¿ zostanie obs³u¿one przez tê metodê.
 
@@ -412,7 +404,7 @@ Kontroler wywo³uje jedn¹ z dwóch metod serwisu zale¿nie od wartoœci parametru \t
 
 Po wykonaniu opracji na bazie danych tworzona jest odpowiedŸ na zapytanie o statusie \texttt{200 Ok}.
 
-\subsubsection{Potwierdzenie wykonania zlecenia}\indent \par
+\subsubsection{Potwierdzenie wykonania zlecenia}
 
 Do wprowadzania modyfikacji u¿ywa siê metody \texttt{PATCH} zapytañ HTTP. Parametrami zapytania s¹ numer id zlecenia oraz kod potwierdzaj¹cy. Po otrzymaniu zapytania na adres \texttt{/api/target/confirm} kontroler wyszukuje zlecenie o zadanym numerze. Je¿eli zlecenie nie zostanie odnalezione kontroler zwraca odpowiedŸ o statusie \texttt{400 Bad request}.
 
@@ -472,7 +464,7 @@ Serwis ustawia status i datê wykonania zlecenia, a tak¿e przypisuje lokalizacjê,
 
 Kontroler po otrzymaniu zmodyfikowanego obiektu przesy³a go w odpowiedz na zapytanie htpp ze statusem \texttt{200 Ok}.
 
-\subsection{Automatyzacja dzia³ania systemu}\indent \par
+\subsection{Automatyzacja dzia³ania systemu}
 		
 		W celu umozliwienia wykonywania czêœci zadañ serwera automatycznie w okreœlonych odstêpach czasu wykorzystano funkcjonalnoœæ planowania zadañ frameworka Spring. Uaktywnienie funkcjonalnoœci wymaga utworzenia konfiguracji z uzytciem adnotacji \texttt{@EnableScheduling}\cite{scheduler}. W konfiguracji przedstawionej na listingu \ref{lst:scheduler_config} wyspecyfikowano tak¿e liczbê w¹tków zadañ, jakie mog¹ zostaæ przydzielone. Je¿eli w¹tków by³oby zbyt ma³o, zaplanowane zadania by³yby opóŸniane a¿ do momentu ukoñczenia aktywnych zadañ i zwolnienia w¹tku.
 		
@@ -502,18 +494,18 @@ Sposób tworzenia wyra¿eñ \texttt{cron} przedstawia poni¿sza tabela.
 \begin{table}[H]
 \begin{tabular}{lcll}
 \textbf{jednostka czasu} & \textbf{wymagane} & \textbf{dozwolone wartoœci} & \textbf{znaki specialne}\\ \hline
-sekundy &Y &0-59 &, - * / \\
-minuty &Y& 0-59& , - * / \\
-godziny&Y& 0-23 &, - * / \\
-dzieñ miesi¹ca &Y &1-31 &, - * ? / L W \\
-miesi¹c &Y &0-11 lub JAN-DEC &, - * / \\
-dzieñ tygodnia & Y &1-7 or SUN-SAT& , - * ? / L \# \\
-rok &N &puste lub 1970-2099 &, - * / \\
+sekundy &tak &0-59 &, - * / \\
+minuty &tak& 0-59& , - * / \\
+godziny&tak& 0-23 &, - * / \\
+dzieñ miesi¹ca &tak &1-31 &, - * ? / L W \\
+miesi¹c &tak&0-11 lub JAN-DEC &, - * / \\
+dzieñ tygodnia & tak &1-7 lub SUN-SAT& , - * ? / L \# \\
+rok &nie &puste lub 1970-2099 &, - * / \\
 \end{tabular}
 \caption{Parametry wyra¿eñ cron}
 \label{table:cron}
 \end{table}
-\begin{description}
+\begin{description}[leftmargin=+1cm]
 \tiny
 \item [*] - ka¿da wartoœæ
 \item [?] - wartoœæ dowolna
@@ -528,9 +520,9 @@ rok &N &puste lub 1970-2099 &, - * / \\
 Na przyk³ad:
 
 \begin{description}
-\item [0 15 10 * * ? 2005] - uruchom o 10:15 ka¿dego dnia w roku 2005
-\item [0 0/5 14 * * ?] - uruchom co 5 minut, zaczynaj¹c od 14:00, do 14:55 w³¹cznie, ka¿dego dnia
-\item [0 15 10 ? * 6L 2002-2005] - uruchom o 10:15, w ka¿dy ostatni pi¹tek miesi¹ca w latach od 2002 do 2005 w³¹cznie
+\item [0 15 10 * * ? 2005] - uruchom o 10:15 ka¿dego dnia w roku 2005,
+\item [0 0/5 14 * * ?] - uruchom co 5 minut, zaczynaj¹c od 14:00, do 14:55 w³¹cznie, ka¿dego dnia,
+\item [0 15 10 ? * 6L 2002-2005] - uruchom o 10:15, w ka¿dy ostatni pi¹tek miesi¹ca w latach od 2002 do 2005 w³¹cznie.
 \end{description}
 		
 		
@@ -541,10 +533,9 @@ Na przyk³ad:
 \begin{enumerate}
 	\item \textbf{Generowanie nowych zleceñ.} Schemat powtarzania tego zadania okreœla wyra¿enie \texttt{
 	cron = "0 0 0/12 * * ?"}, które interpretowane jest jako "`co 12 godzin, ka¿dego dnia, zaczynaj¹c o pó³nocy"'.
-	Generowanie zleceñ rozpoczyna siê od pobrania z bazy danych listy u¿ytkowników, którzy posiadaj¹ mniej ni¿ maksymalna dozwolona liczba zleceñ prywatnych. Ze wzglêdu na z³o¿onoœæ zapytania, konieczne by³o jego zdefiniowanie rêczne przy pomocy adnotacji \texttt{@Query}, co zaprezentowano na listingu \ref{lst:query} w dziale \ref{db} \nameref{db}.
+	Generowanie zleceñ rozpoczyna siê od pobrania z bazy danych listy u¿ytkowników, którzy posiadaj¹ mniej ni¿ maksymalna dozwolona liczba zleceñ prywatnych. Ze wzglêdu na z³o¿onoœæ zapytania, konieczne by³o jego zdefiniowanie rêczne przy pomocy adnotacji \texttt{@Query}, co zaprezentowano na listingu \ref{lst:query}.
 	
-	Nastêpnie, dla ka¿dego u¿ytkownika tworzona jest lista u¿ytkowników znajduj¹cych siê w pobli¿u na podstawie zapamiêtanej ostatniej ich lokalizacji. Z utworzonej listy losowanych jest tylu u¿ytkowników, aby uzupe³niæ zlecenia do maksymalnej wartoœci.
-	
+Nastêpnie, dla ka¿dego u¿ytkownika tworzona jest lista u¿ytkowników znajduj¹cych siê w pobli¿u na podstawie zapamiêtanej ostatniej ich lokalizacji. Z utworzonej listy losowanych jest tylu u¿ytkowników, aby uzupe³niæ zlecenia do maksymalnej wartoœci.
 	
 	\begin{lstlisting} [label={lst:generate_task},caption={Zadanie generuj¹ce nowe zlecenia}]
 %%@Scheduled(cron = %%"0 0 0/12 * * ?"%%)%%
@@ -608,7 +599,7 @@ public void createNewTargets() {
     }
 \end{lstlisting}
 
-Funkcja obliczaj¹ca odleg³oœæ dwóch punktów na podstawie wspó³rzêdnych zosta³a zaczerpniêta z  serwisu StackOverflow\ref{bib:stack_distance}.
+Funkcja obliczaj¹ca odleg³oœæ dwóch punktów na podstawie wspó³rzêdnych zosta³a zaczerpniêta z  serwisu StackOverflow\cite{distance}.
 
 
 	\item \textbf{Zmiana widocznoœci zleceñ z prywatnych na publiczne}. Aby mo¿liwe by³o utrzymanie spójnoœci danych, konieczne jest czêste wykonywanie aktualizacji. Z tego powodu to zadanie wywo³ywane jest co 10 sekund. Podczas wykonywania pobierana jest lista zleceñ prywatnych, które przekroczy³y czas przydzielone na ich potwierdzenie. Odpowiednie zapytanie zaprezentowano na listingu \ref{lst:expired_service}. Nastêpnie ka¿de zlecenie jest modyfikowane przez zmianê widocznoœci na publiczne, nadanie nowej daty utworzenia w celu zrestartowania wa¿noœci i usuniêcie przypisania do u¿ytkownika Szukaj¹cego.
@@ -628,7 +619,6 @@ public void makePublicTargets() {
 		\end{lstlisting}
 		
 			\begin{lstlisting} [label={lst:expired_service},caption={Metoda serwisu \texttt{TargetService} pobieraj¹ca zlecenia wymagaj¹ce zmian.}]
-			
 public List<Target> findExpired(boolean publi) {
         LocalDateTime daysAgo = LocalDateTime.now()
 		.minusDays(Preferences.PRIVATE_TARGET_DAYS);
@@ -641,62 +631,62 @@ public List<Target> findExpired(boolean publi) {
 \end{enumerate}
 		
 		
-\section{Aplikacja kliencka}\indent \par
+\section{Aplikacja kliencka}
 
 Ta sekcja opisuje proces implementacji aplikacji mobilnej przeznaczonej dla graczy.
 
-		\subsection{Struktura projektu}\indent \par
+		\subsection{Struktura projektu}
 		Projekt zosta³ wykonany w programie Android Studio w wersji 2.1.3\cite{studio}. W plikach projektu wyró¿niæ mo¿na dwie zasadnicze grupy: klasy w jêzyku Java oraz pliki zasobów. 
 		Pliki klas podzielone zosta³y w pakiety zgodnie z ich przeznaczeniem:
 		\begin{itemize}
-			\item activity - zawiera klasy \texttt{Activity} widoków dostêpnych w aplikacji
-			\item api - klasy dostarczaj¹ce funkcjonalnoœci komunikacji z serwerem poprzez zapytania http
-			\item constant - wartoœci sta³ych wykorzystywanych w projekcie
-			\item fragment - zawiera klasy fragmentów bêd¹cych zawartoœci¹ klas \texttt{Activity}
-			\item model - zawiera definicje obiektów reprezentuj¹cych rzeczywiste dane, na których operuje system
-			\item util - zawiera klasy wspomagaj¹ce dostarczaj¹ce funkcjonalnoœci przetwarzania danych poprzez statyczne metody
-			\item view - zawiera niestandardowe klasy komponentów widoku 
+			\item activity - zawiera klasy \texttt{Activity} widoków dostêpnych w aplikacji,
+			\item api - klasy dostarczaj¹ce funkcjonalnoœci komunikacji z serwerem poprzez zapytania http,
+			\item constant - wartoœci sta³ych wykorzystywanych w projekcie,
+			\item fragment - zawiera klasy fragmentów bêd¹cych zawartoœci¹ klas \texttt{Activity},
+			\item model - zawiera definicje obiektów reprezentuj¹cych rzeczywiste dane, na których operuje system,
+			\item util - zawiera klasy wspomagaj¹ce dostarczaj¹ce funkcjonalnoœci przetwarzania danych poprzez statyczne metody,
+			\item view - zawiera niestandardowe klasy komponentów widoku.
 
 		\end{itemize}
 		
 		
 		Struktura plików zasobów jest okreœlona z góry dla wszystkich projektów. Wyró¿niæ mo¿na nastêpuj¹ce foldery: 
 		\begin{itemize}
-			\item drawable - obrazy oraz pliki xml elementów widoku
-			\item layout - pliki interfejsu graficznego aplikacji
-			\item menu - lista opcji dostêpnych na ró¿nych menu aplikacji
-			\item mipmap - ikony aplikacji
-			\item values - pliki xml okreœlaj¹ce wartoœci takie jak kolory, wymiary, style u¿ywane w aplikacji
+			\item drawable - obrazy oraz pliki xml elementów widoku,
+			\item layout - pliki interfejsu graficznego aplikacji,
+			\item menu - lista opcji dostêpnych na ró¿nych menu aplikacji,
+			\item mipmap - ikony aplikacji,
+			\item values - pliki xml okreœlaj¹ce wartoœci takie jak kolory, wymiary, style u¿ywane w aplikacji.
 		\end{itemize}
 		
 		
 		Oprócz  opisanych powy¿ej plików istotn¹ rolê w projekcie pe³ni¹ dwa pliki \texttt{build.gradle} pozwalaj¹ce na konfiguracje projektu oraz do³¹czanie bibliotek.
 		
-		\subsection{Biblioteki wykorzystane w projekcie}\indent \par
+		\subsection{Biblioteki wykorzystane w projekcie}
 		
 		W celu poszerzenia funkcjonalnoœci dostêpnych w projektach Androida i zaoszczêdzenia czasu programowania stosuje siê biblioteki do³¹czane poprzez plik \texttt{gradle.build}. Biblioteki do³¹cza siê poprzez podanie zale¿noœci w sekcji \texttt{dependencies\{\}}. 
 		
-		Poni¿sza lista przedstawia wszystkie biblioteki wykorzystywane w projekcie. Wybrane z nich zostan¹ szerzej opisane w dalszej czêœci pracy.
-		
+		Poni¿sza lista przedstawia wszystkie biblioteki wykorzystywane w projekcie:
 		\begin{itemize}
-			\item ButterKnife\cite{butterknife} - biblioteka pozwala na wstrzykiwanie elementów widoków z pliku xml do klas Javy
-			\item FastAdapter\cite{fastadapter} - biblioteka u³atwiaj¹ca tworzenie list z wykorzystaniem komponentu \texttt{RecyclerView}
-			\item Support Library\cite{appcompat} - biblioteka dostarczana przez Google, zapewniaj¹ca kompatybilnoœæ ze starszymi wersjami systemu Android
-			\item Circular Image View\cite{circular} - element interfejsu pozwalaj¹cy na utworzenie okr¹g³ebo obrazu
-			\item Gson\cite{gson} - biblioteka pozwalaj¹ca na konwersjê pomiêdzy obiektami Javy a ich reprezentacj¹ w formacie JSON
-			\item Retrofit\cite{retrofit}- klient HTTP dla Androida pozwalaj¹cy na wygodne tworzenie zapytañ HTTP 
-			\item Joda\cite{joda} - dostarcza funkcjonalnoœci pozwalaj¹cych na wygodne przetwarzanie dat i czasu z uwzglêdnieniem stref czasowych
-			\item Universal Image Loader\cite{imageloader} - pozwala na ³adowanie obrazów z ró¿nych Ÿróde³ w tle, pozwalaj¹c na p³ynn¹ pracê aplikacji bez obci¹¿ania interfejsu
-			\item Android Image Cropper\cite{cropper} - dostarcza funkcjonalnoœæ przycinania zdjêæ wykorzystywan¹ podczas rejestracji konta
-			\item Hold To Load Layout\cite{holdtoload} - widok w kszta³cie ko³a wyœwietlaj¹cy pasek ³adowania wokó³ siebie podczas d³ugiego wciœniêcia
-			\item Okhttp3 Logging Interceptor\cite{okhttp} - rozszerzenie dla biblioteki Retrofit opartej na Okhttp3 pozwalaj¹ce na wyœwietlanie zapytañ HTTP w logach aplikacji i na konsoli
-			\item Number Progress Bar\cite{progressbar} - pasek postêpu z numeryczn¹ reprezentacj¹ poziomu ukoñczenia w procentach
-			\item Play Services\cite{play} - us³ugi dostarczane przez Google, niezbêdne do wykorzystania API Google Maps
-			\item Google Maps\cite{maps} - obs³uga Google Maps 
-			\item Circular Progress Bar\cite{circular_bar} - pasek postêpu w kszta³cie okrêgu, wykorzystywany jako odliczanie czasu
-			
+			\item ButterKnife\cite{butterknife} - biblioteka pozwala na wstrzykiwanie elementów widoków z pliku xml do klas Javy,
+			\item FastAdapter\cite{fastadapter} - biblioteka u³atwiaj¹ca tworzenie list z wykorzystaniem komponentu \texttt{RecyclerView},
+			\item Support Library\cite{appcompat} - biblioteka dostarczana przez Google, zapewniaj¹ca kompatybilnoœæ ze starszymi wersjami systemu Android,
+			\item Circular Image View\cite{circular} - element interfejsu pozwalaj¹cy na utworzenie okr¹g³ego obrazu,
+			\item Gson\cite{gson} - biblioteka pozwalaj¹ca na konwersjê pomiêdzy obiektami Javy a ich reprezentacj¹ w formacie JSON,
+			\item Retrofit\cite{retrofit}- klient HTTP dla Androida pozwalaj¹cy na wygodne tworzenie zapytañ HTTP,
+			\item Joda\cite{joda} - dostarcza funkcjonalnoœci pozwalaj¹cych na wygodne przetwarzanie dat i czasu z uwzglêdnieniem stref czasowych,
+			\item Universal Image Loader\cite{imageloader} - pozwala na ³adowanie obrazów z ró¿nych Ÿróde³ w tle, pozwalaj¹c na p³ynn¹ pracê aplikacji bez obci¹¿ania interfejsu,
+			\item Android Image Cropper\cite{cropper} - dostarcza funkcjonalnoœæ przycinania zdjêæ wykorzystywan¹ podczas rejestracji konta,
+			\item Hold To Load Layout\cite{holdtoload} - widok w kszta³cie ko³a wyœwietlaj¹cy pasek ³adowania wokó³ siebie podczas d³ugiego wciœniêcia,
+			\item Okhttp3 Logging Interceptor\cite{okhttp} - rozszerzenie dla biblioteki Retrofit opartej na Okhttp3 pozwalaj¹ce na wyœwietlanie zapytañ HTTP w logach aplikacji i na konsoli,
+			\item Number Progress Bar\cite{progressbar} - pasek postêpu z numeryczn¹ reprezentacj¹ poziomu ukoñczenia w procentach,
+			\item Play Services\cite{play} - us³ugi dostarczane przez Google, niezbêdne do wykorzystania API Google Maps,
+			\item Google Maps\cite{maps} - obs³uga Google Maps,
+			\item Circular Progress Bar\cite{circular_bar} - pasek postêpu w kszta³cie okrêgu, wykorzystywany jako odliczanie czasu.
 		\end{itemize}
-		\subsection{Tworzenie interfejsu aplikacji}\indent \par
+		
+Wybrane biblioteki zostan¹ szerzej opisane w dalszej czêœci pracy.
+		\subsection{Tworzenie interfejsu aplikacji}
 		
 Interfejs u¿ytkownika w aplikacjach na systemy Android tworzony jest przy pomocy plików XML znajduj¹cych siê w katalogu \texttt{res/layout} projektu. Do tworzenia interfejsu wykorzystuje siê standardowe komponenty dostarczane przez œrodowisko Android, jak np. Button, ImageView, EditText itp. Komponenty osadza siê kontenerach okreœlaj¹cych ich uk³ad na ekranie, np. LinearLayout, w którym elementy uk³adane s¹ jeden obok drugiego w okreœlonym kierunku(pionowo lub poziomo). Ka¿dy element widoku posiada w³aœciwoœci, którymi mo¿na zmieniaæ jego wygl¹d i zachowanie. Mo¿liwe jest wykorzystanie elementów spoza domyœlnego zestawu dostêpnego w œrodowisku, na przyk³ad poprzez do³¹czenie zewnêtrznej biblioteki lub zdefiniowanie w³asnej klasy. W takim wypadku przy deklaracji elementu w pliku XML nale¿y podaæ pe³n¹ œcie¿kê do klasy z  uwzglêdniemiem pakietu w jakim siê znajduje. Przyk³adowy plik definicji widoku wykorzystuj¹cy zewnêtrzn¹ klasê przedstawiono na listingu \ref{lst:android_xml}. Elementom interfejsu mo¿na nadawaæ identyfikatory korzystaj¹c z parametru \texttt{android:id="@+id/<nazwa>"}. Po nadajniu identyfikatora mo¿liwe jest odnalezienie elementu w klasie aktywnoœci.
 
@@ -792,7 +782,6 @@ W projekcie aby zredukowaæ iloœæ powielonego kodu potrzebnego do prze³¹czania ak
 
 
 \begin{lstlisting}[label={lst:intent_helper},caption={Klasa \texttt{IntentHelper}}]
-
 public class IntentHelper {
     public final static int FILE_PICK = 1001;
     public final static int GPS_SETTINGS = 1002;
@@ -824,7 +813,6 @@ Jako parametry metod zwartych w klasie nale¿y podaæ kontekst Ÿród³owy, z którego
 
 
 \begin{lstlisting}[label={lst:intent_helper_call},caption={Wywo³anie metody klasy \texttt{IntentHelper}}]
-
     public void goToTargets() {
         IntentHelper.startActivityIntent(this, TargetActivity.class);
         finish();
@@ -836,17 +824,17 @@ Je¿eli po zakoñczeniu pracy kontrolera powinny zostaæ zwrócone jakieœ dane, akty
 
 W aplikacji zaimplementowane zosta³y nastêpuj¹ce aktywnoœci:
 \begin{itemize}
-	\item CodeActivity - widok pozwalaj¹cy na wygenerowanie kodu potwierdzaj¹cego
-	\item DetailsActivity - widok szczegó³ów zlecenia
-	\item GpsActivity - widok wyœwietlany po zalogowaniu u¿ytkownika wykouj¹cy zapis lokalizacji do bazy, drug¹ jego funkcj¹ jest zablokowanie dostêpu do pozosta³ych funkcji aplikacji
-	\item LoginActivity - widok logowania do konta
-	\item MapActivity - widok mapy z naniesionymi znanymi lokalizacjami u¿ytkownika, wywo³ywany z poziomu szczegó³ów zlecenia
-	\item TargetActivity - wikod listy zleceñ
-	\item RegisterActivity - widok rejestracji konta
-	\item WelcomeActivity - widok startowy aplikacji
+	\item CodeActivity - widok pozwalaj¹cy na wygenerowanie kodu potwierdzaj¹cego,
+	\item DetailsActivity - widok szczegó³ów zlecenia,
+	\item GpsActivity - widok wyœwietlany po zalogowaniu u¿ytkownika wykouj¹cy zapis lokalizacji do bazy, drug¹ jego funkcj¹ jest zablokowanie dostêpu do pozosta³ych funkcji aplikacji,
+	\item LoginActivity - widok logowania do konta,
+	\item MapActivity - widok mapy z naniesionymi znanymi lokalizacjami u¿ytkownika, wywo³ywany z poziomu szczegó³ów zlecenia,
+	\item TargetActivity - wikod listy zleceñ,
+	\item RegisterActivity - widok rejestracji konta,
+	\item WelcomeActivity - widok startowy aplikacji.
 \end{itemize}
 
-Szczegó³y dotycz¹ce implementacji kolejnych aktywnoœci opisuj¹ kolejne sekcje tego rozdzia³u.
+Szczegó³y dotycz¹ce implementacji ka¿dej z aktywnoœci opisuj¹ kolejne sekcje tego rozdzia³u.
 
 Aktywnoœci zadeklarowane w aplikacji musz¹ zostaæ wpisane do pliku \texttt{AndroidManifest.xml}. Plik ten dostarcza niezbêdnych informacji o zawartoœci aplikacji do systemu operacyjnego, takich jak wymagane uprawnienia aplikacji czy wersja systemu operacyjnego.\cite{manifest, permissions} Zwartoœæ tego pliku w projekcie pokazano na listingu \ref{lst:manifest}. Oprócz wymienionych powy¿ej aktywnoœci zadeklarowana zosta³a jedna dodatkowa \texttt{CropImageActivity} pochodz¹ca z biblioteki ImageCropper.
 
@@ -915,10 +903,10 @@ Aktywnoœci zadeklarowane w aplikacji musz¹ zostaæ wpisane do pliku \texttt{Andro
  W pliku manifest zosta³y zadeklarowane uprawnienia aplikacji:
 
 \begin{itemize}
-	\item INTERNET - pozwala na dostêp do internetu
-	\item ACCESS\_FINE\_LOCATION - pozwala na pozyskanielokalizacji przy pomocy modu³u GPS
-	\item ACCESS\_COARSE\_LOCATION - powzwala na pozyskanie lokalizacji przy pomocy modu³u GSM lub Wifi
-	\item READ\_EXTERNAL\_STORAGE - pozwala na odczyt plików z zewnêtrznej karty pamiêci
+	\item INTERNET - pozwala na dostêp do internetu,
+	\item ACCESS\_FINE\_LOCATION - pozwala na pozyskanielokalizacji przy pomocy modu³u GPS,
+	\item ACCESS\_COARSE\_LOCATION - powzwala na pozyskanie lokalizacji przy pomocy modu³u GSM lub Wifi,
+	\item READ\_EXTERNAL\_STORAGE - pozwala na odczyt plików z zewnêtrznej karty pamiêci.
 \end{itemize}
 
 
@@ -1007,7 +995,7 @@ Prze³¹czanie pomiêdzy wybranymi widokami aplikacji odbywa siê za pomoc¹ bocznego
 
 \end{lstlisting}
 
-Panel nawigacyjny dostêpny jest tylko z aktywnoœci \texttt{TargetActivity}. Obs³ug¹ klikniêæ w panelu zajmuje siê metoda \texttt{onNavigationItemSelected}. Fragment tej metody pozwalaj¹cy na uruchomienie aktywnoœci \texttt{CodeActivity} przedstawia poni¿szy listing.
+Panel nawigacyjny (rys. \ref{fig:drawer_5}) dostêpny jest tylko z aktywnoœci \texttt{TargetActivity}. Obs³ug¹ klikniêæ w panelu zajmuje siê metoda \texttt{onNavigationItemSelected}. Fragment tej metody pozwalaj¹cy na uruchomienie aktywnoœci \texttt{CodeActivity} przedstawia poni¿szy listing.
 
 
 \begin{lstlisting}[label={lst:navigation_click},caption={Lista opcji dostêpna na panelu nawigacyjnym}]
@@ -1040,9 +1028,9 @@ Panel nawigacyjny dostêpny jest tylko z aktywnoœci \texttt{TargetActivity}. Obs³
 \label{fig:drawer_5}%
 \end{figure}
 
-		\subsection{Komunikacja z serwerem} \indent \par \label{komunikacja_android}
+		\subsection{Komunikacja z serwerem} \label{komunikacja_android}
 		
-		Przesy³anie danych pomiêdzy zaimplementowanym serwerem, a opisywan¹ aplikacj¹ mobiln¹ odbywa siê przy pomocy zapytañ HTTP. Do tworzenia zapytañ wykorzystana zosta³a biblioteka Retrofit rozpowszechniana na licencji Apache 2.0\cite{apache}.
+		Przesy³anie danych pomiêdzy zaimplementowanym serwerem, a opisywan¹ aplikacj¹ mobiln¹ odbywa siê przy pomocy zapytañ HTTP. Do tworzenia zapytañ wykorzystana zosta³a biblioteka Retrofit rozpowszechniana na licencji Apache 2.0 \cite{apache}.
 		Retrofit pozwala na przekszta³cenie API HTTP w interfejs Javy, a nastêpnie przy pomocy metod i adnotacji zdefiniowanie dostêpnych adresów URL. Nastêpnie mo¿liwe jest wygenerowanie implementacji oraz obs³ugê zapytañ wysy³anych z jej pomoc¹. 
 		
 		\begin{lstlisting}[label={lst:retrofit_service}, caption={Przyk³adowe interfejsy zapytañ Retrofit}]
@@ -1148,7 +1136,7 @@ private void saveLoginLocation() {
 \end{lstlisting}
 
 		
-		\subsection{Rejestracja konta} \indent \par \label{rejestracja}
+		\subsection{Rejestracja konta} \label{rejestracja}
 		
 				Kontrolerem widoku jest klasa \texttt{RegisterActivity}. Rejestracja u¿ytkownika odbywa siê w czterech etapach: 
 		\begin{enumerate}
@@ -1175,8 +1163,7 @@ public void pickPhoto() {
 	
 
 				\begin{lstlisting}[label={lst:image_result}, caption={Obs³uga wyników aktywnoœci wyboru zdjêcia}]
-		
-	
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
 		Intent data) {
@@ -1228,14 +1215,11 @@ public void pickPhoto() {
 
 \end{lstlisting}
 		
-	W celu zabezpieczenia przez wykorzystywaniem przez u¿ytkowników zdjêæ nieprzedstawiaj¹cych osób, wprowadzony zosta³ mechanizm wykrywania twarzy przy pomocy narzêdzia Mobile Vision\cite{vision}.	Po zakoñczeniu przycinania zdjêcie jest one przekazywane do obiektu \texttt{FaceDetector}, a nastêpnie poddawane analizie. W zale¿noœci od liczby wykrytych twarzy, pod zdjêciem wyœwietlany jest odpowiedni komunikat. 
+	W celu zabezpieczenia przez wykorzystywaniem przez u¿ytkowników zdjêæ nieprzedstawiaj¹cych osób, wprowadzony zosta³ mechanizm wykrywania twarzy przy pomocy narzêdzia Mobile Vision\cite{vision}.	Po zakoñczeniu przycinania zdjêcie jest przekazywane do obiektu \texttt{FaceDetector}, a nastêpnie poddawane analizie. W zale¿noœci od liczby wykrytych twarzy, pod zdjêciem wyœwietlany jest odpowiedni komunikat.	Efekt dzia³ania tej funkcjonalnoœci pokazano na rysunku \ref{fig:fig7}.
 	
-	Przyk³ad dzia³ania opisanego procesu zaprezentowano na poni¿szych rysunkach.
-	
-	
-	\begin{figure}[H] 
+		\begin{figure}[H] 
 	\centering
-  \begin{subfigure}[b]{0.5\linewidth}
+ \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[draft=false,width=.5\linewidth]{rys05/register1.png} 
     \caption{Widok formularza rejestracji} 
@@ -1261,9 +1245,11 @@ public void pickPhoto() {
     \caption{Efekt po wykryciu twarzy} 
     \label{fig7:d} 
   \end{subfigure} 
+	
   \caption{Przyk³ad przebiegu procesu wyboru zdjêcia}
-  \label{fig7} 
-\end{figure}
+  \label{fig:fig7}
+	\end{figure}
+	
 
 	Formularz danych sk³ada siê z szeregu pól tekstowych. Szczególnym przypadkiem jest pole wyboru daty urodzenia, które wyœwietla okno dialogowe kalendarza po kliniêciu na nie. W celu wyœwietlenia okna tworzony jest obiekt \texttt{DatePickerDialog}, a do pola tekstowego dodawany jest \texttt{OnFocusChangeListener}, pozwalaj¹cy na detekcjê zmiany aktywnoœci pola. Wynik wyboru date z kalendarza obs³ugiwany jest przez interfejs \texttt{DatePickerDialog.OnDateSetListener}.
 	
@@ -1341,10 +1327,8 @@ public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
 	
 	Korzystaj¹c z narzêdzia Retrofit tworzone s¹ serwisy, z których nastêpnie pobierane s¹ odpowiednie metody.   Zapytania wykonywane s¹ metod¹ \texttt{execute()}, która gwarantuje wykonanie ich w w¹tku, w którym zostan¹ wywo³ane. Po uzyskaniu odpowiedzi z identyfikatorem przes³anego zdjêcia jest on odzyskiwany przy pomocy metody \texttt{imgurResponse.body().getData().getId()} i przekazywany do obiektu \texttt{UserTemplate}. Po poprawnym wykonaniu zapytania tworz¹cego konto aktywnoœæ jest zamykana w metodzie \texttt{onPostExecute}.
 	
-	
-	\begin{lstlisting}[label={lst:date_pick}, caption={Wyœwietlanie okna dialogowego kalendarza}]
+	\begin{lstlisting}[label={lst:date_pick}, caption={Zadanie \texttt{AsyncTask} rejestracji konta}]
 public class RegisterTask extends AsyncTask<Void, Void, User> {
-
 $$@Override
     protected void onPostExecute(User user) {
         progressBar.setVisibility(View.GONE);
@@ -1359,7 +1343,6 @@ $$@Override
                 }, 3000);
             }
         }
-
         %%@SuppressWarnings(%%"ConstantConditions"%%)%%
         $$@Override
         protected User doInBackground(Void... voids) {
@@ -1421,11 +1404,10 @@ $$@Override
             }
             return registeredUser.body();
         }
-    }
 	
 	\end{lstlisting}
 	
-		\subsection{Logowanie do konta} \indent \par
+		\subsection{Logowanie do konta}
 		
 		Logowanie do konta wykonywane jest przy pomocy adresu email oraz has³a podanego przy rejestracji. Obs³ug¹ widoku logowania zajmuje siê klasa \texttt{LoginActivity}. Po wprowadzeniu danych i naciœniêciu przycisku "`Log in"' walidowane s¹ pola danych, a nastêpnie przesy³ane na serwer z u¿yciem serwisu. Retrofit. W odpowiedzi na zapytanie przesy³any jest token dotêpu do API serwera, który zapamiêtywany jest w statycznym polu klasy \texttt{AppVariable}, aby móg³ zostaæ wykorzystany w kolejnych zapytaniach. Po poprawnym zalogowaniu aplikacji przechodzi do aktywnoœci \texttt{GpsActivity}.
 		
@@ -1492,7 +1474,7 @@ private void attemptLogin() {
 }
 		\end{lstlisting} 
 		
-		\subsection{Lokalizacja urz¹dzenia} \indent \par
+		\subsection{Lokalizacja urz¹dzenia}
 		
 		Po zalogowaniu aplikacja przechodzi do zapisu lokalizacji. Na ekranie wyœwietlony zostaje widok \texttt{activity\_gps.xml} obs³ugiwany przez \texttt{GpsActivity}. 
 		
@@ -1659,7 +1641,7 @@ public void onLocationChanged(android.location.Location location) {
 \end{lstlisting} 
 
 
-		\subsection{Lista zleceñ} \indent \par \label{lista_zlecen}
+		\subsection{Lista zleceñ} \label{lista_zlecen}
 		
 Organizacja widoki listy zleceñ jest inna od pozosta³ych aktywnoœci w aplikacji. Aby umo¿liwiæ podzia³ na dwie zak³adki zastosowane zosta³y komponenty \texttt{TabLayout} oraz \texttt{ViewPager} pozwalaj¹ce na zmianê widoku przeci¹gniêciem w poziomie po ekranie. Zawartoœæ poszczególnych widoków przeniesiona zosta³a do fragmentów. W przeciwieñstwie do aktywnoœci, fragemnty nie mog¹ wystêpowaæ samodzielnie w aplikacji, musz¹ byæ czêœci¹ jakiejœ aktywnoœci. Mo¿liwe jest jednak posiadanie wielu fragmentów jednoczeœnie w ramach jednego widoku.
 
@@ -1696,7 +1678,7 @@ public class TargetPageAdapter extends FragmentPagerAdapter {
 
 \end{lstlisting}
 
-Fragmenty umieszczane na kartach sk³adaj¹ siê z komponentu \texttt{RecyclerView} wyœwietlaj¹cego listê zleceñ zawartego w widoku \texttt{SwipeRefreshLayout}. Widok ten pozwala na wykonanie wybranej akcji gestem poci¹gniêcia w dó³.
+Fragmenty umieszczane na kartach sk³adaj¹ siê z komponentu \texttt{RecyclerView} wyœwietlaj¹cego listê zleceñ zawartego w widoku \texttt{SwipeRefreshLayout}\cite{swipe}. Widok ten pozwala na wykonanie wybranej akcji gestem poci¹gniêcia w dó³.
 
 Lista \texttt{RecyclerView} korzysta z kontenerów nazywanych \texttt{ViewHolder} do wyœwietlania elementów. Konieczne jest zdefiniowanie pliku interfejsu okreœlaj¹cego wygl¹d elementu, a nastêpnie stworzenie zmiennych w klasie ViewHolder, które zostan¹ póŸniej wykorzystane ustawienia wyœwietlanych danych, i powi¹zanie ich z widokiem. W implementowanej liœcie pojedynczy element sk³ada siê ze zdjêcia, kilku elementów tekstowych oraz kolorowego paska statusu.
 
@@ -1901,7 +1883,7 @@ private void openDetails(Target target) {
 }
 	
 \end{lstlisting}
-		\subsection{Szczegó³y zlecenia}\indent \par
+		\subsection{Szczegó³y zlecenia}
 		
 		Aktywnoœci¹ obs³uguj¹c¹ ekran szczegó³ów zlecenia jest \texttt{DetailsActivity}. Dane o wyœwietlanym zleceniu przekazywane s¹ w intencji przez klasê \texttt{Bundle}. Na widoku znajduje siê ten sam zestaw danych, co na elemencie listy opisanym w punkcie \ref{lista_zlecen}, zatem metoda inicjalizuj¹ca komponenty widoku jest zbli¿ona do tej przedstawionej na listingu \ref{lst:adapter}.	Zasadnicz¹ ró¿nic¹ jest sposób pobrania danych do inicjalizacji. Nie s¹ one przekazywane w konstruktorze, lecz musz¹ zostaæ pobrane z intencji. Widok inicjalizowany jest na podstawie otrzymanej klasy modelu \texttt{Target}.
 		
@@ -1987,7 +1969,7 @@ public boolean onOptionsItemSelected(MenuItem menuItem) {
 \end{lstlisting}
 
 		
-		\subsection{Mapa znanych lokalizacji u¿ytkownika}\indent \par
+		\subsection{Mapa znanych lokalizacji u¿ytkownika}
 		
 Umieszczenie mapy Google wewn¹trz widoku odbywa siê poprzez dodanie do pliku interfejsu fragmentu z ustawionym parametrem \texttt{android:name="com.google.android.gms.maps.MapFragment"}.\cite{maps_fragment} Pod zadany widok zostanie podpiêta instancja klasy \texttt{MapFragment}. Kontroler aktywnoœci musi implementowaæ interfejs \texttt{OnMapReadyCallback}. Po utworzeniu widoku mapa jest pobierana metod¹ \texttt{getMapAsync}. Nastepnie z serwera pobierane s¹ punkty lokalizacyjne za pomoc¹ interfejsu Retrofit.
 
@@ -2003,7 +1985,7 @@ Umieszczenie mapy Google wewn¹trz widoku odbywa siê poprzez dodanie do pliku int
 		\end{lstlisting}
 
 
-Narzêdzie Google Maps oferuje mo¿liwoœæ grupowania znaczników znajduj¹cych siê blisko siebie w celu zwiêkszenia przejrzystoœci mapy. Grupowanie wymaga utworzenia obiektu \texttt{ClusterManager}, którzy zarz¹dza wyœwietlanymi znacznikami. W przypadku wyœwietlania bez grupowania znaczniki dodawaæ mo¿na bezpoœrednio do obiektu mapy. Po pobraniu danych o lokalizacji znaczniki dodawane s¹ w jeden z opisanych wy¿ej sposobów zaleznie od ustawionych preferencji. Znacznikow przypisywane s¹ dodatkowe informacje \texttt{title} oraz \texttt{snippet} wyœwietlane po klikniêciu na znacznik. Dla lokalizacji zapisanych mniej ni¿ tydzieñ temu w tytule zamiast pe³nej daty wyœwietlony zostanie wzglêdny czas utworzenia. Na rysunku \ref{fig:map_4} przedstawiono efekt dodania znaczników dla przyk³adowych danych.
+Narzêdzie Google Maps oferuje mo¿liwoœæ grupowania znaczników znajduj¹cych siê blisko siebie w celu zwiêkszenia przejrzystoœci mapy. Grupowanie wymaga utworzenia obiektu \texttt{ClusterManager}, którzy zarz¹dza wyœwietlanymi znacznikami. W przypadku wyœwietlania bez grupowania znaczniki dodawaæ mo¿na bezpoœrednio do obiektu mapy. Po pobraniu danych o lokalizacji znaczniki dodawane s¹ w jeden z opisanych wy¿ej sposobów zaleznie od ustawionych preferencji. Znacznikow przypisywane s¹ dodatkowe informacje \texttt{title} oraz \texttt{snippet} wyœwietlane po klikniêciu na znacznik. Dla lokalizacji zapisanych mniej ni¿ tydzieñ temu w tytule zamiast pe³nej daty wyœwietlony zostanie wzglêdny czas utworzenia.
 
 \begin{lstlisting}[label={lst:map_options}, caption={Obs³uga wywo³ania aktywnoœci mapy}]	
 
@@ -2055,36 +2037,9 @@ public void getHuntedLocations() {
     }
 }
 \end{lstlisting}
-
 		
 		
-\begin{figure}[H] 
-\centering
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.8\linewidth]{rys05/map2.png} 
-	\caption{Znaczniki lokalizacji} 
-	\label{fig7:a} 
-\end{subfigure}%% 
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.8\linewidth]{rys05/map1.png} 
-	\caption{Grupa znaczników} 
-	\label{fig7:b} 
-\end{subfigure} 
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.8\linewidth]{rys05/map3.png} 
-	\caption{Okno z danymi o znaczniku} 
-	\label{fig7:c} 
-\end{subfigure}%%
-\caption{Mapa lokalizacji u¿ytkownika po dodaniu znaczników}
-\label{fig:map_4} 
-\end{figure}
-		
-		
-		
-		\subsection{Generowanie kodów potwierdzaj¹cych} \indent \par
+		\subsection{Generowanie kodów potwierdzaj¹cych}
 		
 Do aktywnoœci generowania kodu przejœæ mo¿na z bocznego panelu nawigacyjnego. Kontrolerem aktywnoœci jest klasa \texttt{CodeActivity}. Do generowania kodu wykorzystywany jest przycisk utworzony przy pomocy biblioteki HoldToLoadLayout. Podczas przytrzymania przycisku wyœwietlany jest pasek ³adowania. Biblioteka wymaga zaimplementowania metod wywo³ywanych po ukoñczeniu ³adowania. Po utworzeniu widoku, w metodzie \texttt{onCreateView} przypisywana jest instancja s³uchacza wyzwalaj¹cego zdarzenia po osi¹gniêciu stanu pe³nego i pustego paska ³adowania. Wygl¹d interfejsu podczas ³adowania przedstawiono na rysunku \ref{fig:code_layout}.
 

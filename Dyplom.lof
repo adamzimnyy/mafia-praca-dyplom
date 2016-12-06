@@ -3,26 +3,36 @@
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Diagram przypadk\'ow u\.zycia po stronie aplikacji mobilnej\relax }}{20}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagram przypadk\'ow u\.zycia po stronie aplikacji serwerowej\relax }}{21}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Ekran startowy aplikacji, \textit {\'zr\'od\IeC {\l }o obrazu:} \cite {boss}\relax }}{26}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Ekran rejestracji\relax }}{27}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Ekran logowania \relax }}{27}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Ekran zapisu lokalizacji po logowaniu\relax }}{28}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Lista zlece\'n\relax }}{28}{figure.4.7}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Ekran rejestracji\relax }}{29}{figure.4.8}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Mapa znanych lokalizacji u\.zytkownika\relax }}{29}{figure.4.9}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Panel nawigacyjny aplikacji\relax }}{30}{figure.4.10}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Ekran Generowanie kodu\relax }}{30}{figure.4.11}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Model konceptualny bazy danych\relax }}{31}{figure.4.12}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Model fizyczny bazy danych\relax }}{32}{figure.4.13}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Diagram przypadk\'ow u\.zycia dla aplikacji mobilnej\relax }}{19}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagram przypadk\'ow u\.zycia dla aplikacji serwerowej\relax }}{20}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Ekran startowy aplikacji, \textit {\'zr\'od\IeC {\l }o obrazu:} \cite {boss}\relax }}{25}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Ekran rejestracji\relax }}{26}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Ekran logowania \relax }}{26}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Ekran zapisu lokalizacji po logowaniu\relax }}{27}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Lista zlece\'n\relax }}{27}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Ekran "`Szczeg\'o\IeC {\l }y zlecenia"'\relax }}{28}{figure.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Mapa znanych lokalizacji u\.zytkownika\relax }}{28}{figure.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Panel nawigacyjny aplikacji\relax }}{29}{figure.4.10}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Ekran Generowanie kodu\relax }}{29}{figure.4.11}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Model konceptualny bazy danych\relax }}{30}{figure.4.12}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Model fizyczny bazy danych\relax }}{31}{figure.4.13}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Panel nawigacyjny w aplikacji - implementacja\relax }}{65}{figure.5.1}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Przyk\IeC {\l }ad przebiegu procesu wyboru zdj\k ecia\relax }}{70}{figure.5.2}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Ekran zapisu lokalizacji - implementacja\relax }}{77}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Widok szczeg\'o\IeC {\l }\'ow zlecenia - implementacja\relax }}{84}{figure.5.4}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Mapa lokalizacji u\.zytkownika po dodaniu znacznik\'ow\relax }}{86}{figure.5.5}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Widok generowania kodu podczas \IeC {\l }adowania przycisku\relax }}{87}{figure.5.6}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Panel nawigacyjny w aplikacji - implementacja\relax }}{64}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Przyk\IeC {\l }ad przebiegu procesu wyboru zdj\k ecia\relax }}{68}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Ekran zapisu lokalizacji - implementacja\relax }}{75}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Widok szczeg\'o\IeC {\l }\'ow zlecenia - implementacja\relax }}{82}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Widok generowania kodu podczas \IeC {\l }adowania przycisku\relax }}{85}{figure.5.5}
 \addvspace {10pt}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Uruchomienie kreatora maszyny wirtualnej\relax }}{87}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Strona statusu utworzonej maszyny wirtualnej\relax }}{88}{figure.6.2}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Lista dost\k epnych urz\k adze\'n w programie Android Studio\relax }}{88}{figure.6.3}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Pr\'oba logowania poprawnymi danymi\relax }}{89}{figure.6.4}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Pr\'oba logowania b\IeC {\l }\k ednymi danymi\relax }}{90}{figure.6.5}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Pr\'oba dost\k epu do API z tokenem\relax }}{91}{figure.6.6}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Pr\'oba dost\k epu do API bez tokena\relax }}{92}{figure.6.7}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Test funkcjonalno\'sci logowania w aplikacji mobilnej\relax }}{92}{figure.6.8}
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Test funkcjonalno\'sci wykrywania twarzy\relax }}{93}{figure.6.9}
+\contentsline {figure}{\numberline {6.10}{\ignorespaces Mapa lokalizacji u\.zytkownika po dodaniu znacznik\'ow\relax }}{94}{figure.6.10}
+\contentsline {figure}{\numberline {6.11}{\ignorespaces Test funkcjonalno\'sci generowania kodu\relax }}{94}{figure.6.11}
 \addvspace {10pt}
 \addvspace {10pt}
