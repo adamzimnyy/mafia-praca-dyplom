@@ -21,9 +21,8 @@
 \contentsline {section}{\numberline {3.4}Wymagania niefunkcjonalne}{18}{section.3.4}
 \contentsline {chapter}{\chapternumberline {4}Projekt systemu}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}Przypadki u\.zycia}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}Projekt interfejsu}{25}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Aplikacja kliencka}{25}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Projekt bazy danych}{30}{section.4.3}
+\contentsline {section}{\numberline {4.2}Projekt interfejsu aplikacji mobilnej}{25}{section.4.2}
+\contentsline {section}{\numberline {4.3}Projekt bazy danych}{29}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Model konceptualny}{30}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Model fizyczny}{31}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Protok\'o\IeC {\l } komunikacji w systemie}{32}{section.4.4}

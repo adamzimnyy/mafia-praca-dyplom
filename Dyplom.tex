@@ -152,9 +152,6 @@ language=Java,
 
 \makeatother
 
-
-
-
  
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -662,6 +659,12 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 \newpage
 \addcontentsline{toc}{chapter}{Spis listingów}
 \renewcommand\lstlistlistingname{Spis listingów}
+
+
+\makeatletter
+\renewcommand*{\l@lstlisting}{\@dottedtocline{1}{0em}{2.3em}}
+\makeatother
+
 \lstlistoflistings
 \include{skroty} %skróty mo¿na sobie pomin¹æ
 \chapterstyle{default}
