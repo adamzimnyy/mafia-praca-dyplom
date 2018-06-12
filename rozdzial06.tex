@@ -1,228 +1,31 @@
-\chapter{Testy systemu}
+\chapter{Testowanie i ocena wydajnoœci systemu}
 
 \section{Przygotowanie œrodowiska testowego} 
 
 \subsection{Aplikacja serwerowa}
-W celu przygotowania aplikacji serwerowej do instalacji na maszynie konieczne jest wywo³anie w konsoli w g³ównym folderze z plikami projektu komendy \texttt{mvn package spring-boot:repackage}. Komenda wymaga zainstalowania w systemie narzêdzia Maven. Po wykonaniu komendy w folderze \texttt{/target/} utworzoy zostanie plik wykonywalny o rozrzerzeniu \texttt{.jar}.
 
-Jako œrodowisko instalacji czêœci serwerowej systemu wybrany zosta³ serwis Amazon Web Services\cite{amazon}. Narzêdzie Elastic Beanstalk dostêpne w serwisie pozwala na utworzenie wirtualnej maszyny z systemem Linux oraz zainstalowanie na niej aplikacji. 
+Uruchomienie aplikacji z poziomu Intellij IDEA, dzia³a na porcie localhost:8080 i 
 
-\begin{figure}[h]
-\centering
-\includegraphics[draft = false,width=12cm]{rys06/aws1.jpg}%
-\caption{Uruchomienie kreatora maszyny wirtualnej}%
-\label{fig:aws1}%
-\end{figure}
+konfiguracja po³¹czenia do bazy danych na IP 10.0.2.15
 
-Po zalogowaniu do konta serwisu AWS konieczne jest utworzenie nowej instancji korzystaj¹c z menu akcji dostêpnego po prawej stronie (rys. \ref{fig:aws1}). Wybór opcji "`Create new enviroment"' spowoduje uruchomienie kreatora konfiguracji. W konfiguracji nale¿y kolejno:
-\begin{enumerate}
-	\item jako typ aplikacji wybraæ opcjê \textbf{Web Server Enviroment},
-	\item w polu "`Predefined configuration"' wybraæ opcjê \textbf{Java},
-	\item w polu "`Enviroment type"' wybraæ opcjê \textbf{Single instance},
-	\item jako plik Ÿród³owy nale¿y wybraæ utworzony wczeœniej plik \texttt{.jar},
-	\item pola formularza "`Enviroment information"' wype³niæ wedle uznania.
-\end{enumerate}
+\subsection{Testy akceptacyjne}
 
-Po zakoñczeniu konfiguracji utworzona aplikacja dostêpna bêdzie pod adresem podanym w górnej czêœci strony (rys. \ref{fig:aws2}).
+JUnity jakieœ do kontrolerów? 
 
-\begin{figure}[H]
-\centering
-\includegraphics[draft=false, width=\textwidth]{rys06/aws2.jpg}%
-\caption{Strona statusu utworzonej maszyny wirtualnej}%
-\label{fig:aws2}%
-\end{figure}
+Screeny z wywo³ania komend z Swaggera i screeny z bazy danych pokazuj¹cej efekty,
+	przez pgAdmin 4 lub przez konsole na VBoxie
 
-\subsection{Aplikacja kliencka} 
+\subsection{Serwery bazodanowe}
 
+Uruchomienie VirtualBox, konfiguracja adaptera sieciowego 
 
+Postgres uruchamia siê automatycznie 
 
-W celu instalacji aplikacji na telefonie konieczne jest w³¹czenie opcji debugowania USB w ustawieniach. Aby to zrobiæ nalezy wykonaæ nastêpuj¹ce kroki:
-\begin{enumerate}
-	\item W ustawieniach telefonu nacisn¹æ szybko 7 razy na pozycjê "`Numer kompilacji"' w sekcji "`Informacje o oprogramowaniu"'. Po wykonaniu tej operacji w ustawieniach pojawi siê dodatkowa pozycja "`Opcje dla programistów"'.
-	\item Po wejœciu w "`Opcje dla programistów"' zaznaczyæ pole "`Debugowanie USB"'.
-	\item Pod³¹czyæ telefon do komputera przez kabel USB. 
-	\item W oknie dialogowym na telefonie zezwoliæ na debugowanie USB.
-\end{enumerate}
+sprawdzenie stanu komenda systemctl status 
 
-Po wykonaniu tego procesu pod³¹czony telefon widoczny bêdzie na liœcie dostêpnych urz¹dzeñ w programie Android Studio (rys. \ref{fig:as}).
+pokazanie serwerów komend¹ pg\_lsclusters
 
-\begin{figure}[H]
-\centering
-\includegraphics[draft = false, width=12cm]{rys06/as.jpg}%
-\caption{Lista dostêpnych urz¹dzeñ w programie Android Studio}%
-\label{fig:as}%
-\end{figure}
-
-\section{Bezpieczeñstwo} 
-
-W ramach testów bezpieczeñstwa aplikacji sprawdzono dzia³anie funkcjonalnoœci logowania oraz dostêpu do API. Do sprawdzenia poprawnoœci zabezpieczeñ wykorzystane zosta³o narzêdzie Postman\cite{postman} pozwalaj¹ce na tworzenie zapytañ HTTP. 
-
-\paragraph{Uzyskanie tokena autoryzuj¹cego} 
-
-\
-
-Sprawdzenie poprawnoœci dzia³ania funkcjonalnoœci logowania opiera siê na przes³aniu na okreœlony adres poprawnych oraz niepoprawnych danych logowania i weryfikacja uzyskanych odpowiedzi. 
-
-W celu uzyskania tokena autoryzuj¹cego daj¹cego dostêp do API nale¿y przes³aæ dane logowania w zapytaniu POST na adres \texttt{/auth/}. W tym celu nale¿y ustawiæ odpowiednie pola w narzêdziu Postman w sposób pokazany na rysunku \ref{fig:postman1} i nacisn¹æ przycisk "`Send"'. OdpowiedŸ na zapytanie wyœwietlana jest w dolnej czêœci okna. Po podaniu poprawnych danych w odpowiedzi znajduje siê token autoryzacyjny oraz dane zalogowanego u¿ytkownika.
-
-\begin{figure}[H]
-\includegraphics[draft=false, width=\columnwidth]{rys06/postman1.jpg}%
-\caption{Próba logowania poprawnymi danymi}%
-\label{fig:postman1}%
-\end{figure}
-
-W przypadku podania z³ych danych logowania odpowiedŸ otrzymana z serwera bêdzie mia³a status \texttt{401 Unauthorized}, co pokazano na rysunku \ref{fig:postman2}. 
-
-\begin{figure}[H]
-\includegraphics[draft=false, width=\columnwidth]{rys06/postman2.jpg}%
-\caption{Próba logowania b³êdnymi danymi}%
-\label{fig:postman2}%
-\end{figure}
-
-\paragraph{Dostêp do API} 
-
-\
-
-Dostêp do API wymaga przes³ania uzyskanego po zalogowaniu tokena w nag³ówku o nazwie \texttt{X-Auth-Token}. W celu sprawdzenia poprawnoœci dzia³ania tej funkcjonalnoœci wys³ane zostan¹ dwa zapytania na adres \texttt{/api/target?user=1}, w jednym z nich zawarty zostanie poprawny token uzyskany przez zalogowanie. Zabezpieczenie pozosta³ych dostêpnych w aplikacji adresów API wykonane jest w sposób analogiczny.
-
-
-Zak³adka "`Headers"' w programie Postman pozwala na dodanie nag³ówków do zapytania. Po ustawieniu parametrów w sposób pokazany na rysunku \ref{fig:postman3} i wys³aniu zapytania, w odpowiedzi znajduj¹ siê odczytane z bazy danych wartoœci. 
-\begin{figure}[H]
-\includegraphics[draft=false, width=\columnwidth]{rys06/postman3.jpg}%
-\caption{Próba dostêpu do API z tokenem}%
-\label{fig:postman3}%
-\end{figure}
-
-Na rysunku \ref{fig:postman4} pokazano efekt wys³ania zapytania bez tokena. OdpowiedŸ serwera ma status \texttt{401 Unauthorized}, co pokazuje poprawne dzia³anie zabezpieczenia.
-
-\begin{figure}[H]
-\includegraphics[draft=false, width=\columnwidth]{rys06/postman4.jpg}%
-\caption{Próba dostêpu do API bez tokena}%
-\label{fig:postman4}%
-\end{figure}
-
-\section{Wybrane funkcjonalnoœci aplikacji mobilnej}
-
-Do testów aplikacji klienckiej wykorzystano telefon LG G2 mini posiadaj¹cy ekran o rodzielczoœci 540x960 i przek¹tnej 4,7", dzia³aj¹cy pod kontrol¹ systemu Android w wersji 5.0.2.
-
-\subsection{Logowanie}
-
-Po zweryfikowaniu poprawnoœci dzia³ania funkcjonalnoœci logowania po stronie serwerowej systemu, przetestowane zosta³o zachowanie aplikacji mobilnej po wprowadzeniu poprawnych i niepoprawnych danych logowania. Wyniki testów zaprezentowano na rysunku \ref{fig:login_test}.
-
-
-\begin{figure}[H] 
-\centering
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.7\linewidth]{rys06/login1.png} 
-	\caption{Ekran logowania} 
-	\label{fig7:a} 
-\end{subfigure}%% 
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.7\linewidth]{rys06/login2.png} 
-	\caption{Poprawne zalogowanie} 
-	\label{fig7:b} 
-\end{subfigure} 
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.7\linewidth]{rys06/login3.png} 
-	\caption{Komunikat o b³êdzie} 
-	\label{fig7:c} 
-\end{subfigure}%%
-\caption{Test funkcjonalnoœci logowania w aplikacji mobilnej}
-\label{fig:login_test} 
-\end{figure}
-
-Po poprawnym logowaniu aplikacja przechodzi do kolejnego ekranu jakim jest "`Zapis lokalizacji"', a w dolnej czêœci ekranu wyœwietlany jest komunikat "`Login success"'. Po podaniu b³êdnych danych aplikacja nie przechodzi do kolejnego widoku. Na ekranie zostaje wyœwietlony komunikat "`This password is incorrect"'. Testy tej funkcjonalnoœci pokaza³y poprawne zachowanie aplikacji po podaniu b³êdnych danych, jednak komunikat o b³êdzie logowania wyœwietlany jest czarn¹ czcionk¹ na czarnym tle, co czyni go prawie niewidocznym.
-
-
-\subsection{Wybór zdjêcia i wykrycie twarzy}
-
-Jednnym z elementów procesu rejestracji nowego konta jest wybór zdjêcia z galerii urz¹dzenia. Po wywo³aniu widoku "`Rejestracja"' widoczny jest przycisk pozwalaj¹cy na wybór zdjêcia. Po naciœniêciu tego przycisku uruchamiana jest zewnêtrzna aplikacja galerii pozwalaj¹ca na wybór zdjêcia. W trakcie testu ustalono, ¿e aplikacja poprawnie uzyskuje dostêp do plików znajduj¹cych siê zarówno na karcie pamiêciu urz¹dzenia, jak i w pamiêci wewnêtrznej. 
-	
-	Po wyborze zdjêcia zweryfikowano poprawnoœæ funkcjonalnoœci przycinania i wykrywania twarzy. Do sprawdzenia poprawnoœci wykorzystano zdjêcia z wyraŸnie widocznymi twarzami przyciête na kilka sposobów. Test pokazuj¹ poprawne dzia³anie funkcjonalnoœci, co zaprezentowano na rysunku \ref{fig:face_test}.
-	
-	\begin{figure}[H] 
-	\centering
- 	\begin{subfigure}[b]{0.33\linewidth}
-    \centering
-    \includegraphics[draft=false,width=.7\linewidth]{rys06/register1.png} 
-    \caption{Poprawne wykrycie twarzy} 
-    \label{fig7:a} 
-  \end{subfigure}%% 
-  \begin{subfigure}[b]{0.33\linewidth}
-    \centering
-    \includegraphics[draft=false,width=.7\linewidth]{rys06/register2.png} 
-    \caption{Niewykrycie twarzy} 
-    \label{fig7:b} 
-  \end{subfigure} 
-  \begin{subfigure}[b]{0.33\linewidth}
-    \centering
-    \includegraphics[draft=false,width=.7\linewidth]{rys06/register4.png}
-    \caption{Wykrycie wielu twarzy} 
-    \label{fig7:d} 
-  \end{subfigure} 
-
-  \caption{Test funkcjonalnoœci wykrywania twarzy}
-  \label{fig:face_test}
-	
-\end{figure}
-\subsection{Wyœwietlenie mapy}
-
-Widok mapy znanych lokalizacji uzytkownika dostêpny jest po klikniêciu przycisku z ikon¹ mapy na górnym pasku nawigacyjnym w widoku "`Szczegó³y zlecenia"'. Po wyœwietleniu tego widoku do mapy dodane zostaj¹ znaczniki wskazuj¹ce lokalizacje. Podczas testów tej funkcjonalnoœci zauwa¿ono, ¿e mapa nie jest odœwie¿ana automatycznie po pobraniu danych z bazy i dodaniu znaczników, przez co pocz¹tkowo s¹ one niewidoczne. W celu odœwie¿enia mapy nalezy zmieniæ jej przybli¿enie korzostaj¹c z odpowiedniego gestu. Po zmianie przybli¿enia znaczniki pojawiaj¹ siê na mapie. 
-
-Znaczniki znajduj¹ce siê blisko siebie grupowane s¹ ze sob¹, a na ikonie grupy wyœwietlana jest ich liczba. Po klikniêciu na znacznik wyœwietlana jest informacja o czasie zarejestrowania lokalizacji. Na rysunku \ref{fig:map_4} przedstawiono widok mapy dla przyk³adowych danych.
-		
-		
-\begin{figure}[H] 
-\centering
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.8\linewidth]{rys06/map2.png} 
-	\caption{Znaczniki lokalizacji} 
-	\label{fig7:a} 
-\end{subfigure}%% 
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.8\linewidth]{rys06/map1.png} 
-	\caption{Grupa znaczników} 
-	\label{fig7:b} 
-\end{subfigure} 
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.8\linewidth]{rys06/map3.png} 
-	\caption{Okno z danymi o znaczniku} 
-	\label{fig7:c} 
-\end{subfigure}%%
-\caption{Mapa lokalizacji u¿ytkownika po dodaniu znaczników}
-\label{fig:map_4} 
-\end{figure}
-		
-\subsection{Generowanie kodu}
-
-W celu wygenerowania kodu w aplikacji konieczne jest przytrzymanie przycisku z ikon¹ kostki do gry przez czas 2 sekund. W trakcie testu zweryfikowano poprawnoœæ wykonania zapisu do bazy danych oraz dzia³ania zegara odliczaj¹cego czas.
-
- Korzystaj¹c z ustawieñ telefonu, w sekcji "`Opcje dla programistów"' mo¿liwa jest zmiana czasu trwania animacji, co pokazano na rysunku \ref{fig:code_test}. Biblioteka HoldToLoad Layout wykorzystana do stworzenia przycisku generuj¹cego kod wykorzystuje te parametry, przez co mo¿liwa jest zmiana czas potrzebnego na jego pe³ne za³adowanie, a tak¿e ca³kowite wy³¹czenie ³adowania. Pozwala to na ominiêcie zabezpieczenia przed zbyt czêstym generowaniem kodu. Zmiana ustawieñ animacji prowadzi do niepoprawnego dzia³ania aplikacji. Nale¿y jednak zauwa¿yæ, ¿e opcje programistyczne s¹ w wiêkszoœci przypadów ukryte przed u¿ytkownikiem a ich domyœlne wartoœci zapewniaj¹ poprawne dzia³anie.
-
-\begin{figure}[H] 
-\centering
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.7\linewidth]{rys06/code1.png} 
-\caption{Przycisk w trakcie ³adowania}%
-	\label{fig7:akjh} 
-\end{subfigure}%% 
-\begin{subfigure}[b]{0.33\linewidth}
-	\centering
-	\includegraphics[draft=false,width=.7\linewidth]{rys06/code2.png} 
-\caption{Ustawienia czasu animacji}
-	\label{fig:code_amin} 
-\end{subfigure} 
-\caption{Test funkcjonalnoœci generowania kodu}
-\label{fig:code_test} 
-\end{figure}
-	
-	\section{Wnioski z testów}
-	
-	Przeprowadzone testy funkcjonalne systemu pokaza³y, ¿e zaimplementowane funkconalnoœci dzia³aj¹ w sposób poprawny. Zapewniony zosta³ odpowiednie zabezpieczenia dostêpu do wybranych czêœci systemu przez okreœlone grupy u¿ytkowników. Aplikacja mobilna w poprawny sposób komunikuje siê z serwerem. Niektóre elementy interfejsu u¿ytkownika wyœwietlane s¹ na ekranie telefonu w niepoprawny sposób, jednak nie ma to du¿ego wp³ywu na funkcjonowanie systemu.
+\section{Pomiar wp³ywu metody replikacji na czas zapisu}
+\section{Pomiar wp³ywu metody replikacji na czas odczytu}
+\section{Pomiar wp³ywu metody replikacji na niezawodnoœæ}
+\section{Wnioski z testów}

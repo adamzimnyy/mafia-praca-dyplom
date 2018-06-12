@@ -1,11 +1,12 @@
-\select@language {polish}
+\babel@toc {polish}{}
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {table}{\numberline {3.1}{\ignorespaces Konfigurowalne parametry gry\relax }}{18}{table.caption.3}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Schemat zapyta\'n testowych\relax }}{20}{table.caption.12}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Liczno\'s\'c rekord\'ow w tabelach\relax }}{20}{table.caption.13}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Liczba powt\'orze\'n testu w zalezno\'sci od liczby aktywnych u\.zytkownik\'ow\relax }}{20}{table.caption.14}
+\contentsline {table}{\numberline {3.4}{\ignorespaces Liczba rekord\'ow wstawianych do bazy danych w testach op\'o\'znienia replikacji\relax }}{21}{table.caption.15}
 \addvspace {10pt}
-\addvspace {10pt}
-\contentsline {table}{\numberline {5.1}{\ignorespaces Parametry wyra\.ze\'n cron\relax }}{54}{table.caption.7}
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

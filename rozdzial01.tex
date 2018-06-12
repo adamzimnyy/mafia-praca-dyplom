@@ -1,23 +1,37 @@
-\chapter{Wstêp} \label{wstep}
-Niniejszy dokument opisuje przebieg realizacji projektu dyplomowego o temacie \textit{System wspomagaj¹cy organizacjê gry miejskiej wykorzystuj¹cej urz¹dzenia z systemem Android} na kierunku Informatyka, na wydziale Elektroniki Politechniki Wroc³awskiej.
+\chapter{Wstêp} 
 
-Gr¹ miejsk¹\cite{wiki} nazywana jest gra, która wykorzystuje przestrzeñ œwiata rzeczywistego jako element swojej mechaniki. Uczestnicy gry wykonuj¹ zlecane przez organizatorów zadania na podstawie wskazówek lub instrukcji. Gry miejskie czêsto posiadaj¹ element fabularny, nadaj¹cy kontekstu wykonywanym zadaniom i pozwalaj¹cy uczestnikom wcielaæ siê w postaci opowiadanej historii. Tematyka gier mo¿e równie¿ zawierac motywy historyczne, promuj¹ce miasto i zachêcaj¹ce do poznawania jego kultury, szczególnie jeœli prowadzona jest na terenie jednego miasta.
+Niniejszy dokument opisuje przebieg realizacji projektu dyplomowego magisterskiego o temacie \textit{Analiza i ocena wydajnoœci mechanizmów replikacji w systemie bazodanowym wykorzystuj¹cym PostgreSQL} na kierunku Informatyka, na wydziale Elektroniki Politechniki Wroc³awskiej.
+\section{Cel i zakres pracy}
 
-\section{Cel projektu} \label{cel}
-Celem projektu jest stworzenie systemu pozwalaj¹cego na zorganizowanie i zarz¹dzanie gr¹ miejsk¹ oraz branie w niej udzia³u na terenie wybranego obszaru. System powinien prowadziæ grê bez koniecznoœci nadzoru ze strony osób zarz¹dzaj¹cych.
-\section{Zakres projektu} \label{zakres}
-\indent \par
-Projekt systemu obejmuje nastêpuj¹ce zagadnienia:
+Celem pracy jest stworzenie niezale¿nych systemów wykorzystuj¹cych ró¿ne dostêpne metody replikacji danych i przetestowanie wp³ywu wybranej metody replikacji danych, jak i jej parametrów konfiguracyjnych na wydajnoœæ bazy danych. Miar¹ wydajnoœci jest czas odpowiedzi, a w przypadku testów replikacji wielkoœæ opóŸnienia.
 
-\begin{itemize}[leftmargin=+18mm]
-	\item opracowanie zasad gry,
-	\item analizê wymagañ systemu,
-	\item projekt interfejsu u¿ytkownika,
-	\item wybór technologii wykonania systemu,
-	\item projekt i implementacjê mobilnej aplikacji klienckiej,
-	\item projekt i implementacjê serwera prowadz¹cego grê,
-	\item projekt i implementacjê panelu administracyjnego,
-	\item przeprowadzenie testów systemu,
-	\item stworzenie dokumentacji projektu,
-	\item wdro¿enie systemu z wykorzystaniem sklepu Google Play.\cite{play_store}
+Zakres pracy obejmuje: 
+\begin{itemize}
+	\item analizê problemu w oparciu o dostêpn¹ literaturê,
+	\item projekt oraz wykonanie systemu bazowanowego opartego na PostgreSQL,
+	\item projekt oraz wykonanie webowego interfejsu dostêpowego do stworzonej bazy danych,
+	\item konfiguracjê mechanizmów replikacji bazy danych,
+	\item projekt testów benchmarkowych pozwalaj¹cych okreœliæ wydajnoœæ systemu,
+	\item analizê statystyczn¹ i ocenê porównawcz¹ efektywnoœci zastosowanych rozwi¹zañ replikacji danych.
 \end{itemize}
+\section{Metody replikacji w systemach bazodanowych}
+
+Replikacja to proces polegaj¹cy na kopiowaniu bazy danych pomiêdzy ró¿nymi serwerami, w celu utworzenia kopii zapasowej lub wykorzystania jako serwer zapasowy. Stosowanie replikacji pozwala na zwiêkszenie bezpieczeñstwa danych w razie awarii, a tak¿e zmiejszenie czasu dostêpu do danych poprzez roz³o¿enie obci¹¿eñ pomiêdzy serwery lub w przypadku czasowej niedostêpnoœci serwerów.
+
+Metody replikacji danych podzieiæ mo¿na na synchroniczne oraz asynchroniczne. W przypadku metod synchronicznych transakcja zatwierdzana jest dopiero, gdy wszystkie serwery potwierdz¹ jej poprawne wykonanie. Zapewnia to spójnoœæ danych we wszystkich serwerach bez wystêpowania opóŸnieñ, jednak mo¿e powodowaæ wiêksze opóŸnienia lub zawieszenie transakcji w przypadku niedostêpnoœci któregoœ z serwerów. Replikacja synchroniczna wymaga ogromnych przepustowoœci ³¹cza, co przek³ada siê na du¿y koszt wytworzenia i utrzymania systemu. 
+
+W przypadku replikacji asynchronicznej, dane kopiowane s¹ co okreœlony czas lub po uaktywnieniu wyzwalacza. Konsekwencj¹ takiego sposobu replikacji jest minimalizacja opóŸnieñ w trakcie dodawania lub edycji rekordów, co przek³ada siê na wydajnoœæ aplikacji, jednak mo¿e powodowaæ powstawanie czasowych niespójnoœci pomiêdzy baz¹ g³ówn¹ a replikami. W zale¿noœci od przepustowoœci sieci, konfiguracji systemu i rozmiaru danych opóŸnienie to mo¿e wynosiæ nawet do kilku godzin. Stosowanie replikacji asynchronicznej pozwala na znaczne zmiejszenie kosztu wytworzenia systemu ze wzglêdu znacznie ni¿sze wymagania. 
+
+Ze wzglêdu na sposób przesy³ania danych metody replikacji mo¿na podzieliæ na \textit{statement-based} i \textit{row-based}. Replikacja \textit{statement-based} polega na ponownym wykonaniu na ka¿dym z serwerów  zapytañ, które zosta³y u¿yte do wprowadzenia zmian na serwerze g³ównym. Replikacja \textit{row-based} tworzy kopie powielaj¹c rzeczywiste zmiany w tabelach.  
+
+W zale¿noœci od sposobu dostêpu przez u¿ytkownika wyró¿niæ mo¿na systemy master-slave lub multimaster. W systemach master-slave wystêpuje g³ówny wêze³ replikacji, z którym komunikuj¹ siê u¿ytkownicy, a zmiany dokonywane na nim propagowane s¹ do serwerów slave. W architekturze multimaster serwery s¹ sobie równowa¿ne, u¿ytkownicy mog¹ dokonywaæ zmian na dowolnym serwerze.
+
+
+
+
+
+
+% \section{Metody testowania wydajnoœci systemów bazodanowych}
+
+% \section{Istniej¹ce wyniki badañ wydajnoœci systemów baz danych SQL}
+

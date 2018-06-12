@@ -1,71 +1,56 @@
-\select@language {polish}
+\babel@toc {polish}{}
 \contentsline {chapter}{Spis rysunk\'ow}{4}{Doc-Start}
 \contentsline {chapter}{Spis tabel}{5}{Doc-Start}
 \contentsline {chapter}{Spis listing\'ow}{6}{Doc-Start}
-\contentsline {chapter}{\chapternumberline {1}Wst\k ep}{9}{chapter.1}
-\contentsline {section}{\numberline {1.1}Cel projektu}{9}{section.1.1}
-\contentsline {section}{\numberline {1.2}Zakres projektu}{9}{section.1.2}
-\contentsline {chapter}{\chapternumberline {2}Zasady gry}{10}{chapter.2}
-\contentsline {section}{\numberline {2.1}Zlecenia}{10}{section.2.1}
-\contentsline {section}{\numberline {2.2}Lokalizacja gracza}{11}{section.2.2}
-\contentsline {section}{\numberline {2.3}Punktacja}{11}{section.2.3}
-\contentsline {section}{\numberline {2.4}Rejestracja do gry}{11}{section.2.4}
-\contentsline {section}{\numberline {2.5}S\IeC {\l }ownik poj\k e\'c}{12}{section.2.5}
-\contentsline {chapter}{\chapternumberline {3}Analiza wymaga\'n systemu}{13}{chapter.3}
-\contentsline {section}{\numberline {3.1}Architektura systemu}{13}{section.3.1}
-\contentsline {section}{\numberline {3.2}Wymagania funkcjonalne}{13}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Aplikacja kliencka}{13}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Aplikacja serwerowa}{15}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Panel administracyjny}{17}{subsection.3.2.3}
-\contentsline {section}{\numberline {3.3}Konfigurowalne parametry systemu}{18}{section.3.3}
-\contentsline {section}{\numberline {3.4}Wymagania niefunkcjonalne}{18}{section.3.4}
-\contentsline {chapter}{\chapternumberline {4}Projekt systemu}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}Przypadki u\.zycia}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}Projekt interfejsu aplikacji mobilnej}{25}{section.4.2}
-\contentsline {section}{\numberline {4.3}Projekt bazy danych}{29}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Model konceptualny}{30}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Model fizyczny}{31}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Protok\'o\IeC {\l } komunikacji w systemie}{32}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}\'Scie\.zki dost\k epu API}{32}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Struktury danych}{42}{subsection.4.4.2}
-\contentsline {chapter}{\chapternumberline {5}Implementacja systemu}{44}{chapter.5}
-\contentsline {section}{\numberline {5.1}Aplikacja serwerowa}{44}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Wykorzystywane technologie i narz\k edzia}{44}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}Struktura plik\'ow projektu}{44}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}Zabezpieczenie dost\k epu do API}{45}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}Baza danych}{47}{subsection.5.1.4}
-\contentsline {subsection}{\numberline {5.1.5}Komunikacja i przep\IeC {\l }yw danych}{49}{subsection.5.1.5}
-\contentsline {subsection}{\numberline {5.1.6}Implementacja obs\IeC {\l }ugi wybranych zapyta\'n}{50}{subsection.5.1.6}
-\contentsline {subsubsection}{Rejestracja}{50}{section*.4}
-\contentsline {subsubsection}{Pobranie lokalizacji u\.zytkownika}{51}{section*.5}
-\contentsline {subsubsection}{Potwierdzenie wykonania zlecenia}{52}{section*.6}
-\contentsline {subsection}{\numberline {5.1.7}Automatyzacja dzia\IeC {\l }ania systemu}{53}{subsection.5.1.7}
-\contentsline {subsubsection}{Przyk\IeC {\l }ady implementacji zada\'n w projekcie}{54}{section*.8}
-\contentsline {section}{\numberline {5.2}Aplikacja kliencka}{56}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Struktura projektu}{56}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Biblioteki wykorzystane w projekcie}{57}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}Tworzenie interfejsu aplikacji}{58}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}Komunikacja z serwerem}{64}{subsection.5.2.4}
-\contentsline {subsection}{\numberline {5.2.5}Rejestracja konta}{66}{subsection.5.2.5}
-\contentsline {subsection}{\numberline {5.2.6}Logowanie do konta}{72}{subsection.5.2.6}
-\contentsline {subsection}{\numberline {5.2.7}Lokalizacja urz\k adzenia}{73}{subsection.5.2.7}
-\contentsline {subsection}{\numberline {5.2.8}Lista zlece\'n}{76}{subsection.5.2.8}
-\contentsline {subsection}{\numberline {5.2.9}Szczeg\'o\IeC {\l }y zlecenia}{81}{subsection.5.2.9}
-\contentsline {subsection}{\numberline {5.2.10}Mapa znanych lokalizacji u\.zytkownika}{83}{subsection.5.2.10}
-\contentsline {subsection}{\numberline {5.2.11}Generowanie kod\'ow potwierdzaj\k acych}{84}{subsection.5.2.11}
-\contentsline {chapter}{\chapternumberline {6}Testy systemu}{87}{chapter.6}
-\contentsline {section}{\numberline {6.1}Przygotowanie \'srodowiska testowego}{87}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Aplikacja serwerowa}{87}{subsection.6.1.1}
-\contentsline {subsection}{\numberline {6.1.2}Aplikacja kliencka}{88}{subsection.6.1.2}
-\contentsline {section}{\numberline {6.2}Bezpiecze\'nstwo}{89}{section.6.2}
-\contentsline {paragraph}{Uzyskanie tokena autoryzuj\k acego}{89}{section*.9}
-\contentsline {paragraph}{Dost\k ep do API}{90}{section*.10}
-\contentsline {section}{\numberline {6.3}Wybrane funkcjonalno\'sci aplikacji mobilnej}{92}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}Logowanie}{92}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}Wyb\'or zdj\k ecia i wykrycie twarzy}{93}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {6.3.3}Wy\'swietlenie mapy}{93}{subsection.6.3.3}
-\contentsline {subsection}{\numberline {6.3.4}Generowanie kodu}{94}{subsection.6.3.4}
-\contentsline {section}{\numberline {6.4}Wnioski z test\'ow}{95}{section.6.4}
-\contentsline {chapter}{\chapternumberline {7}Podsumowanie}{96}{chapter.7}
-\contentsline {chapter}{Literatura}{97}{section*.12}
-\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{100}{appendix.A}
+\contentsline {chapter}{\chapternumberline {1}Wst\k ep}{8}{chapter.1}
+\contentsline {section}{\numberline {1.1}Cel i zakres pracy}{8}{section.1.1}
+\contentsline {section}{\numberline {1.2}Metody replikacji w systemach bazodanowych}{8}{section.1.2}
+\contentsline {chapter}{\chapternumberline {2}Analiza wymaga\'n systemu}{10}{chapter.2}
+\contentsline {section}{\numberline {2.1}Architektura systemu}{10}{section.2.1}
+\contentsline {section}{\numberline {2.2}Wymagania funkcjonalne}{10}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Aplikacja serwerowa}{10}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Analizowane architektury rozproszonej bazy danych}{11}{subsection.2.2.2}
+\contentsline {subsubsection}{Bucardo}{11}{section*.3}
+\contentsline {subsubsection}{Pgpool-II}{11}{section*.4}
+\contentsline {subsubsection}{Replikacja logiczna}{12}{section*.5}
+\contentsline {subsubsection}{Replikacja strumieniowa}{12}{section*.6}
+\contentsline {subsection}{\numberline {2.2.3}Wykorzystywane technologie}{12}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Narz\k edzia wspomagaj\k ace ocen\k e wydajno\'sci system\'ow bazodanowych}{12}{subsection.2.2.4}
+\contentsline {subsubsection}{pgbench}{12}{section*.7}
+\contentsline {subsubsection}{JMeter}{13}{section*.8}
+\contentsline {subsubsection}{Spawner Data Generator}{13}{section*.9}
+\contentsline {chapter}{\chapternumberline {3}Projekt systemu}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Przypadki u\.zycia}{15}{section.3.1}
+\contentsline {subsubsection}{Aplikacja serwerowa}{15}{section*.10}
+\contentsline {subsubsection}{Aplikacja testuj\k aca}{16}{section*.11}
+\contentsline {section}{\numberline {3.2}Projekt bazy danych}{16}{section.3.2}
+\contentsline {section}{\numberline {3.3}Projekt mechanizm\'ow replikacji}{17}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Pgpool-II}{17}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Bucardo}{18}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Replikacja logiczna}{18}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Replikacja strumieniowa}{19}{subsection.3.3.4}
+\contentsline {section}{\numberline {3.4}Projekt test\'ow wydajno\'sciowych}{19}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Wykorzystywane operacje bazodanowe}{19}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Spos\'ob prowadzenia test\'ow}{20}{subsection.3.4.2}
+\contentsline {chapter}{\chapternumberline {4}Implementacja systemu}{22}{chapter.4}
+\contentsline {section}{\numberline {4.1}Aplikacja serwerowa}{22}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Struktura plik\'ow projektu}{22}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Szczeg\'o\IeC {\l }y implementacji wybranych funkcjonalno\'sci}{23}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}Baza danych}{23}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Konfiguracja replikacji}{23}{subsection.4.2.1}
+\contentsline {subsubsection}{Bucardo}{23}{section*.16}
+\contentsline {subsubsection}{Pg-Pool II}{23}{section*.17}
+\contentsline {subsubsection}{Natywna replikacja PostgreSQL}{23}{section*.18}
+\contentsline {subsection}{\numberline {4.2.2}Generowanie danych testowych}{24}{subsection.4.2.2}
+\contentsline {chapter}{\chapternumberline {5}Testowanie i ocena wydajno\'sci systemu}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}Przygotowanie \'srodowiska testowego}{25}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Aplikacja serwerowa}{25}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Testy akceptacyjne}{25}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Serwery bazodanowe}{25}{subsection.5.1.3}
+\contentsline {section}{\numberline {5.2}Pomiar wp\IeC {\l }ywu metody replikacji na czas zapisu}{25}{section.5.2}
+\contentsline {section}{\numberline {5.3}Pomiar wp\IeC {\l }ywu metody replikacji na czas odczytu}{25}{section.5.3}
+\contentsline {section}{\numberline {5.4}Pomiar wp\IeC {\l }ywu metody replikacji na niezawodno\'s\'c}{25}{section.5.4}
+\contentsline {section}{\numberline {5.5}Wnioski z test\'ow}{25}{section.5.5}
+\contentsline {chapter}{\chapternumberline {6}Podsumowanie}{26}{chapter.6}
+\contentsline {chapter}{Literatura}{27}{section*.20}
+\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{28}{appendix.A}

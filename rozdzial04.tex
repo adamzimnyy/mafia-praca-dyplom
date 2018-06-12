@@ -1,1481 +1,169 @@
 \chapter{Projekt systemu}
 
+Na podstawie okreœlonych wymagañ opracowany zosta³ projekt systemu. Na projekt sk³ada siê analiza przypadków u¿ycia systemu, projekt schematu bazy danych, projekt mechanizmów replikacji oraz plan prowadzenia testów wydajnoœciowych. 
 
-\section{Przypadki u¿ycia} 
-Na podstawie sprecyzowanych powy¿ej zasad gry i opisu dzia³ania systemu opracowano przypadki u¿ycia systemu. Diagramy przypadków u¿ycia przedstawiono na rysunkach \ref{fig:usecase_1} oraz \ref{fig:usecase_2}.
+\section{Przypadki u¿ycia}
 
+Na poni¿szych rysunkach przedstawiono przypadki u¿ycia systemu.
+
+\subsubsection{Aplikacja serwerowa}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{{{img/server_use_case}}}%
+\caption{Przypadki u¿ycia aplikacji serwerowej}%
+\label{}%
+\end{figure}
+		
+\subsubsection{Aplikacja testuj¹ca}
 \begin{figure}[H]
 \centering
-\includegraphics[width=\columnwidth]{rys04/usecase1.jpg}
-\caption{Diagram przypadków u¿ycia dla aplikacji mobilnej}
-\label{fig:usecase_1}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\columnwidth]{rys04/usecase2.jpg}
-\caption{Diagram przypadków u¿ycia dla aplikacji serwerowej}
-\label{fig:usecase_2}
-\end{figure}
-
-Poni¿ej znajduj¹ siê przyk³adowe scenariusze opisuj¹ce dzia³ania u¿ytkownika, jakie mog¹ zajœæ podczas korzystania z systemu.\cite{pu} Ze wzglêdu na zautomatyzowan¹ naturê czêœci serwerowej systemu, opis scenariuszy skupia siê g³ównie na czynnoœciach wykonywanych przez u¿ytkownika aplikacji mobilnej. W scenariuszach zosta³y wyszczególnione sytuacje wyj¹tkowe oznaczaj¹ce b³¹d w podstawowym przebiegu interakcji prowadz¹cy do jej niepoprawnego zakoñczenia oraz przebiegi alternatywne opisuj¹ce inny zestaw kroków prowadz¹cy do tego samego wyniku. 
-\begin{enumerate}
-
-\item Rejestracja
-\begin{description}
-\item[Aktor] \hfill \\
- Niezarejestrowany u¿ytkownik aplikacji
-\item[Zdarzenie inicjuj¹ce] \hfill \\
-U¿ytkownik bêd¹c na ekranie startowym aplikacji klikn¹³ przycisk "`Rejestracja"'.
-\item[Warunki pocz¹tkowe] \hfill \\
-brak
-\item[Opis przebiegu interakcji] \hfill \\
-\begin{enumerate}
-\item W aplikacji wyœwietlany jest ekran "`Rejestracja"'.
-\item	U¿ytkownik klika przycisk "`Wybór zdjêcia"'.
-		\begin{enumerate}[label*=\arabic*.]
-		\item	Na telefonie zostaje otwarta aplikacja do wyboru obrazu.
-		\item	U¿ytkownik wybiera obraz.
-		\item	Aplikacja wyœwietla widok pozwalaj¹cy na przyciêcie zdjêcia.
-		\item	U¿ytkownik ustawia przyciêcie i zatwierdza wybór.
-		\item	Przyciête zdjêcie wyœwietla siê w miejscu przycisku na ekranie "`Rejestracja"'.
-		\item	Na zdjêciu wykrywana jest twarz i wyœwietlana jest informacja potwierdzaj¹ca wykrycie twarzy.
-		\end{enumerate}
-		\item	U¿ytkownik wype³nia pola tekstowe szablonu rejestracyjnego.
-		\begin{enumerate}[label*=\arabic*.]
-		\item	Po klikniêciu w pole "`Data urodzenia"' zamiast klawiatury wyœwietla siê kalendarz.
-		\item	U¿ytkownik wybiera datê z kalendarza i potwierdza przyciskiem Ok.
-		\item	Data zostaje wpisana w polu "`Data urodzenia"'.
-		\end{enumerate}
-\item	U¿ytkownik zaznacza pole wyboru "`Akceptujê zasady gry"'.
-\item	U¿ytkownik klika przycisk "`Rejestruj"'.
-\item	Zdjêcie u¿ytkownika jest przesy³ane na serwer.
-\item	W miejscu przycisku "`Rejestruj"' wyœwietlony zostaje pasek postêpu przesy³ania.
-\item	Po przes³aniu zdjêcia otrzymywany jest jego identyfikator.
-\item	Dane z szablonu wraz z identyfikatorem zdjêcia przesy³ane s¹ na serwer.
-\item	Okno rejestracji zamyka siê automatycznie po 4 sekundach i aplikacja powraca do ekranu startowego.
-\end{enumerate}
-\item[Sytuacje wyj¹tkowe] \hfill \\
-Ad. 3.3. Wybrana data urodzenia jest w przysz³oœci. Wyœwietlany jest komunikat o niepoprawnoœci daty.\\*
-Ad. 8. Przes³anie zdjêcia nie powiod³o siê. Wyœwietlany jest komunikat o b³êdzie przesy³ania zdjêcia. Nastêpuje powrót do kroku 5.
-\item[Przebiegi alternatywne ] \hfill
-\begin{enumerate}
-\item	Punkty 2., 3. oraz 4. mog¹ zostaæ wykonane w dowolnej kolejnoœci.
- \item	W dowolnym momencie rejestracji u¿ytkownik mo¿e wyœwietliæ zasady gry. Wyœwietlenie zasad nie ma wp³ywu na resztê przebiegu rejestracji. Scenariusz zostaje rozszerzony o kroki:
-\begin{enumerate}[label*=\arabic*.]
-\item	U¿ytkownik klika w przycisk "`Zasady gry"'. 
-\item	Wyœwietlone zostaje okno z zasadami. 
-\item	U¿ytkownik czyta zasady i klika przycisk "`Ok"'.
-\item	 Okno z zasadami zamyka siê.
-\end{enumerate}
-\end{enumerate}
-
-\item[Warunki koñcowe] \hfill \\
-Zarejestrowane zosta³o nowe konto u¿ytkownika.
-
-\end{description}
-%------------------------------------------------------------------------------------------
-\item Logowanie
-
-\begin{description}
-
-\item [Aktor]\hfill \\
-	U¿ytkownik
-\item [Zdarzenie inicjuj¹ce]\hfill \\
-	U¿ytkownik bêd¹c na ekranie startowym aplikacji klikn¹³ przycisk „Logowanie”.
-\item [Warunki pocz¹tkowe]\hfill \\
-U¿ytkownik posiada konto w aplikacji (jest zarejestrowany).
-\item [Opis przebiegu interakcji]\hfill
-\begin{enumerate}
-\item	W aplikacji wyœwietlany jest ekran "`Logowanie"'.
-\item	U¿ytkownik uzupe³nia pola "`nazwa u¿ytkownika"' i "`has³o"'.
-\item	U¿ytkownik klika przycisk "`Zaloguj"'.
-\item	Pola tekstowe i przycisk zastêpowane s¹ przez wskaŸnik postêpu.
-\item	Dane logowania przesy³ane s¹ przez aplikacjê na serwer.
-\item	Serwer sprawdza poprawnoœæ wprowadzonych danych.
-\item	Aplikacja otrzymuje token uwierzytelniaj¹cy u¿ytkownika.
-\item	Aplikacja przechodzi do widoku "`Zapis lokalizacji"'.
-\end{enumerate}
-\item [Sytuacje wyj¹tkowe ]\hfill \\
-Ad. 4. Wprowadzone dane s¹ niepoprawne. Wyœwietlony zostaje komunikat "`Niepoprawne dane logowania"'. Nastêpuje powrót do kroku 2.
-\item [Przebiegi alternatywne ]\hfill \\
-	brak
-\item [Warunki koñcowe]\hfill \\
-	U¿ytkownik zosta³ zalogowany.
-	\end{description}
-%------------------------------------------------------------------------------------------
-\item Zapis lokalizacji u¿ytkownika
-
-\begin{description}
-\item [Aktor]\hfill \\
-	Aplikacja
-\item [Zdarzenie inicjuj¹ce] \hfill \\
-	U¿ytkownik zosta³ zalogowany (przypadek Logowanie do aplikacji mobilnej)
-\item [Warunki pocz¹tkowe] \hfill \\ brak
-\item [Opis przebiegu interakcji]  \hfill
-\begin{enumerate}
-	\item	W aplikacji wyœwietlony zostaje ekran "`Zapis lokalizacji"'.
-	\item	Wyœwietlony zostaje komunikat "`Sprawdzanie uprawnieñ"'.
-	\item	Aplikacja sprawdza uprawnienia dostêpu do modu³u GPS telefonu.
-	\item	Wyœwietlony zostaje komunikat "`Sprawdzanie ustawieñ"'.
-	\item	Aplikacja sprawdza, czy w telefonie w³¹czone s¹ us³ugi lokalizacyjne. 
-	\item	Wyœwietlony zostaje komunikat "`Oczekiwanie na lokalizacjê"'.
-	\item	Aplikacja rozpoczyna nas³uchiwanie aktualizacji lokalizacji.
-	\item	Gdy dok³adnoœæ lokalizacji osi¹gnie 25 m informacje o lokalizacji s¹ przesy³ane na serwer.
-	\item	Serwer zapisuje dane do bazy.
-	\item	Aplikacja przechodzi do widoku "`Zlecenia"'.
-\end{enumerate}
-
-\item [Sytuacje wyj¹tkowe]  \hfill \\
-Ad. 8.	Nie uda³o siê ustaliæ dok³adnej lokalizacji przez okres 30 sekund. Wyœwietlany jest komunikat "`Nie uda³o siê ustaliæ lokalizacji. Spróbuj ponownie póŸniej"'.
-\item [Przebiegi alternatywne]  \hfill \\
-Ad. 3. Aplikacja nie ma uprawnieñ do modu³u GPS telefonu. \\*
-Wyœwietlane jest okno dialogowe z proœb¹ o uprawnienia. Nastêpuje powrót do kroku 3.\\*
-Ad 5. W telefonie wy³¹czone s¹ us³ugi lokalizacyjne
-Wyœwietlane jest okno dialogowe z proœb¹ o zmianê ustawieñ. Otwarte zostaj¹ ustawienia telefonu. Nastêpuje powrót do kroku 5.
-\item [Warunki koñcowe] \hfill \\
-	Lokalizacja zosta³a zapisana do bazy danych.
-\item[Uwagi] \hfill \\
-	Aktualizacje lokalizacji nie s¹ zatrzymywane po wykonaniu zapisu.
-\end{description}
-
-%------------------------------------------------------------------------------------------
-
-
-\item Potwierdzenie wykonania zlecenia
-
-\begin{description}
-\item [Aktor]\hfill \\
-	U¿ytkownik 
-\item [Zdarzenie inicjuj¹ce] \hfill \\
-	Wyœwietlenie szczegó³ów zlecenia
-\item [Warunki pocz¹tkowe] \hfill \\ 
-Zlecenie ma status Aktywny
-\item [Opis przebiegu interakcji]  \hfill
-\begin{enumerate}
-	\item	U¿ytkownik wprowadza kod uzyskany od znalezionego u¿ytkownika w odpowiednie pole w widoku "`Szczegó³y zlecenia"'.
-	\item	U¿ytkownik zatwierdza kod przyciskiem "`Wyœlij"'.
-	\item	Aplikacja pobiera lokalizacjê u¿ytkownika i razem z kodem przesy³a dane na serwer.
-	\item	Na serwerze nastêpuje sprawdzenie, czy wprowadzony kod jest poprawny oraz czy lokalizacje generowania i wprowadzenia kodu znajduj¹ siê w pobli¿u siebie.
-	\item	Jeœli kod jest poprawny, zlecenie zostaje zatwierdzone. Aplikacja ponownie pobiera zmienione ju¿ dane o zleceniu.
-	\item	Widok "`Szczegó³y zlecenia"' jest aktualizowany nowymi danymi.
-\end{enumerate}
-
-\item [Sytuacje wyj¹tkowe]  \hfill \\
-Ad. 3. Aktualna lokalizacja u¿ytkownika nie jest dostêpna – przesy³ana jest ostatnia lokalizacja logowania u¿ytkownika.  \\*
-Ad 5. Kod jest niepoprawny – przycisk "`Wyœlij"' zostaje zablokowany na 10 sekund. W miejscu przycisku pokazuje siê odliczanie czasu. W zleceniu nie nastêpuj¹ ¿adne zmiany.  \\*
-
-\item [Warunki koñcowe] \hfill \\
-Zlecenie zosta³o oznaczone jako wykonane.
-\end{description}
-
-%------------------------------------------------------------------------------------------
-\item Generowanie kodu
-
-\begin{description}
-\item [Aktor]\hfill \\
-	U¿ytkownik 
-\item [Zdarzenie inicjuj¹ce] \hfill \\
-	U¿ytkownik wybra³ pozycjê "`Generuj kod"' z menu nawigacyjnego aplikacji
-\item [Warunki pocz¹tkowe] \hfill \\ 
-brak
-\item [Opis przebiegu interakcji]  \hfill
-\begin{enumerate}
-\item	W aplikacji wyœwietlony zostaje widok "`Generowanie kodu"'.
-\item U¿ytkownik przytrzymuje przycisk z ikon¹ kostki do gry.
-\item W czasie trzymania przycisku wyœwietlana jest animacja ³adowania wokó³ przycisku.
-\item	Po zakoñczeniu ³adowania generowany jest losowy 6-cyfrowy ci¹g znaków z³o¿ony z du¿ych liter i cyfr.
-\item	Wygenerowany kod wyœwietlany jest w odpowiednim polu w aplikacji.
-\item	Pobierana jest lokalizacja u¿ytkownika i wraz z wygenerowanym kodem przesy³ana jest na serwer i zapisywana w bazie danych.
-\item	Uruchamiane jest odliczanie czasu wa¿noœci kodu.
-\end{enumerate}
-
-\item [Sytuacje wyj¹tkowe]  \hfill \\
-Ad 3. W przypadku puszczenia przycisku przed zakoñczeniem animacji kod nie jest generowany, animacja jest resetowana do pocz¹tku. Po kolejnym wciœniêciu przycisku ³adowanie rozpoczyna siê od pocz¹tku. \\*
-
-\item [Warunki koñcowe] \hfill \\
-Na ekranie aplikacji wyœwietlony zosta³ wygenerowany kod.
-\end{description}
-
-%------------------------------------------------------------------------------------------
-
-\item Edycja profilu
-\begin{description}
-\item [Aktor]\hfill \\
-	U¿ytkownik 
-\item [Zdarzenie inicjuj¹ce] \hfill \\
-	U¿ytkownik klikn¹³ przycisk "`Edycja profilu"' w widoku "`Profil u¿ytkownika"'.
-\item [Warunki pocz¹tkowe] \hfill \\ 
-brak
-\item [Opis przebiegu interakcji]  \hfill
-\begin{enumerate}
-\item	Pola z informacjami o u¿ytkowniku w aplikacji staj¹ siê edytowalne.
-\item	Przycisk Edycja profilu zamienia siê w "`Zapisz"'.
-\item	U¿ytkownik zmienia interesuj¹ce go pola.
-\item	U¿ytkownik zatwierdza zmiany wciskaj¹c przycisk "`Zapisz"'.
-\item	Zmiany s¹ weryfikowane pod k¹tem poprawnoœci podobnie jak przy rejestracji.
-\item	Zmiany zostaj¹ przes³ane na serwer i zapisane do bazy danych.
-\item	Pola z informacjami ponownie staj¹ siê nieedytowalne.
-
-\end{enumerate}
-
-\item [Sytuacje wyj¹tkowe]  \hfill \\
-Ad 5. Weryfikacja poprawnoœci danych nie powiod³a siê – b³êdnie wprowadzone pola zostaj¹ zaznaczone kolorem czerwonym. Nastêpuje powrót do kroku 3. \\*
-	Ad. 6. Nie uda³o siê nawi¹zaæ po³¹czenia z serwerem – wyœwietlony jest komunikat o b³êdzie po³¹czenia. Nastêpuje powrót do kroku 4.\\*
-	U¿ytkownik opuœci³ widok "`Profil u¿ytkownika"' przed zapisaniem zmian. Wprowadzone zmiany zostaj¹ utracone.\\*
-
-\item [Warunki koñcowe] \hfill \\
-Zmiany w profilu u¿ytkownika zosta³y zapisane.
-\end{description}
-
-%------------------------------------------------------------------------------------------
-
-
-\end{enumerate} % wyliczanie przypadków u¿ycia
-\newpage
-\section{Projekt interfejsu aplikacji mobilnej}
-
-Projekt interfejsu aplikacji mobilnej zosta³ wykonany w oparciu o wskazówki \textit{Material design}\cite{design} opracowane przez Google. Projekt wykonany zosta³ w programie graficznym bez uwzglêdnienia dostêpnych technologii. Po implementacji niektóre elementy interfejsu mog¹ ró¿niæ siê nieznacznie od zaprojektowanych.
-
-Po uruchomieniu aplikacji wyœwietlony zostaje ekran powitalny, z którego u¿ytkownik mo¿e przejœæ do logowania lub rejestracji do gry. Z poziomu ekranu powitalnego jest równie¿ mo¿liwoœæ wyœwietlenia zasad gry. Po klikniêcie przycisku "`Login"', wyœwietlony zostaje ekran "`Logowanie"' widoczny na rysunku \ref{fig:login}, a po klikniêciu przycisku "`Register"' ekran "`Rejestracja"' (rys. \ref{fig:register}).
-\begin{figure}[h]
-\centering
-\includegraphics[width=4cm]{rys04/welcome}
-\caption{Ekran startowy aplikacji, \textit{Ÿród³o obrazu:} \cite{boss}}
-\label{fig:welcome}
-\end{figure}
-
-Na ekranie rejestracji formularz na informacje o u¿ytkowniku. Tekst wpisywany pole has³a nie jest wyœwietlany jawnie, lecz zastêpowany kropkami. Na prawo od pola has³a znajduje siê przycisk z ikon¹ oka, po jego naciœniêciu znaki has³a zostan¹ pokazane.
-
-U góry ekranu znajduje siê miejsce na zdjêcie profilowe u¿ytkownika. Po klikniêciu wewn¹trz widocznej na rysunku \ref{fig:register} ramki u¿ytkownik zostanie przekierowany do odpowiedniej dla jego urz¹dzenia aplikacji galerii w celu wyboru zdjêcia. Po wyborze zdjêcia aplikacja poprosi u¿ytkownika o przyciêcie go do zadanych rozmiarów. Zdjêcia profilowe musz¹ byæ kwadratowe. Po zakoñczeniu procesu przycinania wybrane zdjêcie zostanie wyœwietlone wewn¹trz ramki.
-
-Po klikniêciu przez uzytkownika w pole "`data urodzenia"' zamiast standardowej klawiatury wyœwietlone zostanie okno dialogowe z kalendarzem widoczne na rysunku \ref{fig:reg2}.
-
-Na górnej krawêdzi ekranu znajduje siê pasek nawigacyjny pozwalaj¹cy na powrót do ekranu startowego aplikacji.
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}[b]{0.4\linewidth}
-\centering
-\includegraphics[width=4cm]{rys04/register} 
-\caption{ Formularz rejestracji}
-\label{fig:reg}
-\end{subfigure}
-\begin{subfigure}[b]{0.4\linewidth}
-\centering
-\includegraphics[width=4cm]{rys04/register2}
-\caption{Okno dialogowe kalendarza}
-\label{fig:reg2}
-\end{subfigure}
-\caption{Ekran rejestracji}
-\label{fig:register}
-\end{figure}
-
-Ekran "`Logowanie"' zawiera dwa podstawowe pola tekstowe, nazwa u¿ytkownika i has³o oraz przycisk logowania. Pod przyciskiem znajduje siê pole wyboru pozwalaj¹ce zapamiêtaæ wpisane dane. Po naciœniêciu przycisku formularz logowania znika, a w jego miejscu pojawia siê wskaŸnik ³adowania. W przypadku b³êdnych danych wyœwietlony zostaje komunikat o b³êdzie. Po poprawnym logowaniu w aplikacji zostaje wyœwietlony ekran "`Zapis lokalizacji"' widoczny na rysunku \ref{fig:gps}.
-
-Ponownie umieszczono na górnej krawêdzi ekranu pasek nawigacyjny pozwalaj¹cy na powrót do ekranu startowego aplikacji.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=4cm]{rys04/login}
-\caption{Ekran logowania }
-\label{fig:login}
-\end{figure}
-
-
-Na ekranie "`Zapis lokalizacji"' pod umieszczon¹ grafik¹ wyœwietlany jest komunikat o aktualnie wykonywanym zadaniu lub informacja dla u¿ytkownika o dodatkowych czynnoœciach, które nale¿y wykonaæ np. w³¹czenie GPS. Pod komunikatem znajduje siê przycisk pozwalaj¹cy na otwarcie ustawieñ systemowych telefonu, w przypadku gdy u¿ytkownik zamkn¹³ okno dialogowe informuj¹ce o koniecznoœci uaktywnienia modu³u GPS telefonu.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=4cm]{rys04/nogps}
-\caption{Ekran zapisu lokalizacji po logowaniu}
-\label{fig:gps}
-\end{figure}
-
-
-Widok "`Lista zleceñ"' wyœwietlany po zakoñczeniu zapisu lokalizacji podzielony jest na dwie jednakowe sekcje: prywatn¹ i publiczn¹. W ka¿dej z sekcji znajduje siê lista zleceñ danego typu. Elementy listy zawieraj¹ informacje o u¿ytkowniku bêd¹cym celem zlecenia oraz jego status. Po klikniêciu elementu listy otwarty zostaje widok "`Szczegó³y zlecenia"' widoczny na rysunku \ref{fig:details}. 
-
-Na górnym pasku nawigacyjnym znajduje siê przycisk pozwalaj¹cy na pokazanie bocznego panelu nawigacyjnego. Panel nawigacyjny mo¿e te¿ zostaæ przywo³any poprzez przeci¹gniêcie w prawo po ekranie. Wysuniêty panel nawigacyjny widoczny jest na rysunku \ref{fig:drawer}.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=4cm]{rys04/targets}
-\caption{Lista zleceñ}
-\label{fig:targets}
-\end{figure}
-
-
-G³ówym elementem widoku "`Szczegó³y zlecenia"' zajmuj¹cym znacz¹c¹ czêœæ ekranu jest zdjêcie profilowe u¿ytkownika. Pod nim znajduj¹ siê dane osobowe szukanego gracza, a tak¿e informacje o statusie zlecenia. Na dole ekranu znajduje siê formaularz do wprowadzenia kodu potwierdzaj¹cego wykonanie zlecenia. Górny pasek aplikacji zawiera przycisk powrotu do listy zleceñ oraz przycisk do zg³aszania z³amania przez gracza zasad gry. Po naciœniêciu tego przycisku w aplikacji wyœwietlone zostanie okno dialogowe widoczne na rysunku \ref{fig:details} b).
-
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}[b]{0.4\linewidth}
-\centering
-\includegraphics[width=4cm]{rys04/details3} 
-\caption{ Widok szczegó³ów zlecenia}
-\label{fig:det}
-\end{subfigure}
-\begin{subfigure}[b]{0.4\linewidth}
-\centering
-\includegraphics[width=4cm]{rys04/report}
-\caption{Zg³oszenie z³amania zasad}
-\label{fig:det2}
-\end{subfigure}
-\caption{Ekran "`Szczegó³y zlecenia"'}
-\label{fig:details}
-\end{figure}
-
-
-Po wykonaniu gestu przeci¹gniêcia w dó³ na ekranie szczegó³ów zlecenia wyœwietlona zostaje "`Mapa"' (rys. \ref{fig:map}), na którym znajduje siê mapa z naniesonymi znacznikami oznaczaj¹cymi znane lokalizacje szukanego gracza. Po klikniêciu na znacznik pokazana zostanie data i godzina zarejestrowania tej lokalizacji.
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=4cm]{rys04/map}
-\caption{Mapa znanych lokalizacji u¿ytkownika}
-\label{fig:map}
-\end{figure}
-
-
-Boczne menu nawigacyjne pokazane na rysunku \ref{fig:drawer} przywo³ywane jest poprzez naciœniêcie przycisku nawygacyjnego lub przeci¹gniêcie w prawo na ekranie "`Lista zleceñ"'. Pozwala ono na prze³¹czanie pomiêdzy kolejnymi ekranami aplikacji. U do³u menu nawigacyjnego znajduj¹ siê równie¿ przyciski pozwalaj¹ce na kontakt z twórc¹ aplikacji oraz otwarcie strony aplikacji w sklepie Google Play.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=4cm]{rys04/drawer}
-\caption{Panel nawigacyjny aplikacji}
-\label{fig:drawer}
-\end{figure}
-
-Na ekran "`Generowanie kodu"' sk³ada siê zegar wraz z okr¹g³ym paskiem postêpu, pole tekstowe oraz przycisk. W celu wygenerowania kodu u¿ytkownik musi przytrzymaæ przycisk a¿ to na³adowania do pe³na wskaŸnika, który pojawi siê wokól przycisku. Po na³adowaniu generowany kod pojawi siê w polu tekstowym, a zegar zacznie odliczaæ czas do koñca wa¿noœci kodu, co pokazano na rysunku \ref{fig:code}.
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=4cm]{rys04/code}
-\caption{Ekran Generowanie kodu}
-\label{fig:code}
+\includegraphics[width=12cm]{{{img/jmeter_use_case}}}%
+\caption{Przypadki u¿ycia aplikacji testuj¹cej}%
+\label{}%
 \end{figure}
 
 \section{Projekt bazy danych}
-W tym rozdziale przedstawiony zosta³ model konceptualny oraz fizyczny bazy danych wykorzystywanej w systemie. 
 
-\subsection{Model konceptualny}
-Poni¿ej zaprezentowano diagram zwi¹zków encji w bazie danych prezentuj¹cy relacje pomiêdzy poszczególnymi tabelami (rys. \ref{fig:model_k}).
+Na potrzeby testów utworzona zostanie baza danych sk³adaj¹ca siê z 10 jednakowych tabel, oznaczonych literami od \textit{A} do \textit{J}. Tabele sk³adaæ siê bêd¹ z 7 kolumn: numeru id, 3 kolumn numerycznych oraz 3 kolumn tekstowych, oznaczonych literami od \textit{a} do \textit{f}. Schemat tabeli przedstawia poni¿szy rysunek. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=8cm]{rys04/db3.jpg}%
-\caption{Model konceptualny bazy danych}%
-\label{fig:model_k}%
+\includegraphics[width=6cm]{{{img/table_c}}}%
+\caption{Przyk³adowa tabela}%
+\label{}%
 \end{figure}
 
-Podstawow¹ tabel¹ w bazie jest tabela \texttt{users} przechowuj¹ca konta uzytkowników. Ka¿dy z u¿ytkowników mo¿e posiadaæ zero lub wiêcej zleceñ (\texttt{targets}). Zlecenie mo¿e byæ przypisane jednemu u¿ytkownikowi w przypadku zleceñ prywatnych, lub nieprzypisane w przypadku zleceñ publicznych. Ka¿de zlecenie musi posiadaæ dok³adnie jednego u¿ytkownika bêd¹cego Szukanym. Zlecenia mog¹ mieæ przypisan¹ lokalizacjê, w której zosta³y wykonane.
+W tabeli A dodana zostanie dodatkowa kolumna \textit{timestamp}, z domyœln¹ wartoœci¹ \texttt{current\_timestamp}, zapisuj¹ca czas utworzenia ka¿dego rekordu w bazie danych. Dodatkowo w tabeli A na serwerze pe³ni¹cym funkcjê \textit{slave} utworzona zostanie dodatkowa kolumna \textit{replica\_timestamp} o takich samych w³asnoœciach, jak kolumna \textit{timestamp}. Kolumny te pos³u¿¹ do ocenienia opóŸnienia replikacji przy wstawianiu rekordów. 
 
-Kod generowany w aplikacji musi byæ przypisany do uzytkownika generuj¹cego go. U¿ytkownik mo¿e nie posiadaæ wygenerowanych kodów, lub posiadaæ dok³adnie jeden, jednak to ograniczenie nie zosta³o uzglêdnione w relacjach encji z za³o¿eniem, ¿e zostanie wprowadzone na etapie implementacji. 
-
-Kod musi posiadaæ lokalizacjê, w której zosta³ wygenerowany. Lokalizacja musi byæ przypisana do dok³adnie jednego u¿ytkownika. U¿ytkownik mo¿e posiadaæ wiele lokalizacji.
-
-Zg³oszenia (\texttt{reports}) o z³amaniu zasad musz¹ nale¿eæ do jednego u¿ytkownika zg³oszonego, oraz mieæ jednego u¿ytkownika zg³aszaj¹cego.
-
-Punkty (\texttt{rewards}) otrzymywane s¹ za wykonynanie konkrentnego zlecenia i przyznawane jednemu u¿ytkownikowi. U¿ytkownik mo¿e posiadaæ zero lub wiele przyznanych punktów.
-
-\subsection{Model fizyczny}\indent \par
 \begin{figure}[H]
 \centering
-\includegraphics[width=\columnwidth]{rys04/db2.jpg}%
-\caption{Model fizyczny bazy danych}%
-\label{fig:model_f}%
+\includegraphics[width=8cm]{{{img/table_a}}}%
+\caption{Zmodyfikowana tabela A na serwerze slave}%
+\label{}%
 \end{figure}
 
-Na rysunku \ref{fig:model_f} zaprezentowano model fizyczny bazy danych.
 
-Tabela users zawiera istotne informacje personalne u¿ytkownika, takie jak imiê, nazwisko, datê urodzenia, a tak¿e wybrane przez uzytkownika dane logowania. Tabela zosta³a rozszerzona o dane statystyczne o uzytkowniku, m.in. datê ostatniego logowania, datê rejestracji. Pole \texttt{authorities} okreœla rolê u¿ytkownika (gracz, administrator) i jest wykorzystywane w metodach autoryzacji, co zostanie omówione w póŸniejszych rozdzia³ach.
+\section{Projekt mechanizmów replikacji}
 
-Tabela location przechowuje poza kluczami g³ównym i pochodnym u¿ytkownika informacje lokalizacyjne: d³ugoœæ i szerokoœæ geograficzn¹ oraz datê utworzenia i typ wpisu (np. logowanie).
+\subsection{Pgpool-II}
 
-Tabela target ³¹czy dwóch u¿ytkowników w parê. Jeden z nich staje siê szukaj¹cym, a drugi szukanym. W tabeli umieszczone zosta³y informacje o dacie utworzenia i ukoñczenia zlecenia, widocznoœci dla u¿ytkowników systemu oraz statusie zlecenia.
+Pgpool-II jest oprogramowaniem dzia³aj¹cym w warstwie middleware, co oznacza, ¿e poœredniczy ono w komunikacji miêdzy u¿ytkownikiem, a innymi warstwami systemu, w tym wypadku bazami danych. Oprogramowanie mo¿e dzia³aæ jako proces na jednym z komputerów bêd¹cych jednoczeœnie serwerem baz danych, jak i jako samodzielna maszyna. 
 
-Tabela code zawiera ci¹g znaków bêd¹cy losowo generowanym has³em potwierdzaj¹cym zlecenie, datê utworzenia oraz referencje do u¿ytkownika bêd¹cego w³aœcicielem kodu i lokalizacji wygenerowania.
+Na potrzeby testów utworzone zostan¹ 3 serwery: pgpool-core, na którym zostanie uruchomione oprogramowanie pgpool-II oraz serwery pgpool1 oraz pgpool2, bêd¹ce serwerami baz danych PostgreSQL. Proces aplikacji pgpool pe³ni rolê tzn. load balancera, który automatycznie decyduje, na który z serwerów przekazaæ zapytanie zale¿nie od obci¹¿enia sieci. Dostêp do baz danych odbywaæ siê bêdzie przez domyœlny port 5432. Domyœlnym portem obs³ugi zapytañ na serwerze pgpool-core jest 9999, jednak ze wzglêdu na to, ¿e nie ma na nim instancji PostgreSQL wykorzystany zostanie port 5432. Konfiguracja na serwerze pgpool-core wymaga podania adresów IP wszystkich serwerów baz danych. Projektowany system wymaga³ bêdzie posiadania dwóch adresów statycznych.
 
-W tabeli report przechowywane s¹ zg³oszenia o z³amaniu zasad sk³adaj¹ce siê z powodu zg³oszenia (wybieranego w aplikacji z zamkniêtej listy dostêpnych mo¿liwoœci), daty i nieobowi¹zkowego opisu dodatkowego. Zg³oszenie przypisywane jest dwóm u¿ytkownikom, zg³oszonemu i zg³aszaj¹cemu.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\columnwidth]{{{img/pgpool}}}%
+\caption{Architektura systemu pgpool}%
+\label{}%
+\end{figure}
 
-Tabela reward przechowuje informacje o zdobywanych przez u¿ytkowników punktach. Wpis sk³ada siê z wartoœci punktowej, daty dodania, opisu s³ownego mówi¹cego o tym, za co punkty zosta³y przyznane oraz informacji o u¿ytkowniku otrzymuj¹cym je.
+\subsection{Bucardo}
 
-\section{Protokó³ komunikacji w systemie} \label{prot_kom}
-Korzystaj¹c z przygotowanych wymagañ funkcjonalnych oraz przypadków u¿ycia aplikacji opracowano protokó³ komunikacyjny w systemie. Komunikacja pomiêdzy serwerem a aplikacjami dostêpnymi dla u¿ytkowników systemu bêdzie odbywaæ siê poprzez zapytania HTTP. Do wymiany danych zastosowany zostanie format JSON (ang. JavaScript Object Notation)\cite{json}.
+ System replikacji bucardo wymaga do dzia³ania instancji bazy PostgreSQL. Informacje o zmianach zachodz¹cych w tabelach, a tak¿e konfiguracja replikacji przechowywane s¹ w lokalnej bazie danych o nazwie \texttt{bucardo}. Z tego wzglêdu zostanie on zainstalowany na serwerze master, a replikacja zostanie skonfigurowana z bazy lokalnej do bazy na serwerze zdalnym. Replikacja wymaga równie¿ utworzenia u¿ytkownika \texttt{bucardo} z uprawnieniami \texttt{SUPERUSER} na wszystkich serwerach. Komunikacja u¿ytkownika bêdzie odbywaæ siê wy³¹cznie z serwerem master, na domyœlnym porcie 5432. Wymagane bêdzie posiadanie jednego statycznego adresu IP dla serwera slave.
 
-W planowanej koncepcji protoko³u komunikacyjnego adresy zosta³y podzielone na trzy grupy ró¿ni¹ce siê uprawnieniami dostêpu:
-\begin{itemize}
-	\item \texttt{/api/*} - adresy dostêpne dla graczy
-	\item \texttt{/admin/*} - adresy dostêpne dla administratorów
-	\item pozosta³e - adresy dostêpne dla wszyskich
-\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\columnwidth]{{{img/bucardo}}}%
+\caption{Architektura systemu bucardo}%
+\label{}%
+\end{figure}
 
-W celu uzyskania dostêpu do \texttt{/api/*} lub \texttt{/admin/*} wymagane jest przes³anie wraz z zapytaniem nag³ówka \texttt{X-Auth-Token} zawieraj¹cego informacje o uprawnieniach. Szczegó³y dotycz¹ce tego zabezpieczenia opisane zosta³y w sekcji \ref{zabezpieczenia}.
+\subsection{Replikacja logiczna}
 
-\subsection{Œcie¿ki dostêpu API}
-Wybrane adresy obs³ugi zapytañ prezentuje poni¿sza lista. Struktury danych wymienione w sekcjach "`Parametry danych"' i "`Zwaracane wartoœci"' zosta³y przedstawione w kolejnym punkcie.
-\lstset{style=json_color}
-% ------------------------------------------------------------------------------------------------
-\begin{enumerate}
-	\item Rejestracja konta 
+System replikacji logicznej sk³adaæ siê bêdzie z dwóch serwerów. Na serwerze master utworzona zostanie publikacja obejmuj¹ca wszystkie tabele bazy danych \texttt{postgres}. Publikacja rejestruje wszystkie operacje dokonywane na bazie danych i udostêpnia je do odczytu przez subskrybentów. Na serwerze slave utworzona zostanie subskrypcja nas³uchuj¹ca zmian w publikacji serwera master i kopiuj¹ca te zmiany do lokalnej bazy danych. Dla u¿ytkownika udostêpniony zostanie port 5432 serwera master. Wymagane bêdzie posiadanie jednego statycznego adresu IP dla serwera master. 
 
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\columnwidth]{{{img/logical}}}%
+\caption{Architektura systemu replikacji logicznej}%
+\label{}%
+\end{figure}
 
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/register/} \\
+\subsection{Replikacja strumieniowa}
+
+System replikacji strumieniowej wykorzystuje dwa serwery. Wykorzystuj¹c funkcje archiwizacji bazy danych na serwerze master utworzony zostanie plik WAL (write ahead log) przechowuj¹cy zmiany dokonywane na lokalnej bazie danych. Przy pomocy procesów WAL sender oraz WAL receiver zostanie utworzona kopia tego pliku na serwerze slave, który nastêpnie wykorzysta go do odtworzenia zmian. Do zestawienia po³¹czenia konieczne jest posiadanie jednego statycznego adresu IP dla serwera slave. Serwer slave dzia³aæ bêdzie w trybie hot-standby, oznacza to, ¿e bêdzie dzia³aæ w trybie tylko do odczytu i obs³ugiwaæ wy³¹cznie zapytania SELECT. U¿ytkownik komunikowaæ siê bêdzie z serwerem master na porcie 5432.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\columnwidth]{{{img/stream}}}%
+\caption{Architektura systemu replikacji strumieniowej}%
+\label{}%
+\end{figure}
+
+\section{Projekt testów wydajnoœciowych}
+\subsection{Wykorzystywane operacje bazodanowe}
+
+Testy wydajnoœciowe systemu przeprowadzone zostan¹ przy pomocy zapytañ CRUD. Wykorzystane zostan¹ operacje SELECT, INSERT oraz UPDATE. Schemat zapytañ wykorzystywanych w testach przedstawia poni¿sza tabela.
+
+\begin{table}[H]
+\centering
+\caption{Schemat zapytañ testowych}
+\label{}
+\begin{tabular}{|l|l|}
 \hline
-\end{tabularx}
+nazwa testu   & schemat zapytania \\ \hline
+All select    & \texttt{SELECT * FROM <table>}\\ 
+Single select & \texttt{SELECT * FROM <table> where id = <value>} \\ 
+Insert        & \texttt{INSERT INTO <table> VALUES (<value1>,<value2>,...)} \\ 
+Update        & \texttt{UPDATE <table> SET <column> = <value1> WHERE id = <value2>}        \\ \hline
+\end{tabular}
+\end{table}
 
-\quad
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Rejestruje nowe konto. Dane w szablonie wype³nionym przez u¿ytkownika s¹ uzupe³niane o uprawnienia i datê rejestracji, a has³o jest szyfrowane, po czym nastêpuje zapis do bazy.
-\end{tcolorbox}
-\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
-\color{black}
+\subsection{Sposób prowadzenia testów}
 
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{3cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{template} & \texttt{UserTemplate} & szablon danych u¿ytkownika &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-%\end{tcolorbox}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & User &\\
-\end{tabularx}
-\end{adjustwidth}
-
-%\noindent\rule[0.2ex]{\linewidth}{0.2pt}
-\quad
-%\end{tcolorbox}
-\end{mybox}
-
-% ----------------------------------------------------------------------------------
-
-	\newpage \item Logowanie
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/auth/} \\
+Przed rozpoczêciem testów tabele w bazie danych zostan¹ wype³nione przyk³adowymi danymi w nastêpuj¹cej liczbie: 
+\begin{table}[H]
+\centering
+\caption{Licznoœæ rekordów w tabelach}
+\label{my-label}
+\begin{tabular}{|l|r|}
 \hline
-\end{tabularx}
+tabela & liczba rekordów \\ \hline
+A      & 10 000           \\ 
+B      & 20 000           \\ 
+C      & 30 000           \\ 
+D      & 40 000           \\
+E      & 50 000           \\ 
+F      & 60 000           \\ 
+G      & 70 000           \\ 
+H      & 80 000           \\ 
+I      & 90 000           \\ 
+J      & 100 000          \\ \hline
+\end{tabular}
+\end{table}
 
-\quad
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Autentykuje u¿ytkownika na podstawie podanych danych logowania i zwraca token dostêpu do API systemu.
-\end{tcolorbox}
-\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
-\color{black}
+Dla ka¿dej tabeli przeprowadzone zostan¹ testy dla piêciu ró¿nych liczb aktywnych u¿ytkowników: 1, 5, 10, 25, 40. Testy zostan¹ powtórzone tak, aby wykonane zosta³o conajmniej 50 zapytañ dla ka¿dej kombinacji parametrów wejœciowych. Liczbê wymaganych powtórzeñ przedstawia tabela \ref{tab_reps}.
 
-%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} X X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{name} & \texttt{AuthenticationRequest} &  &\\
-\end{tabularx}
-\end{adjustwidth}
-%\end{tcolorbox}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{AuthenticationResponse} &\\
-\end{tabularx}
-\end{adjustwidth}
-
-%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
-
-%\noindent\rule[0.2ex]{\linewidth}{0.2pt}
-\quad
-%\end{tcolorbox}
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-
-\item Sprawdzenie dostêpnoœci nazwy u¿ytkownika lub adresu email
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/register/check?username=\{name\}} \\
+\begin{table}[H]
+\centering
+\caption{Liczba powtórzeñ testu w zaleznoœci od liczby aktywnych u¿ytkowników}
+\label{tab_reps}
+\begin{tabular}{|r|r|}
 \hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zwraca informacje o istnieniu konta u¿ytkownika o zadanej nazwie.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{name} & \texttt{String} & nazwa uzytkownika &\\
-\end{tabularx}
-
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
+liczba u¿ytkowników & liczba powtórzeñ testu\\ \hline
+1      & 50           \\ 
+5      & 10           \\ 
+10      & 5           \\ 
+25      &2           \\
+40      & 2          \\  \hline
+\end{tabular}
+\end{table}
 
 
+W celu analizy opóŸnienia replikacji przeprowadzone zostan¹ dodatkowe testy z wykorzystaniem zapytania INSERT. Badany bêdzie wp³yw iloœci rekordów zapisywanych w jednym zapytaniu na czas replikacji. 
 
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{boolean} &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\quad
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{1.5cm} X}
-	\texttt{true} & nazwa u¿ytkownika jest wolna \\
-	\tiny{lub} & \\
-	\texttt{false} & nazwa u¿ytkownika jest zajêta \\
-
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\newpage \item Pobranie konta u¿ytkownika
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user?user=\{id\}} \\
+\begin{table}[H]
+\centering
+\caption{Liczba rekordów wstawianych do bazy danych w testach opóŸnienia replikacji}
+\label{my-label}
+\begin{tabular}{|r|r|r|r|}
 \hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zwraca dane o koncie u¿ytkownika o zadanym numerze id.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{id} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
-\end{tabularx}
-
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{User} &\\ 
-	\texttt{404} & \texttt{Not found} &  &\\
-\end{tabularx}
-\end{adjustwidth}
-
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-
-\item	Pobranie zleceñ u¿ytkownika
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/target?user=\{id\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zwraca zlecenia u¿ytkownika o zadanym numerze id.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{id} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
-\end{tabularx}
-
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{List<Target>} &\\ 
-	\texttt{404} & \texttt{Not found} &  &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-
-
-\newpage \item	Pobranie lokalizacji  u¿ytkownika
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/location?user=\{id\}\&date=\{date\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zwraca zlecenia u¿ytkownika o zadanym numerze id.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{id} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
-	\texttt{date} & \texttt{timestamp} & data utworzenia, od której maj¹ zostaæ pobrane rekordy &\\
-\end{tabularx}
-
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{List<Location>} &\\ 
-	\texttt{400} & \texttt{Bad request} & \texttt{"User not found!"} &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item	Zapis lokalizacji u¿ytkownika
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/location} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zapis lokalizacji u¿ytkownika do bazy. 
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{location} & \texttt{Location} & lokalizacja u¿ytkownika &\\
-	
-\end{tabularx}
-
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{"`Location save success"'}&\\ 
-	\texttt{400} & \texttt{Bad request} & Exception stack trace &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\newpage \item	Zapis kodu
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/code} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zapis kodu do bazy danych.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{code} & \texttt{Code} & kod potwierdzaj¹cy zlecenie &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & &\\
-\end{tabularx}
-\end{adjustwidth}
-\
-
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item	Potwierdzenie wykonania zlecenia
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/target/confirm?target=\{id\}\&code=\{code\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Potwierdza wykonanie zlecenia. Kod przes³any jako parametr jest porównywany z wyszkuwanym w baze na podstawie u¿ytkownika bêd¹cego celem zlecenia. 
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X L{0.8cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ \hline
-	\texttt{id} & \texttt{long} & numer identyfikacyjny zlecenia \\
-	\texttt{code} & \texttt{String} & szeœcioliterowy kod potwierdzaj¹cy wygenerowany w aplikacji \\
-	\end{tabularx}
-
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{Target}&\\ 
-	\texttt{400} & \texttt{Bad request} &  &\\
-\end{tabularx}
-\end{adjustwidth}
-
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\newpage \item	Pobranie najbardziej aktualnej lokalizacji 
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\linewidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/location/last?user=\{id\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zwraca najbardziej aktualn¹ znan¹ lokalizacjê u¿ytkownika o zadanym numerze id.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-		\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
-\end{tabularx}
-
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{Location}&\\ 
-	\texttt{400} & \texttt{Bad request} & \texttt{"User not found!"} &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item	Edycja profilu u¿ytkownika 
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Aktualizuje informacje zawarte w koncie u¿ytkownika na podstawie przes³anego szablonu.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{3cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{template} & \texttt{UserTemplate} & szablon z danymi u¿ytkownika &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
-	\texttt{400} & \texttt{Bad request} &  &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\newpage \item Zg³oszenie z³amania zasad
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{POST}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/report} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zapis zg³oszenia o ³amaniu zasad do bazy.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry danych}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{code} & \texttt{Report} &  &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item	Odmro¿enie lub zamro¿enie konta
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user/status?user=\{id\}\&status=\{status\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zmiana statusu konta na aktywne lub zawieszone.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
-	\texttt{status} & \texttt{String} & \texttt{active} lub \texttt{suspended} &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
-	\texttt{400} & \texttt{Bad request} & &\\
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\newpage \item	Usuniêcie konta u¿ytkownika
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{DELETE}}} & \cellcolor{bluebg_light}\texttt{\color{white}/api/user?user=\{id\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Usuwa konto u¿ytkownika i powi¹zane z nim informacje. Konto mo¿e zostaæ usuniête tylko przez jego w³aœciciela lub administratora.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
-	\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika \\
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item	Zmiana has³a
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/auth/password?username={username}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Wysy³a proœbê o przes³anie linku do zmiany has³a na adres email u¿ytkownika o podanej nazwie.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
-	\texttt{username} & \texttt{String} & nazwa u¿ytkownika \\
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item	Zmiana parametru dzia³ania systemu
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/param?key=\{key\}\&value=\{value\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Aktualizuje wybrany parametr zadan¹ wartoœci¹.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
-	\texttt{key} & \texttt{String} & nazwa parametru \\
-	\texttt{value} & \texttt{String} & nowa wartoœæ \\
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item	Odczyt wartoœci parametru dzia³ania systemu
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/param?key=\{key\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Odczytuje wartoœæ zadanego parametru.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\linewidth}{L{2cm} L{2cm} X }
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} \\ 
-	\texttt{key} & \texttt{String} & nazwa parametru \\
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{String}&\\ 
-	\texttt{400} & \texttt{Bad request} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\item Odblokowanie lub zablokowanie konta
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/user?user=\{id\}\&status=\{status\}} \\
-\hline
-\end{tabularx}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Zmienia status konta u¿ytkownika na zablokowany lub aktywny. Dostêpne tylko dla administracji.
-\end{tcolorbox}
-
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{user} & \texttt{long} & numer identyfikacyjny u¿ytkownika &\\
-	\texttt{status} & \texttt{String} & \texttt{active} lub \texttt{banned} &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-\vspace{\baselineskip}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
-	\texttt{400} & \texttt{Bad request} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-\
-
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\newpage	\item Pobranie listy u¿ytkowników
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/user?status=\{status\}\&role=\{role\}} \\
-\hline
-\end{tabularx}
-
-\quad
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Pobiera listê u¿ytkowników nak³adaj¹c zdefiniowane filtry.
-\end{tcolorbox}
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{status} & \texttt{String} & \texttt{active}, \texttt{suspended} lub \texttt{banned} &\\
-	\texttt{role} & \texttt{String} & \texttt{user} lub \texttt{admin} &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-%\begin{tcolorbox}[boxsep=2mm,arc=0pt,colback=white,toprule=0.5pt, leftrule=0pt,rightrule=0pt,bottomrule =0pt]
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{List<User>}&\\ 
-	\texttt{400} & \texttt{Bad request} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-%\noindent\rule[0.2ex]{\linewidth}{0.2pt}
-\quad
-%\end{tcolorbox}
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-	\item Pobranie listy zg³oszeñ
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{GET}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/role?user=\{id\}\&role=\{role\}} \\
-\hline
-\end{tabularx}
-
-\quad
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Pobiera listê zg³oszeñ o ³amaniu zasad nak³adaj¹c zdefiniowane filtry.
-\end{tcolorbox}
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{user} & \texttt{long} & numer identyfikacyjny  u¿ytkownika  &\\
-	\texttt{role} & \texttt{String} & \texttt{user} lub \texttt{admin}  &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{List<Report>}&\\ 
-	\texttt{400} & \texttt{Bad request} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-\quad
-%\end{tcolorbox}
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-\newpage	\item Nadanie lub odebranie uprawnieñ administracyjnych 
-
-\begin{mybox}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{C{2.5cm} X} 
-
- \large{\color{white}\cellcolor{bluebg}\texttt{\textbf{PATCH}}} & \cellcolor{bluebg_light}\texttt{\color{white}/admin/report?by=\{id\}\&reported=\{id2\}\&reason=\{reason\}} \\
-\hline
-\end{tabularx}
-
-\quad
-\begin{tcolorbox}[boxsep=2mm,colframe=jsonbg,boxrule=1pt]
-\quad Nadaje lub obiera uprawnienia administracyjne zadanemu kontu.
-\end{tcolorbox}
-\color{bluefont}\textsc{\textbf{\quad Parametry adresu}} \quad \Vhrulefill \quad
-\color{black}
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{parametr} & \tiny{typ} & \tiny{opis} & \\ 
-	\texttt{reported} & \texttt{long} & numer identyfikacyjny zg³oszonego u¿ytkownika &\\
-	\texttt{by} & \texttt{long} & numer identyfikacyjny zg³aszaj¹cego u¿ytkownika  &\\
-	\texttt{reason} & \texttt{String} & powód zg³oszenia  &\\
-	
-\end{tabularx}
-\end{adjustwidth}
-\color{bluefont}\textsc{\textbf{\quad Zwracane wartoœci:}} \quad \Vhrulefill \quad
-\color{black}
-
-
-\begin{adjustwidth}{1cm}{}
-\begin{tabularx}{\textwidth}{L{2cm} L{2cm} X L{2cm}}
-	\tiny{Code} & \tiny{Message} & \tiny{Content} & \\ 
-	\texttt{200} & \texttt{Ok} & \texttt{User}&\\ 
-	\texttt{400} & \texttt{Bad request} & &\\ 
-\end{tabularx}
-\end{adjustwidth}
-
-\quad
-%\end{tcolorbox}
-\end{mybox}
-% ----------------------------------------------------------------------------------
-
-
-\subsection{Struktury danych}
- 
-Poni¿szy spis przedstawia struktury danych w formacie JSON przesy³ane podczas komunikacji pomiêdzy serwerem a aplikacjami klienckimi. W celu uproszczenia opisu zagnie¿dzone struktury  zosta³y zast¹pione ich nazw¹, np. \texttt{<User>}, a wartoœci numeryczne ich typem.
-\begin{enumerate}
-
-\item AuthenticationRequest 
-
-
-\begin{lstlisting}
-{
-	"username": "string"
-	"password": "string"
-}
-\end{lstlisting}
-\item AuthentiactionResponse
-
-
-\begin{lstlisting}
-{ 
-	"token": "string",
-	"user": <User>
-}
-   \end{lstlisting}
-
-\item Location 
-
-\begin{lstlisting}
-{
-	"date": "2016-11-20T22:03:02.155Z",
-	"id": integer,
-	"latitude": double,
-	"longitute": double,
-	"type": "string",
-	"user": <User>
-}
-   \end{lstlisting}
-
-
-\item Target 
-\begin{lstlisting}
-{
-	 "completed": "2016-11-20T22:03:02.153Z",
-	 "created": "2016-11-20T22:03:02.153Z",
-	 "hunted": <User>,
-	 "hunter": <User>,
-	 "id": integer,
-	 "location": <Location>,
-	 "publicTarget": true,
-	 "status": "string"
- }
-		
-		\end{lstlisting} 
-		
-		
-		
-\item Report 
-\begin{lstlisting}
-{
-	 "date": "2016-11-20T22:03:02.153Z",
-	 "reported_by": <User>,
-	 "id": 0,
-	 "player_id": <User>,
-	 "description": "string",
-	 "reason": "string"
- }
-		\end{lstlisting} 
-
-\item Reward 
-\begin{lstlisting}
-{
-	 "added": "2016-11-20T22:03:02.153Z",
-	 "awardedfor": "string",
-	 "value": integer,
-	 "player_id": <User>,
-	 "id": integer,
-	 "taget_id": <Target>
- }
-		
-		\end{lstlisting} 
-
-		
-		
-		
-		\item User 
-		
-
-\begin{lstlisting}
-{
-	 "authorities": "string",
-	 "dateOfBirth": "2016-11-19T16:48:15.682Z",
-	 "description": "string",
-	 "email": "string",
-	 "firstName": "string",
-	 "gender": "string",
-	 "id": long,
-	 "lastActive": "2016-11-19T16:48:15.682Z",
-	 "lastName": "string",
-	 "latitude": double,
-	 "loginstreak": integer,
-	 "longitude": double,
-	 "noTargetSince": "2016-11-19T16:48:15.683Z",
-	 "notifications": "string",
-	 "password": "string",
-	 "profilePicture": "string",
-	 "registerDate": "2016-11-19T16:48:15.683Z",
-	 "score": integer,
-	 "status": "string",
-	 "targetDistance": double,
-	 "username": "string"
-}
-   \end{lstlisting}
-
-
-	\item UserTemplate 
-	
-	
-\begin{lstlisting}
-{
-	"dateOfBirth": "2016-11-20T21:10:21.927Z",
-	"description": "string",
-	"email": "string",
-	"firstName": "string",
-	"gender": "string",
-	"lastName": "string",
-	"notifications": "string",
-	"password": "string",
-	"profilePicture": "string",
-	"targetDistance": double,
-	"username": "string"
-}
-\end{lstlisting}
-
-\end{enumerate}
-
-
-\end{enumerate}  % api endpoint enum
+Liczba rekordów w zapytaniu & zakres numerów id & Liczba zapytañ & Liczba rekordów \\ \hline
+1                           & 0 - 9 999           & 10 000         & 10 000          \\ 
+20                          & 20 000 - 29 999     & 500            & 10 000          \\ 
+40                          & 40 000 - 49 999     & 250            & 10 000          \\ 
+60                          & 60 000 - 69 959     & 166            & 9 960           \\ 
+80                          & 80 000 - 89 999     & 125            & 10 000          \\ 
+100                         & 100 000 - 109 999   & 100            & 10 000          \\ \hline
+\end{tabular}
+\end{table}
