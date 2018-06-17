@@ -1,56 +1,70 @@
 \babel@toc {polish}{}
 \contentsline {chapter}{Spis rysunk\'ow}{4}{Doc-Start}
-\contentsline {chapter}{Spis tabel}{5}{Doc-Start}
-\contentsline {chapter}{Spis listing\'ow}{6}{Doc-Start}
-\contentsline {chapter}{\chapternumberline {1}Wst\k ep}{8}{chapter.1}
-\contentsline {section}{\numberline {1.1}Cel i zakres pracy}{8}{section.1.1}
-\contentsline {section}{\numberline {1.2}Metody replikacji w systemach bazodanowych}{8}{section.1.2}
-\contentsline {chapter}{\chapternumberline {2}Analiza wymaga\'n systemu}{10}{chapter.2}
-\contentsline {section}{\numberline {2.1}Architektura systemu}{10}{section.2.1}
-\contentsline {section}{\numberline {2.2}Wymagania funkcjonalne}{10}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Aplikacja serwerowa}{10}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Analizowane architektury rozproszonej bazy danych}{11}{subsection.2.2.2}
-\contentsline {subsubsection}{Bucardo}{11}{section*.3}
-\contentsline {subsubsection}{Pgpool-II}{11}{section*.4}
-\contentsline {subsubsection}{Replikacja logiczna}{12}{section*.5}
-\contentsline {subsubsection}{Replikacja strumieniowa}{12}{section*.6}
-\contentsline {subsection}{\numberline {2.2.3}Wykorzystywane technologie}{12}{subsection.2.2.3}
-\contentsline {subsection}{\numberline {2.2.4}Narz\k edzia wspomagaj\k ace ocen\k e wydajno\'sci system\'ow bazodanowych}{12}{subsection.2.2.4}
-\contentsline {subsubsection}{pgbench}{12}{section*.7}
-\contentsline {subsubsection}{JMeter}{13}{section*.8}
-\contentsline {subsubsection}{Spawner Data Generator}{13}{section*.9}
-\contentsline {chapter}{\chapternumberline {3}Projekt systemu}{15}{chapter.3}
-\contentsline {section}{\numberline {3.1}Przypadki u\.zycia}{15}{section.3.1}
-\contentsline {subsubsection}{Aplikacja serwerowa}{15}{section*.10}
-\contentsline {subsubsection}{Aplikacja testuj\k aca}{16}{section*.11}
-\contentsline {section}{\numberline {3.2}Projekt bazy danych}{16}{section.3.2}
-\contentsline {section}{\numberline {3.3}Projekt mechanizm\'ow replikacji}{17}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Pgpool-II}{17}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Bucardo}{18}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Replikacja logiczna}{18}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}Replikacja strumieniowa}{19}{subsection.3.3.4}
-\contentsline {section}{\numberline {3.4}Projekt test\'ow wydajno\'sciowych}{19}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Wykorzystywane operacje bazodanowe}{19}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Spos\'ob prowadzenia test\'ow}{20}{subsection.3.4.2}
-\contentsline {chapter}{\chapternumberline {4}Implementacja systemu}{22}{chapter.4}
-\contentsline {section}{\numberline {4.1}Aplikacja serwerowa}{22}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Struktura plik\'ow projektu}{22}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Szczeg\'o\IeC {\l }y implementacji wybranych funkcjonalno\'sci}{23}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}Baza danych}{23}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Konfiguracja replikacji}{23}{subsection.4.2.1}
-\contentsline {subsubsection}{Bucardo}{23}{section*.16}
-\contentsline {subsubsection}{Pg-Pool II}{23}{section*.17}
-\contentsline {subsubsection}{Natywna replikacja PostgreSQL}{23}{section*.18}
-\contentsline {subsection}{\numberline {4.2.2}Generowanie danych testowych}{24}{subsection.4.2.2}
-\contentsline {chapter}{\chapternumberline {5}Testowanie i ocena wydajno\'sci systemu}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}Przygotowanie \'srodowiska testowego}{25}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Aplikacja serwerowa}{25}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}Testy akceptacyjne}{25}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}Serwery bazodanowe}{25}{subsection.5.1.3}
-\contentsline {section}{\numberline {5.2}Pomiar wp\IeC {\l }ywu metody replikacji na czas zapisu}{25}{section.5.2}
-\contentsline {section}{\numberline {5.3}Pomiar wp\IeC {\l }ywu metody replikacji na czas odczytu}{25}{section.5.3}
-\contentsline {section}{\numberline {5.4}Pomiar wp\IeC {\l }ywu metody replikacji na niezawodno\'s\'c}{25}{section.5.4}
-\contentsline {section}{\numberline {5.5}Wnioski z test\'ow}{25}{section.5.5}
-\contentsline {chapter}{\chapternumberline {6}Podsumowanie}{26}{chapter.6}
-\contentsline {chapter}{Literatura}{27}{section*.20}
-\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{28}{appendix.A}
+\contentsline {chapter}{Spis tabel}{6}{Doc-Start}
+\contentsline {chapter}{Spis listing\'ow}{7}{Doc-Start}
+\contentsline {chapter}{\chapternumberline {1}Wst\k ep}{9}{chapter.1}
+\contentsline {section}{\numberline {1.1}Cel i zakres pracy}{9}{section.1.1}
+\contentsline {section}{\numberline {1.2}Metody replikacji w systemach bazodanowych}{9}{section.1.2}
+\contentsline {chapter}{\chapternumberline {2}Analiza wymaga\'n systemu}{11}{chapter.2}
+\contentsline {section}{\numberline {2.1}Architektura systemu}{11}{section.2.1}
+\contentsline {section}{\numberline {2.2}Wymagania funkcjonalne}{11}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Aplikacja serwerowa}{11}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Analizowane architektury rozproszonej bazy danych}{12}{subsection.2.2.2}
+\contentsline {subsubsection}{Bucardo}{12}{section*.3}
+\contentsline {subsubsection}{Pgpool-II}{12}{section*.4}
+\contentsline {subsubsection}{Replikacja logiczna}{13}{section*.5}
+\contentsline {subsubsection}{Replikacja strumieniowa}{13}{section*.6}
+\contentsline {subsection}{\numberline {2.2.3}Wykorzystywane technologie}{13}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Narz\k edzia wspomagaj\k ace ocen\k e wydajno\'sci system\'ow bazodanowych}{13}{subsection.2.2.4}
+\contentsline {subsubsection}{pgbench}{13}{section*.7}
+\contentsline {subsubsection}{JMeter}{14}{section*.8}
+\contentsline {subsubsection}{Spawner Data Generator}{14}{section*.9}
+\contentsline {chapter}{\chapternumberline {3}Projekt systemu}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}Przypadki u\.zycia}{16}{section.3.1}
+\contentsline {subsubsection}{Aplikacja serwerowa}{16}{section*.10}
+\contentsline {subsubsection}{Aplikacja testuj\k aca}{17}{section*.11}
+\contentsline {section}{\numberline {3.2}Projekt bazy danych}{17}{section.3.2}
+\contentsline {section}{\numberline {3.3}Projekt mechanizm\'ow replikacji}{18}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Pgpool-II}{18}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Bucardo}{19}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Replikacja logiczna}{19}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Replikacja strumieniowa}{20}{subsection.3.3.4}
+\contentsline {section}{\numberline {3.4}Projekt test\'ow wydajno\'sciowych}{20}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Wykorzystywane operacje bazodanowe}{20}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Spos\'ob prowadzenia test\'ow}{21}{subsection.3.4.2}
+\contentsline {chapter}{\chapternumberline {4}Implementacja systemu}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}Aplikacja serwerowa}{23}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Struktura plik\'ow projektu}{23}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Szczeg\'o\IeC {\l }y implementacji wybranych funkcjonalno\'sci}{24}{subsection.4.1.2}
+\contentsline {subsubsection}{Konfiguracja po\IeC {\l }\k aczenia z baz\k a danych}{24}{section*.16}
+\contentsline {subsubsection}{Model danych}{25}{section*.17}
+\contentsline {section}{\numberline {4.2}Baza danych}{25}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Konfiguracja replikacji}{26}{subsection.4.2.1}
+\contentsline {subsubsection}{Bucardo}{27}{section*.18}
+\contentsline {subsubsection}{Pg-Pool II}{28}{section*.19}
+\contentsline {subsubsection}{Replikacja logiczna}{29}{section*.20}
+\contentsline {paragraph}{Serwer master}{29}{section*.21}
+\contentsline {paragraph}{Serwer slave}{29}{section*.22}
+\contentsline {subsubsection}{Replikacja strumieniowa}{29}{section*.23}
+\contentsline {chapter}{\chapternumberline {5}Testowanie i ocena wydajno\'sci systemu}{30}{chapter.5}
+\contentsline {section}{\numberline {5.1}Przygotowanie \'srodowiska testowego}{30}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Aplikacja serwerowa}{30}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}JMeter}{31}{subsection.5.1.2}
+\contentsline {section}{\numberline {5.2}Wyniki pomiar\'ow czasu wykonania zapyta\'n}{32}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Odczyt wszystkich rekord\'ow}{33}{subsection.5.2.1}
+\contentsline {subsubsection}{\'Sredni czas odpowiedzi}{33}{section*.24}
+\contentsline {subsubsection}{Wsp\'o\IeC {\l }czynnik zmienno\'sci}{33}{section*.25}
+\contentsline {subsection}{\numberline {5.2.2}Odczyt jednego rekordu}{36}{subsection.5.2.2}
+\contentsline {subsubsection}{\'Sredni czas odpowiedzi}{36}{section*.28}
+\contentsline {subsubsection}{Wsp\'o\IeC {\l }czynnik zmienno\'sci}{36}{section*.29}
+\contentsline {subsection}{\numberline {5.2.3}Zapis rekordu}{39}{subsection.5.2.3}
+\contentsline {subsubsection}{\'Sredni czas odpowiedzi}{39}{section*.32}
+\contentsline {subsubsection}{Wsp\'o\IeC {\l }czynnik zmienno\'sci}{39}{section*.33}
+\contentsline {subsection}{\numberline {5.2.4}Aktualizacja rekordu}{39}{subsection.5.2.4}
+\contentsline {subsubsection}{\'Sredni czas odpowiedzi}{39}{section*.36}
+\contentsline {subsubsection}{Wsp\'o\IeC {\l }czynnik zmienno\'sci}{39}{section*.37}
+\contentsline {subsection}{\numberline {5.2.5}Op\'o\'znienie replikacji danych}{44}{subsection.5.2.5}
+\contentsline {section}{\numberline {5.3}Wnioski z test\'ow}{44}{section.5.3}
+\contentsline {chapter}{\chapternumberline {6}Podsumowanie}{45}{chapter.6}
+\contentsline {chapter}{Literatura}{46}{section*.41}
+\contentsline {appendix}{\chapternumberline {A}Opis za\IeC {\l }\k aczonej p\IeC {\l }yty CD/DVD}{47}{appendix.A}

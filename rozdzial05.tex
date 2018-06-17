@@ -8,6 +8,19 @@ Po przeprowadzeniu wstêpnych testów na czêœciowo ukoñczonym systemie konieczne b
 
 \subsection{Struktura plików projektu}
 
+Projekt zosta³ wykonany w œrodowisku Intellij IDEA. Pliki klas projektu zosta³y podzielone na paczki zgodnie z ich przeznaczeniem: 
+
+\begin{itemize}
+	\item config
+	\item model
+	\item controller
+	\item repository
+	\item util
+\end{itemize}
+
+Ze wzglêdu na zmianê koncepcji realizacji projektu, przygotowana struktura plików uwzglêdnia elementy, których implementacja nie by³a wymagana do przeprowadzenia testów, np. paczka \texttt{controller} czy te¿ \texttt{repository}.
+
+Oprócz plików klas Javy istotnymi z punktu widzenia implementacji s¹ pliki \texttt{application.properties} oraz \texttt{pom.xml}.
 
 \begin{figure}[H]
 \centering
@@ -16,90 +29,257 @@ Po przeprowadzeniu wstêpnych testów na czêœciowo ukoñczonym systemie konieczne b
 \label{}%
 \end{figure}
 
-screenshot ze struktury plikow i opis co zawiera ka¿da paczka
+
 \subsection{Szczegó³y implementacji wybranych funkcjonalnoœci}
 
-- przyk³adowy kontroller select 
-- przyk³adowy kontroller insert
-- przyk³adowy kontroller update 
+\subsubsection{Konfiguracja po³¹czenia z baz¹ danych}
 
-- repo JPA
+Konfiguracjê warstwy po³¹czenia z baz¹ danych realizuje klasa \texttt{DatabaseConfig}. Po³¹czenie z baz¹ danych realizowane jest przy pomocy sterownika JDBC za poœrednictwem frameworka Hibernate. Wykorzystyje ona plik \texttt{application.properties}, z którego pobiera dane do po³¹czenia z baz¹ danych. W wyniku dzia³ania przedstawionych na poni¿szym listingu metod konfiguracyjnych tworzony jest obiekt \texttt{dataSource}, który zawiera niezbêdne do ustanowienia po³¹czenia dane, a tak¿e definiowane s¹ dodatkowe ustawienia powi¹zane z frameworkiem Hibernate, miêdzy innymi sterownik bazy danych oraz œcie¿ka do plików modelu danych. 
 
+\begin{lstlisting}[caption=Konfiguracja po³¹czenia z baz¹ danych]
 
+$$@Configuration
+$$@EnableTransactionManagement
+public class DatabaseConfig {
 
-\begin{lstlisting}[caption=Repozytorium JPA]
+    $$@Autowired
+    private Environment env;
 
-@RestController
-@RequestMapping(value = {"/antenna", "antenna"})
-public class AntennaController {
-
-    @Autowired
-    AntennaRepository antennaRepository;
-
-    @RequestMapping(value = "find", produces = "application/json", method = RequestMethod.GET)
-    public Antenna findById(@RequestParam("id") int id) {
-        return antennaRepository.findOne(id);
+    $$@Bean(name = "dataSource")
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("db.driver"));
+        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setUsername(env.getProperty("db.username"));
+        dataSource.setPassword(env.getProperty("db.password"));
+        return dataSource;
     }
+		
+	$$[...]
 }
 
 \end{lstlisting}
 
+Parametry wykorzystywane do stworzenia konfiguracji okreœlone s¹ w pliku \texttt{application.properties}. Przez zmianê podanego adresu IP dokonuje siê wyboru testowanej bazy danych. Pozosta³e parametry okreœlaj¹ dane logowania i sposób aktualizacji schematu bazy danych podczas uruchomienia aplikacji.
+\begin{lstlisting} 
 
+# Database
+db.driver= org.postgresql.Driver
+db.url= jdbc:postgresql://35.177.119.219:5432/postgres
+db.username= postgres
+db.password= postgres
 
-\begin{lstlisting}[caption=Repozytorium JPA]
-public interface AntennaRepository extends JpaRepository<Antenna,Integer> {
+# Hibernate
+hibernate.dialect= org.hibernate.dialect.PostgreSQL94Dialect
+hibernate.show_sql= true
+hibernate.hbm2ddl.auto= update
+entitymanager.packagesToScan= app.model
 
+\end{lstlisting}
+
+\subsubsection{Model danych}
+
+W projekcie zosta³o wykorzystane mapowanie obiektowo-relacyjne do utworzenia schematu bazy danych. Tabele w schemacie definiowane s¹ przez klasy znajduj¹ce siê w pakiecie \texttt{model}.
+\begin{lstlisting}[caption=Przyk³adowa klasa modelu danych]
+
+$$@Getter
+$$@Setter
+$$@Entity
+public class A {
+
+    $$@Id
+    int id;
+
+    int a,b,c;
+    String d,e,f;
+
+    $$@Column(columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+    Date timestamp;
 }
 
 \end{lstlisting}
 
-
-
-\begin{lstlisting}[caption=Model]
-
-
-\end{lstlisting}
+Adnotacje \texttt{@Getter} oraz \texttt{@Setter} pochodz¹ z biblioteki Lombok i s³u¿¹ do automatycznego generowania metod dostêpu do zmiennych. Adnotacja \texttt{@Entitiy} deklaruje klasê jako tabelê modelu, a \texttt{@Id} okreœla klucz g³ówny tabeli. Kolumna \texttt{timestamp} posiada dodatkowe parametry definiuj¹ce, które ustawiaj¹ jej domyœln¹ wartoœæ na czas utworzenia rekordu w bazie. Jest to wykorzystywane do pomiaru opóŸnienia replikacji. 
 
 \section{Baza danych}
 
-informacja o VirtualBox
-jak zosta³ postawiony serwer 
-coœ o clusterach utworzonych w postgresie i portach jak siê do nich odnosi 
+Jako serwis hostingowy serwerów bazodanowych wybrano AWS (Amazon Web Services). Za pomoc¹ tej platformy mo¿liwe jest utworzenie wirtualnej maszyny o okreœlonych zasobach na serwerach Amazon. Serwis udostêpnia mo¿liwoœæ utworzenia maszyny posiadaj¹cej 1 rdzeñ procesora, 1 GB ramu oraz 30 GB miejsca na dysku SSD bez dodatkowych op³at oraz 750 godzin bezp³atnej pracy serwerów. Pula ta rozk³ada siê pomiêdzy wszystkie aktywne serwery.  
 
+Na potrzeby projektu utworzone zosta³o 9 serwerów dzia³aj¹cych pod kontrol¹ systemu Ubuntu 16.04.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{{{img/aws_lista}}}%
+\caption{Lista instancji maszyn wirtualnych w AWS}%
+\label{aws_list}%
+\end{figure}
+
+Domyœlnie, utworzone serwery posiadaj¹ dynamiczne adresy IP przypisywane w momencie uruchomienia maszyny. Serwis hostingowy AWS pozwala na zarezerwowanie 5 statycznych adresów na konto i przypisanie ich do wybranych maszyn. Sposób ich przypisania pokazano na rysunku \ref{aws_list}.
+
+W procesie tworzenia maszyny konieczne jest okreœlenie regu³ dostêpu sieciowego do serwerów. Utworzone zosta³y nastêpuj¹ce regu³y:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{{{img/aws_rule}}}%
+\caption{}%
+\label{}%
+\end{figure}
+
+
+\begin{itemize}
+	\item port 5432 - port komunikacyjny baz danych Postgres
+	\item port 9999 - port komunikacyjny pgpool-II 
+	\item Echo Reply - odpowiedŸ serwera na komendê \texttt{ping}
+	\item port 22 - po³¹czenie SSH do konfiguracji serwera 
+\end{itemize}
 \subsection{Konfiguracja replikacji}
+
+Konfiguracjê replikacji na wszystkich serwerach rozpoczêto od instalacji bazy danych Postgres. System Ubuntu w wersji 16.04 posiada w repozytoriach Ÿród³a dla bazy Postgres w wersji 9.4, jednak w projekcie konieczne jest posiadanie wersji 10. Zainstalowanie tej wersji wymaga kilku dodatkowych kroków. 
+Pierwszym krokiem jest instalacja pakietu \texttt{ssl-cert}.
+
+W konfiguracji programu \texttt{apt} u¿ywanego do instalacji konieczne jest dodanie adresu do repozytorium zawieraj¹cego kod programu. Nale¿y edytowaæ plik \texttt{/etc/apt/sources.list} i dodaæ do niego wpis \texttt{deb http://cz.archive.ubuntu.com/ubuntu xenial main}. Nastêpnie nale¿y zaktualizowaæ konfiguracjê programu komend¹ \texttt{sudo apt update} oraz dokonaæ instalacji komend¹ \texttt{sudo apt install ssl-cert}. 
+
+Kolejnym krokiem jest dodanie do Ÿróde³ programu \texttt{apt} adresu do wersji 10 bazy Postgres. S³u¿y do tego plik \texttt{/etc/apt/sources.list.d/pgdg.list}, w którym nale¿y umieœciæ wpis \texttt{deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main} 
+
+Nastêpnie konieczne jest zaimportowanie klucza do repozytorium: \texttt{wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -} i ponowna aktualizacja programu apt. 
+
+Po ukoñczeniu tych kroków mo¿liwe jest zainstalowanie PostgreSQL w wersji 10 za pomoc¹ komendy 
+\texttt{sudo apt insyall postgresql -y}. 
+
+
+Ostatnim krokiem wspólnym dla wszystkich serwerów jest konfiguracja autoryzacji po³¹czeñ sieciowych. W tym celu nale¿y dokonaæ edycji pliku \texttt{/etc/postgresql/10/main/postgresql.config} aby zezwoliæ na nas³uchiwanie po³¹czeñ ze wszystkich adresów: 
+
+\begin{lstlisting} 
+listen_addresses = '*'
+\end{lstlisting}
+
+oraz pliku \texttt{/etc/postgresql/10/main/pg\_hba.conf} okreœlaj¹cego sposoby autoryzacji u¿ytkowników. Ze wzglêdu na to, ¿e konfigurowane serwery nie posiadaj¹ ¿adnych danych wymagaj¹cych szczególnej ochrony konfiguracja zezwala na dowolne po³¹czenie bez koniecznoœci autoryzacji: 
+\begin{lstlisting}
+local   all             postgres                                trust
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     trust
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            trust
+host    all             all             0.0.0.0/0               trust
+
+# IPv6 local connections:
+host    all             all             ::1/128                 trust
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     trust
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
+\end{lstlisting}
+
+
+W serwerach slave systemów bucardo i replikacji logicznej konieczna jest modyfikacja jednej z tabel w celu umo¿liwienia pomiaru opóŸnienia replikacji. Nale¿y w tym celu wywo³aæ nastêpuj¹ce zapytanie: 
+
+\begin{lstlisting}
+ALTER TABLE a ADD replica_timestamp TIMESTAMP DEFAULT current_timestamp;
+\end{lstlisting}
+
 
 \subsubsection{Bucardo}
 
-opis + konfiguracja
+Konfiguracje aplikacji bucardo rozpoczyna siê od instalacji na serwerze master komend¹ \texttt{sudo apt install bucardo}. Przed u¿yciem programu zalecane jest stworzenie w bazie danych u¿ytkownika bucardo z odpowiednim poziomem uprawnieñ. Bazê danych uruchamia siê poprzez komendê \texttt{psql}. Do stworzenia u¿ytkownika u¿ywane s¹ 2 zapytania: 
+
+\begin{lstlisting}
+CREATE USER bucardo SUPERUSER PASSWORD 'a' LOGIN;
+GRANT ALL ON SCHEMA public TO bucardo.
+\end{lstlisting}
+Kolejnym krokiem jest inicjalizacja programu bucardo. Po wywo³aniu komendy \texttt{sudo bucardo install} uruchomiony zostaje konfigurator, w którym okreœliæ mo¿na u¿ytkownika, bazê danych, adres i port oraz œcie¿kê plików dla programu. Po zatwierdzeniu wyboru utworzona zostaje baza danych o nazwie \texttt{bucardo} przeznaczona na konfiguracjê replikacji. 
+
+Proces konfiguracji replikacji wymaga okreœlenia po³¹czeñ do baz danych, utworzenia grupy replikacji, zdefiniowania replikowanych tabel i utworzenia triggera replikuj¹cego. Pe³ny skrypt konfiguracji przedstawia poni¿szy listing. 
+
+\begin{lstlisting}[caption=Konfiguracja bucardo]
+sudo bucardo add db master db=postgres user=bucardo pass=a host=localhost
+sudo bucardo add db slave db=postgres user=bucardo pass=a host=52.56.122.85
+sudo bucardo add all tables db=master relgroup=rel
+sudo bucardo add dbgroup dbgroup master:source slave:target
+sudo bucardo add sync bsync dbgroup=dbgroup relgroup=rel autokick=1
+sudo bucardo validate all
+
+sudo bucardo start
+
+\end{lstlisting} 
 
 \subsubsection{Pg-Pool II}
 
-opis + konfiguracja
+Instalacja pgpool-II odbywa siê poprzez wywo³anie komendy \texttt{sudo apt install pgpool2}. Po zakoñczeniu instalacji konieczna jest edycja pliku konfiguracyjnego \texttt{pgpool.conf} znajduj¹cego siê w \texttt{/etc/pgpool2/}. Domyœlna konfiguracja dostarczana z programem jest wystarczaj¹co dobra na potrzeby tego projektu, wymagane jest jednak zezwolenie na po³¹czenie z serwerem. W tym celu nale¿y edytowaæ liniê \texttt{listen\_adresses} i ustawiæ wartoœæ parametru na \texttt{'*'}. Wed³ug ustalonego projektu wymagana jest te¿ zmiana portu z $9999$ na $5432$. Nastêpnie nale¿y podaæ dane do po³¹czenia z bazami danych. Kolejne serwery definiowaæ mo¿na przez dopisanie numeru do nazwy parametru.
 
-\subsubsection{Natywna replikacja PostgreSQL}
 
-informacja o typach replikacji 
+\begin{lstlisting}[caption=Konfiguracja pgpool-II]
+listen_addresses = '*'
+                                   # Host name or IP address to listen on:
+                                   # '*' for all, '' for no TCP/IP conns
+                                   # (change requires restart)
+port = 5432
+                                   # Port number
+                                   # (change requires restart)
+																	
+# - Backend Connection Settings -
 
-opis replikacji logicznej + konfiguracja,
-opis replikacji strumieniowej + konfiguracja
+backend_hostname0 = '35.176.165.93'
+                                   # Host name or IP address 
+backend_port0 = 5432
+                                   # Port number for backend 0
+backend_weight0 = 1
+                                   # Weight for backend 0
+backend_data_directory0 = '/var/lib/postgresql/10/main'
+                                   # Data directory for backend 0
+backend_flag0 = 'ALLOW_TO_FAILOVER'
+                                   # Controls various backend behavior
+                                   # ALLOW_TO_FAILOVER or DISALLOW_TO_FAILOVER
+backend_hostname1 = '35.178.97.25'
+backend_port1 = 5432
+backend_weight1 = 1
+backend_data_directory1 = '/var/lib/postgresql/10/main'
+backend_flag1 = 'ALLOW_TO_FAILOVER'
+\end{lstlisting} 
 
-ró¿nice miêdzy nimi na przyk³adzie kolumny replication\_timestamp
+Po zapisaniu zmian w pliku konieczne jest ponowne uruchomienie aplikacji. 
 
-\subsection{Generowanie danych testowych}
+\subsubsection{Replikacja logiczna}
 
-opis mockaroo 
-screenshot z interfejsu 
+Replikacja logiczna jest mechanizmem wbudowanym w PostgreSQL i nie wymaga instalacji dodatkowych aplikacji. 
 
-jakiœ json schema tabeli 
+\paragraph{Serwer master} Konfiguracjê rozpoczyna siê od edycji pliku konfiguracyjnego \texttt{/etc/postgresql/10/main/postgresql.config}, w którym nale¿y ustawiæ wartoœæ parametru \texttt{wal\_level} na \texttt{logical}. Nastêpnie po zalogowaniu do bazy danych nale¿y utworzyæ publikacjê zawieraj¹c¹ tabele podlegaj¹ce replikacji, w tym przypadku s¹ to wszystkie tabele bazy postgres. 
 
-wygenerowany sql? 
+\begin{lstlisting}
+CREATE PUBLICATION pub FOR ALL TABLES;
+\end{lstlisting} 
 
-informacja o limicie do 1000 wierszy i koniecznoœæ u¿ycia spanwera do g³ównej tabeli 
+\paragraph{Serwer slave} Konfiguracja replikacji po stronie serwera slave sprowadza siê do utworzenia subskrypcji nas³uchuj¹cej zmian publikowanych z serwera master. W zapytaniu definiuj¹cym sybskrypjê nale¿y okreœliæ adres bazy danych, dane do logowania oraz nazwê publikacji: 
 
-Spawner data generator 
+\begin{lstlisting}
+CREATE SUBSCRIPTION sub CONNECTION 'dbname=postgres user=postgres 
+host=35.177.38.10 password=postgres' PUBLICATION pub;
+\end{lstlisting} 
 
-opis, aplikacja desktopowa, generuje nieograniczona ilosc danych 
-mo¿na uzyæ tego do generowania kluczy publicznych z limitem 1000 na podstawie mockaroo 
 
-generowanie 100k danych random\_int w ka¿dej kolumnie 
 
+Po zakoñczeniu konfiguracji warto zrestarowaæ serwer bazy danych, aby upewniæ siê, ¿e wprowadzone zmiany zostan¹ zastosowane. Mo¿na to zrobiæ komend¹ \texttt{sudo systemctl restart postgresql}.
+
+\subsubsection{Replikacja strumieniowa}
+
+W celu konfiguracji replikacji strumieniowej nale¿y edytowaæ plik \texttt{/etc/postgresql/10/main/postgresql.config} na serwerze master i ustawiæ w nim parametry przedstawione na poni¿szym listingu. 
+
+\begin{lstlisting}[caption=Konfiguracja replikacji strumieniowej na serwerze master]
+listen_addresses = '*'
+wal_level = hot_standby
+max_wal_senders = 10
+wal_keep_segments = 32
+
+archive_mode = on               
+archive_command = 'cp %p /home/ubuntu/archive/%f'       
+\end{lstlisting} 
+
+Nastêpnie w tym samym pliku na serwerze slave nale¿y ustawiæ parametr \texttt{hot\_standby=on} oraz utworzyæ plik \texttt{recovery.conf} w œcie¿ce danych bazy, domyœlnie \texttt{/var/lib/postgresql/10/main}. Zawartoœæ pliku przedstawiono poni¿ej: 
+
+\begin{lstlisting}
+standby_mode          = 'on'
+primary_conninfo      = 'host=35.177.141.137 port=5432 user=postgres
+			  password=postgres'
+\end{lstlisting} 

@@ -1,21 +1,41 @@
 \babel@toc {polish}{}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Schemat replikacji master-slave\relax }}{11}{figure.2.1}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Okno programu JMeter\relax }}{13}{figure.2.2}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Okno programu Spawner Data Generator, definicja tabel\relax }}{14}{figure.2.3}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Okno programu Spawner Data Generator, konfiguracja pliku wyj\'sciowego\relax }}{14}{figure.2.4}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Schemat replikacji master-slave\relax }}{12}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Okno programu JMeter\relax }}{14}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Okno programu Spawner Data Generator, definicja tabel\relax }}{15}{figure.2.3}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Okno programu Spawner Data Generator, konfiguracja pliku wyj\'sciowego\relax }}{15}{figure.2.4}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Przypadki u\.zycia aplikacji serwerowej\relax }}{15}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Przypadki u\.zycia aplikacji testuj\k acej\relax }}{16}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Przyk\IeC {\l }adowa tabela\relax }}{16}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Zmodyfikowana tabela A na serwerze slave\relax }}{17}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Architektura systemu pgpool\relax }}{17}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Architektura systemu bucardo\relax }}{18}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Architektura systemu replikacji logicznej\relax }}{19}{figure.3.7}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Architektura systemu replikacji strumieniowej\relax }}{19}{figure.3.8}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Przypadki u\.zycia aplikacji serwerowej\relax }}{16}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Przypadki u\.zycia aplikacji testuj\k acej\relax }}{17}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Przyk\IeC {\l }adowa tabela\relax }}{17}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Zmodyfikowana tabela A na serwerze slave\relax }}{18}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Architektura systemu pgpool\relax }}{18}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Architektura systemu bucardo\relax }}{19}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Architektura systemu replikacji logicznej\relax }}{20}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Architektura systemu replikacji strumieniowej\relax }}{20}{figure.3.8}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Struktura plik\'ow projektu\relax }}{22}{figure.4.1}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Struktura plik\'ow projektu\relax }}{24}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Lista instancji maszyn wirtualnych w AWS\relax }}{26}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces \relax }}{26}{figure.4.3}
 \addvspace {10pt}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Tworzenie tabel przy pomocy frameworka Hibernate\relax }}{30}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces JMeter - po\IeC {\l }\k aczenie z baz\k a danych\relax }}{31}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces JMeter - konfiguracja liczby aktywnych u\.zytkownik\'ow\relax }}{31}{figure.5.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Lista grup}}}{31}{subfigure.3.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Przyk\IeC {\l }adowa konfiguracja}}}{31}{subfigure.3.2}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces JMeter - definicja zmiennych losowych\relax }}{32}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces JMeter - definicje zapyta\'n testowych\relax }}{32}{figure.5.5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Single select}}}{32}{subfigure.5.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Update}}}{32}{subfigure.5.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Insert}}}{32}{subfigure.5.3}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Wykres zale\.zno\'sci \'sredniego czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu odczytu wszystkich danych\relax }}{34}{figure.caption.26}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Wykres zale\.zno\'sci wsp\'o\IeC {\l }czynnika zmienno\'sci czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu odczytu wszystkich danych\relax }}{35}{figure.caption.27}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Wykres zale\.zno\'sci \'sredniego czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu odczytu jednego rekordu\relax }}{37}{figure.caption.30}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Wykres zale\.zno\'sci wsp\'o\IeC {\l }czynnika zmienno\'sci czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu odczytu jednego rekordu\relax }}{38}{figure.caption.31}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Wykres zale\.zno\'sci \'sredniego czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu zapisu\relax }}{40}{figure.caption.34}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Wykres zale\.zno\'sci wsp\'o\IeC {\l }czynnika zmienno\'sci czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu zapisu\relax }}{41}{figure.caption.35}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Wykres zale\.zno\'sci \'sredniego czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu aktualizacji rekordu\relax }}{42}{figure.caption.38}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Wykres zale\.zno\'sci wsp\'o\IeC {\l }czynnika zmienno\'sci czasu odpowiedzi od metody replikacji i liczby u\.zytkownik\'ow dla testu aktualizacji rekordu\relax }}{43}{figure.caption.39}
 \addvspace {10pt}
 \addvspace {10pt}

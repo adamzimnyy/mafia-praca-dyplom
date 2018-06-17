@@ -27,7 +27,7 @@
 \usepackage{ebgaramond} % pakiet z czcionkami garamond, potrzebny tylko do strony tytu³owej, musi wyst¹piæ przed pakietem tgtermes
 \usepackage{multirow}
 \usepackage[table,xcdraw]{xcolor}
-
+\usepackage{subfig}
 %% Aby uzyskaæ polskie literki w pdfie (a nie zlepki) korzystamy z pakietu czcionek tgterms. 
 %% W pakiecie tym s¹ zdefiniowane klony czcionek Times o kszta³tach: normalny, pogrubiony, italic, italic pogrubiony.
 %% W pakiecie tym brakuje czcionki o kszta³cie: slanted (podobny do italic). 
@@ -55,7 +55,7 @@
 \usepackage{color}
 \usepackage[font=small]{caption}
 
-\usepackage{subcaption}
+
 \definecolor{jsonbg}{HTML}{F5F5F5}
  
 \lstdefinestyle{json}{
@@ -97,7 +97,10 @@
 \definecolor{pred}{rgb}{0.9,0,0}
 \definecolor{pgrey}{rgb}{0.46,0.45,0.48}
 
-\lstdefinestyle{java}{
+
+\definecolor{greentext}{rgb}{0,0.5,0}
+
+\lstset{
 language=Java,
   showspaces=false,
   showtabs=false,
@@ -111,22 +114,6 @@ language=Java,
   moredelim=[il][\textcolor{pgrey}]{$$},
   moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }
-
-\lstdefinelanguage{XML}
-{
-  basicstyle=\ttfamily\footnotesize,
-  morestring=[b]",
-  moredelim=[s][\bfseries\color{black}]{<}{\ },
-  moredelim=[s][\bfseries\color{black}]{</}{>},
-  moredelim=[l][\bfseries\color{black}]{/>},
-  moredelim=[l][\bfseries\color{black}]{>},
-  morecomment=[s]{<?}{?>},
-  morecomment=[s]{<!--}{-->},
-  commentstyle=\color{blue},
-  stringstyle=\color{greentext},
-  identifierstyle=\color{blue}
-}
-
 
 % flip the switch if a colon is found in Pmode
 \newcommand\processColon@json{%
@@ -152,7 +139,8 @@ language=Java,
 
 \makeatother
 
- 
+\usepackage{rotating}
+
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -336,7 +324,7 @@ language=Java,
     Author = {\@author},
     Subject={},
     Keywords={s³owa kluczowe},
-  }}
+			}}
 }
 \makeatother
 %\else
