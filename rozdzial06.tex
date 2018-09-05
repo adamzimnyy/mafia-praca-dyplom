@@ -2,48 +2,62 @@
 
 \section{Przygotowanie œrodowiska testowego} 
 
+W ninejszym punkcie opisano sposób przygotowania œrodowiska umo¿liwiaj¹cego testowanie i ocenê wydajnoœci mechaniznów replikacji.
+
 \subsection{Aplikacja serwerowa}
 
-W celu przygotowania œrodowiska do testów konieczne wygenerowanie schematu bazy danych. W przypadku systemów bucardo oraz replikacji logicznej krok ten nale¿y wykonaæ przed konfiguracj¹ replikaji. 
+W celu przygotowania œrodowiska do testów konieczne jest wygenerowanie schematu bazy danych. W przypadku systemów bucardo oraz replikacji logicznej krok ten nale¿y wykonaæ przed konfiguracj¹ replikacji. 
 
 Poprzez zmianê parametru adresu do bazy danych w pliku konfiguracyjnym nale¿y wygenerowaæ schemat na ka¿dym z serwerów. W celu aktualizacji schematu przez Hibernate konieczne jest ustawienie parametru \texttt{hibernate.hbm2ddl.auto} w pliku \texttt{application.properties} na wartoœæ \texttt{update}. Zapis z prawid³owego uruchomienia aplikacji wygl¹da nastêpuj¹co: 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{{{img/jpa}}}%
-\caption{Tworzenie tabel przy pomocy frameworka Hibernate}
+\caption{Tworzenie tabel przy pomocy frameworka Hibernate \cite{hibernate} }
 \label{}
 \end{figure}
 
 \subsection{JMeter} 
 
-Przygotowanie planu testów w aplikacji JMeter rozpoczyna siê od stworzenia konfiguracji po³¹czenia z baz¹ danych. Oprócz danych do po³¹czenia konieczne jest zdefiniowanie nazwy u¿ywanej w póŸniejszej konfiguracji do powi¹zania testów z konfiguracj¹, w tym wypadku zdefiniowan¹ nazw¹ jest '1'.  
+Przygotowanie planu testów w aplikacji JMeter rozpoczyna siê od stworzenia konfiguracji po³¹czenia z baz¹ danych. Oprócz danych niezbêdnych do po³¹czenia konieczne jest zdefiniowanie nazwy u¿ywanej w póŸniejszej konfiguracji do powi¹zania testów z konfiguracj¹, w tym wypadku zdefiniowan¹ nazw¹ jest '1'.  
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=8cm]{{{img/jmeter_connection}}}%
-\caption{JMeter - po³¹czenie z baz¹ danych}%
+\caption{JMeter - po³¹czenie z baz¹ danych \cite{jmeter} }%
 \label{jmeter1}%
 \end{figure}
 
-Kolejnym krokiem jest konfiguracja symulowanej liczby liczby u¿ytkowników, którzy wykonuj¹ zapytania w tym samym czasie. Zgodnie ze specyfikacj¹ testów zdefiniowane zosta³y grupy zawieraj¹ce 1, 5, 10, 25 i 40 u¿ytkowników dla ka¿dego z czterech badanych zapytañ. 
+Kolejnym krokiem jest konfiguracja symulowanej liczby u¿ytkowników, którzy wykonuj¹ zapytania w tym samym czasie. Zgodnie ze specyfikacj¹ testów zdefiniowane zosta³y grupy zawieraj¹ce 1, 5, 10, 25 i 40 u¿ytkowników dla ka¿dego z czterech badanych zapytañ. 
 
 \begin{figure}[H]
     \centering
     \subfloat[Lista grup]{{\includegraphics[width=3.5cm]{{{img/test_plan}}} }}%
     \qquad
     \subfloat[Przyk³adowa konfiguracja]{{\includegraphics[width=8cm]{{{img/jmeter_users}}} }}%
-    \caption{JMeter - konfiguracja liczby aktywnych u¿ytkowników}%
+    \caption{JMeter - konfiguracja liczby aktywnych u¿ytkowników \cite{jmeter} }%
     \label{fig:example}%
 \end{figure}
 
 
-Kolejnym krokiem jest utworzenie zmiennych losowych wykorzystywanych w zapytaniach.
+Kolejnym krokiem jest utworzenie zmiennych losowych wykorzystywanych w zapytaniach. W tym przypadku utworzone zosta³y trzy zmienne losowe, których zakresy pokazano w tabeli \ref{rand_tab}. 
+
+\begin{table}[H]
+\centering
+\caption{Zakresy wykorzystanych zmiennych losowych}
+\label{rand_tab}
+\begin{tabular}{|r|r|r|} \hline
+nazwa zmiennej & wartoœæ minimalna & wartoœæ maksymalna \\\hline
+rand\_num      & 100               & 10 000             \\
+rand\_num2     & 4 000             & 5 000              \\
+rand\_num3     & 200 000           & 300 000        \\    \hline
+\end{tabular}
+\end{table}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=8cm]{{{img/jmeter_random}}}%
-\caption{JMeter - definicja zmiennych losowych}%
+\caption{JMeter - definicja zmiennych losowych \cite{jmeter} }%
 \label{}%
 \end{figure}
 
@@ -57,7 +71,7 @@ Ostatnim elementem konfiguracji planu testów jest utworzenie zapytañ JDBC zawier
 		
 		\subfloat[Insert]{{\includegraphics[width=14cm]{{{img/jmeter_insert}}} }}%
     
-    \caption{JMeter - definicje zapytañ testowych}%
+    \caption{JMeter - definicje zapytañ testowych \cite{jmeter} }%
     \label{}%
 \end{figure}
 
@@ -65,7 +79,7 @@ Ostatnim elementem konfiguracji planu testów jest utworzenie zapytañ JDBC zawier
 
 Zaprojektowany plan testowy zosta³ wykonany dla ka¿dego z badanych mechanizmów replikacji. W przypadku aplikacji pgpool zapytania kierowane by³y na serwer pgpool-core, a w przypadku pozosta³ych metod serwery master. Zbadany zosta³ wp³yw rozmiaru danych oraz liczby aktywnych u¿ytkowników na czas odpowiedzi serwera. Czasy zosta³y uœrednione dla oko³o 50 prób na zapytanie, a wyniki zosta³y opisane poni¿ej. 
 
-W wynikach przedstawiony zosta³ czas œredni odpowiedzi na zapytanie oraz jego wspó³czynnik zmiennoœci. Wspó³czynnik zmiennoœci to miara zró¿nicowania rozk³adu cechy. Najczêœciej definiowany jest wzorem:
+W wynikach przedstawiony zosta³ czas œredni odpowiedzi na zapytanie oraz jego wspó³czynnik zmiennoœci. Wspó³czynnik zmiennoœci to miara zró¿nicowania rozk³adu cechy. Najczêœciej definiowany jest wzorem \cite{wsp_wiki}:
 
 \Large
 
@@ -77,10 +91,10 @@ $ V = \frac{ \enskip s \enskip }{ \overline{x} },  \quad \overline{x} \neq 0 $
 
 \quad \indent $ \overline{x}$ to œrednia arytmetyczna z próby.
 
-Mierzy on, jak¹ czêœæ œredniej stanowi odchylenie standardowe. W odró¿nieniu od odchylenia standardowego, jest on miar¹ niemianowan¹ oraz wzglêdn¹ zale¿n¹ od œredniej arytmetycznej, dziêki czemu umo¿liwia porównywanie stopnia zró¿nicowania ró¿nych cech statystycznych. Takie porównania nie s¹ mo¿liwe dla miar bezwzglêdnych. Dla celów praktycznych mo¿na podawaæ wartoœæ wspó³czynnika w procentach po przemno¿eniu przez 100. Przyjmuje siê, ¿e cechy o wartoœci zró¿nicowania poni¿ej 10\% s¹ nieistotne statystycznie. \cite{statystyka}
+Mierzy on, jak¹ czêœæ œredniej stanowi odchylenie standardowe. W odró¿nieniu od odchylenia standardowego, jest on miar¹ niemianowan¹ oraz wzglêdn¹ zale¿n¹ od œredniej arytmetycznej, dziêki czemu umo¿liwia porównywanie stopnia zró¿nicowania ró¿nych cech statystycznych . Takie porównania nie s¹ mo¿liwe dla miar bezwzglêdnych. Dla celów praktycznych mo¿na podawaæ wartoœæ wspó³czynnika w procentach po przemno¿eniu przez 100. Przyjmuje siê, ¿e cechy o wartoœci zró¿nicowania poni¿ej 10\% s¹ nieistotne statystycznie \cite{statystyka}. 
 
 
-Poni¿sze wykresy przedstawiaj¹ zale¿noœæ czasu odpowiedzi od rodzaju replikacji oraz liczby aktywnych u¿ytkowników. Serie danych przedstawiaj¹ poszczególne tabele o ró¿nym rozmiarze, wed³ug tabeli \ref{row_count}. Wyniki uzyskane w badaniach tabeli A zosta³y pominiête, gdy¿ zawiera³y znaczne b³êdy pomiaru wynikaj¹ce z ustanwiania po³¹czeñ przez aplikacjê testuj¹c¹. 
+Wykresy zawarte w kolejnych punktach przedstawiaj¹ zale¿noœæ czasu odpowiedzi od rodzaju replikacji oraz liczby aktywnych u¿ytkowników. Serie danych przedstawiaj¹ poszczególne tabele o ró¿nym rozmiarze, zgodnie z licznoœciami podanymi w tabeli \ref{row_count}. Wyniki uzyskane w badaniach dla tabeli A zosta³y pominiête, gdy¿ zawiera³y znaczne b³êdy pomiaru wynikaj¹ce z ustanawiania po³¹czeñ przez aplikacjê testuj¹c¹. 
 
 \subsection{Odczyt wszystkich rekordów}
 
@@ -89,11 +103,11 @@ Poni¿sze wykresy przedstawiaj¹ zale¿noœæ czasu odpowiedzi od rodzaju replikacji 
 
 Najlepszym systemem okaza³ siê pgpool, który dla 40 u¿ytkowników osi¹ga wyniki o oko³o 25\% lepsze od pozosta³ych systemów. Analizuj¹c poszczególne serie danych (na wykresie s³upki o jednakowym kolorze) mo¿na zauwa¿yæ, ¿e szybkoœæ wzrostu w zale¿noœci od liczby u¿ytkowników zmienia siê w sposób nieliniowy. Dla tabel o du¿ym rozmiarze, np. H, I, J, zauwa¿alne s¹ znacznie wiêksze ró¿nice pomiêdzy kolejnymi wartoœciami ni¿ dla tabel ma³ych. 
 
-Skupiaj¹c uwagê na poszczególnych kolumnach wykresu w obrêbie jednej liczby u¿ytkowników mo¿na dostrzec, ¿e rozmiar danych powoduje liniowy wzrost œredniego czasu odpowiedzi. Warto równie¿ zauwa¿yæ, ¿e wyniki bucardo dla 1 oraz 5 u¿ytkowników s¹ widocznie gorsze od wyników pozosta³ych mechanizmów.
+Skupiaj¹c uwagê na poszczególnych kolumnach wykresu w obrêbie jednej liczby u¿ytkowników mo¿na dostrzec, ¿e rozmiar danych powoduje liniowy wzrost œredniego czasu odpowiedzi. Warto równie¿ zauwa¿yæ, ¿e wyniki bucardo dla 1 oraz 5 u¿ytkowników s¹ widocznie gorsze od wyników uzyskanych w przypadku pozosta³ych mechanizmów.
 
 \subsubsection{Wspó³czynnik zmiennoœci} 
 
-Na wykresie \ref{all_wsp} pokazano wyniki obliczeñ wspó³czynnika zmiennoœci dla testu odczytu wszystkich rekordów w tabeli. Jak widaæ, najwiêksze zró¿nicowanie danych osi¹gaj¹ce od oko³o 50\% do ponad 80\% uzyskano dla mechanizmu pgpool przy obci¹¿eniu jednego u¿ytkownika. Przy wiêkszej liczbie u¿ytkowników wyniki tego mechanizmu s¹ porównywalne do mechanizmów replikacji logicznej oraz strumieniowej i zawieraj¹ siê w przedziale od 10 do 30 procent. W przypadku systemu bucardo liczba u¿ytkowników ma znacz¹cy wp³yw ma zró¿nicowanie danych. Wartoœci wspó³czynnika zmiennoœci uzyskane dla 1, 5 oraz 10 u¿ytkowników s¹ dwukrotnie wy¿sze od pozosta³ych.
+Na wykresie \ref{all_wsp} pokazano wyniki obliczeñ wspó³czynnika zmiennoœci dla testu odczytu wszystkich rekordów w tabeli. Jak widaæ, najwiêksze zró¿nicowanie danych osi¹gaj¹ce od oko³o 50\% do ponad 80\% uzyskano dla mechanizmu pgpool przy obci¹¿eniu jednego u¿ytkownika. Przy wiêkszej liczbie u¿ytkowników wyniki tego mechanizmu s¹ porównywalne do mechanizmów replikacji logicznej oraz strumieniowej i zawieraj¹ siê w przedziale od 10 do 30 procent. W przypadku systemu bucardo liczba u¿ytkowników ma znacz¹cy wp³yw ma zró¿nicowanie czasu odpowiedzi. Wartoœci uzyskane dla 1, 5 oraz 10 u¿ytkowników s¹ dwukrotnie wy¿sze od pozosta³ych.
 
 Na podstawie wykresu nie da siê jednoznacznie okreœliæ wp³ywu rozmiaru danych na zró¿nicowanie czasu odpowiedzi. 
 
@@ -128,7 +142,7 @@ Najbardziej zaskakuj¹ce s¹ wyniki systemu bucardo, w którego przypadku czasy odp
 
 \subsubsection{Wspó³czynnik zmiennoœci} 
 
-Zale¿noœæ wspó³czynnika zmiennoœci od badanych parametrów pokazano na wykresie \ref{single_wsp}. Po porównaniu tego wykresu z wartoœciami dla poprzedniego testu widaæ, ¿e zró¿nicowanie wyników dla odczytu jednego rekordu jest znacznie wiêksze. System replikacji strumieniowej uzyskuje najbardziej jednolite wyniki, jednak nie jest pozbawiony obserwacji znacznie odbiegaj¹cych od œredniej. Zró¿nicowanie replikacji pgpool dla wiêkszoœci badanych przypadków dorównuje replikacji strumieniowej, jednak zawiera wiêcej odchyleñ. Najbardziej zró¿nicowane wyniki uzyskano z badañ systemów bucardo i replikacji logicznej. Ogólny poziom wartoœci wspó³czynnika zmiennoœci jest w przybli¿eniu dwukrotnie wy¿szy od pozosta³ych systemów. W ka¿dym z analizowanych systemów wystêpuj¹ znacz¹ce wahania poziomu zró¿nicowania danych. 
+Zale¿noœæ wspó³czynnika zmiennoœci od badanych parametrów pokazano na wykresie \ref{single_wsp}. Po porównaniu tego wykresu z wartoœciami dla poprzedniego testu widaæ, ¿e zró¿nicowanie wyników dla odczytu jednego rekordu jest znacznie wiêksze. System replikacji strumieniowej uzyskuje najbardziej jednolite wyniki, jednak nie jest pozbawiony obserwacji znacznie odbiegaj¹cych od œredniej. Zró¿nicowanie replikacji pgpool dla wiêkszoœci badanych przypadków dorównuje replikacji strumieniowej, jednak zawiera wiêcej odchyleñ. Najbardziej zró¿nicowane wyniki uzyskano z badañ systemów bucardo i replikacji logicznej. Ogólny poziom wartoœci wspó³czynnika zmiennoœci jest w przybli¿eniu dwukrotnie wy¿szy od pozosta³ych systemów. W ka¿dym z analizowanych systemów wystêpuj¹ znacz¹ce wahania poziomu zró¿nicowania czasu odpowiedzi. 
 \begin{sidewaysfigure}
 \centering
 \includegraphics[width=\textwidth]{img/plot/single/avg}%
@@ -147,7 +161,7 @@ Zale¿noœæ wspó³czynnika zmiennoœci od badanych parametrów pokazano na wykresie \
 \subsection{Zapis rekordu}
 \subsubsection{Œredni czas odpowiedzi} 
 
-Pierwsz¹ obserwacj¹, jak¹ mo¿na odczytaæ z wykresu œredniego czasu dla testu zapisu (rys. \ref{insert_avg}) jest to, ¿e system replikacji logicznej jest zdecydowanie wolniejszy od pozosta³ych. Uzyskiwane przez niego wyniki oscyluj¹ od 120 do oko³o 145ms, podczas gdy inne systemy w wiêkszoœci przypadków uzyskuj¹ wyniki poni¿ej 50ms. Wystêpuj¹ te¿ znaczne ró¿nice w czasach dla poszczególnych tabel w obrêbie jednej liczby po³¹czeñ oraz dla ró¿nych liczb po³¹czeñ. 
+Pierwsz¹ obserwacj¹, jak¹ mo¿na odczytaæ z wykresu ilustruj¹cego wyniki pomiarów œredniego czasu odpowiedzi dla testu zapisu (rys. \ref{insert_avg}) jest to, ¿e system replikacji logicznej jest zdecydowanie wolniejszy od pozosta³ych. Uzyskiwane przez niego wyniki oscyluj¹ od 120 do oko³o 145ms, podczas gdy inne systemy w wiêkszoœci przypadków uzyskuj¹ wyniki poni¿ej 50ms. Wystêpuj¹ te¿ znaczne ró¿nice w czasach dla poszczególnych tabel w obrêbie jednej liczby po³¹czeñ oraz dla ró¿nych liczb po³¹czeñ. 
 
 Mo¿na zauwa¿yæ, ¿e rozmiar danych ma znikomy wp³yw na czas odpowiedzi. Nieco bardziej istotna jest liczba u¿ytkowników, jednak dla badanych poziomów obci¹¿enia ró¿nice s¹ niewielkie. Widoczny jest wzrost w przypadku replikacji strumieniowej i bucardo dla 25 oraz 40 aktywnych po³¹czeñ. 
 
@@ -179,7 +193,7 @@ Wyniki tego testu przedstawione zosta³y na rysunku \ref{update_avg}. Podobnie ja
 
 \subsubsection{Wspó³czynnik zmiennoœci}
 
-Wspó³czynniki zmiennoœci dla testu aktualizacji zaprezentowane zosta³y na wykresie \ref{update_wsp}. £atwo zauwa¿yæ, ¿e test ten jest najmniej zró¿nicowany ze wszystkich. Wartoœæ wspó³czynnika osi¹ga tu maksymalnie 27\% dla wszystkich kombinacji badanych parametrów. Znacznie bardziej widoczny jest tu wp³yw liczby u¿ytkowników na zró¿nicowanie wyników. Replikacka bucardo oraz strumieniowa wykazuj¹ sta³y wzrost zró¿nicowania wraz ze zwiêkszaj¹cym siê obci¹¿eniem. Replikacja logiczna, która wykazywa³a siê najgorszymi czasami aktualizacji danych jest te¿ najmniej zró¿nicowana dla obci¹¿enia powy¿ej jednego u¿ytkownika. Przy jednym po³¹czeniu wspó³czynniki osi¹gaj¹ z kolei jedne z wy¿szych wartoœci na tle badanych systemów.
+Wspó³czynniki zmiennoœci dla testu aktualizacji zaprezentowane zosta³y na wykresie \ref{update_wsp}. £atwo zauwa¿yæ, ¿e test ten jest najmniej zró¿nicowany ze wszystkich. Wartoœæ wspó³czynnika wœród wszystkich kombinacji badanych parametrów osi¹ga tu maksymalnie 27\%. Znacznie bardziej ni¿ w przypadku zapisu widoczny jest wp³yw liczby u¿ytkowników na zró¿nicowanie wyników. Replikacja bucardo oraz strumieniowa wykazuj¹ sta³y wzrost zró¿nicowania wraz ze zwiêkszaj¹cym siê obci¹¿eniem. Replikacja logiczna, która wykazywa³a siê najgorszymi czasami aktualizacji danych jest te¿ najmniej zró¿nicowana dla obci¹¿enia powy¿ej jednego u¿ytkownika. Przy jednym po³¹czeniu wspó³czynniki osi¹gaj¹ z kolei jedne z wy¿szych wartoœci na tle badanych systemów.
 
 \begin{sidewaysfigure}
 \centering
@@ -197,4 +211,46 @@ Wspó³czynniki zmiennoœci dla testu aktualizacji zaprezentowane zosta³y na wykres
 
 \subsection{OpóŸnienie replikacji danych}
 
+Przed przeprowadzeniem testu zegary na serwerach zosta³y zsynchronizowane. Wyniki badañ opóŸnienia replikacji przedstawiono w tabeli \ref{reptab} oraz na wykresie \ref{rep}. Test ten przeprowadzony zosta³ dla systemów bucardo oraz replikacji logicznej. 
+Jak mo¿na zauwa¿yæ, wyniki uzyskiwane przez replikacjê logiczn¹ s¹ zdecydowanie lepsze. OpóŸnienie wynios³o od 1 do 4 milisekund, podczas gdy replikacja bucardo potrzebowa³a ponad 200ms. Liczba wierszy zapisywanych w jednym zapytaniu powoduje liniowy wzrost czasu opóŸnienia replikacji logicznej, czego nie mo¿na powiedzieæ o systemie bucardo, w którego przypadku nie jest widoczna ¿adna zale¿noœæ od liczby rekordów.
+
+\begin{table}[H]
+\centering
+\caption{Wyniki badañ opóŸnienia replikacji systemów bucardo i logicznego}
+\label{reptab}
+\begin{tabular}{|r|rr|} \hline
+ liczba rekordów w zapytaniu   & logical & bucardo \\ \hline
+1   & 0,98    & 289,05  \\
+20  & 1,36    & 212,38  \\
+40  & 1,83    & 259,05  \\
+60  & 2,42    & 224,36  \\
+80  & 2,93    & 268,48  \\
+100 & 3,65    & 217,96 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{img/plot/rep.png}%
+\caption{Wykres zale¿noœci opóŸnienia replikacji danych od liczby rekordów zapisywanych w jednym zapytaniu}%
+\label{rep}%
+\end{figure}
+
+
 \section{Wnioski z testów}
+
+\subsubsection{Odczyt danych}
+
+ Zaobserwowany zosta³ wzrost czasu odpowiedzi przy zwiêkszeniu rozmiaru danych, a tak¿e przy wzrastaj¹cej liczbie u¿ytkowników. Uzyskane czasy odczytu wszystkich rekordów z tabeli dla systemu pgpool-II by³y znacznie ni¿sze od pozosta³ych systemów, co jest zgodne z oczekiwaniami. System pgpool-II zawiera mechanizm równowa¿enia obci¹¿eñ, który rozk³ada zapytania wysy³ane do g³ównego serwera pomiêdzy dostêpne bazy danych. Wp³yw dzia³ania tej funkcjonalnoœci by³ najbardziej widoczny przy najwiêkszym badanym obci¹¿eniu, tj. 40 aktywnych po³¹czeñ. Warto jednak wspomnieæ, ¿e dla jednego u¿ytkownika system ten wprowadzi³ dodatkowe opóŸnienia, które objawia³y siê zwiêkszonym zró¿nicowaniem wyników.
+
+ W pozosta³ych przypadkach uzyskane wyniki by³y prawie ¿e identyczne. Mo¿na zatem stwierdziæ, ¿e w przypadku replikacji asynchronicznej wybrana metoda nie wp³ywa na czas odpowiedzi systemu przy pobieraniu du¿ej liczby danych. Wp³yw liczby u¿ytkowników na czas odpowiedzi mo¿e zostaæ zminimalizowany poprzez zwiêkszenie wydajnoœci serwerów bazodanowych.
+
+Badania czasu odczytu jednego rekordu pokaza³y wiêksze ró¿nice pomiêdzy metodami replikacji, widoczne w szczególnoœci dla replikacji logicznej. Zanik³ jednak wp³yw liczby rekordów oraz w wiêkszoœci liczby po³¹czeñ, co jest stosunkowo przewidywalnym rezultatem. Zapytania zwracaj¹ce jeden rekord wykonywane s¹ znacznie szybciej, wiêc sytuacje, w których u¿ytkownicy czekaj¹ przez niewydajnoœæ systemu s¹ rzadsze. 
+\subsubsection{Zapis danych}
+
+W badaniach czasu zapisu danych, zarówno w przypadku zapytañ \texttt{INSERT} jak i \texttt{UPDATE} najwolniejsz¹ okaza³a siê replikacja logiczna. Mechanizm ten w trakcie wykonywania zapisu do bazy danych zmuszony jest na przeprowadzenie dodatkowych operacji zwi¹zanych z utrzymywaniem aktualnoœci publikacji zawieraj¹cych dziennik zmian. Pomimo zastosowania podobnych mechanizmów w innych systemach, nie zosta³ zaobserwowany ich wp³yw na czas zapisu. Replikacja pgpool osi¹gnê³a nieznacznie wy¿sze czasy, co wynika z synchronicznego sposobu replikacji. Zapytania musz¹ zostaæ wykonane na wszystkich serwerach i konieczne jest otrzymanie potwierdzenia z ka¿dego z nich przed przes³aniem odpowiedzi do u¿ytkownika. 
+
+\subsubsection{Replikacja}
+
+OpóŸnienie replikacji w systemie bucardo okaza³o siê byæ znacznie wy¿sze ni¿ w przypadku replikacji logicznej. Niemo¿liwe by³o tak¿e okreœlenie dla tego systemu zale¿noœci pomiêdzy kolejnymi badanymi wartoœciami liczby zapisywanych rekordów. System bucardo nie udostêpnia zbyt wiele informacji na temat sposobu wykonywania replikacji, dlatego trudno jest jednoznacznie stwierdziæ co mo¿e byæ powodem powstawania tak znacznych opóŸnieñ. 
+

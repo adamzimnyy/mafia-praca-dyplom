@@ -8,7 +8,7 @@ Na poni¿szych rysunkach przedstawiono przypadki u¿ycia systemu.
 
 \subsubsection{Aplikacja serwerowa}
 \begin{figure}[H]
-\centering\includegraphics[width=12cm]{{{img/server_use_case}}}%
+\centering\includegraphics[width=10cm]{{{img/server_use_case}}}%
 \caption{Przypadki u¿ycia aplikacji serwerowej}%
 \label{}%
 \end{figure}
@@ -16,20 +16,20 @@ Na poni¿szych rysunkach przedstawiono przypadki u¿ycia systemu.
 \subsubsection{Aplikacja testuj¹ca}
 \begin{figure}[H]
 \centering
-\includegraphics[width=12cm]{{{img/jmeter_use_case}}}%
+\includegraphics[width=10cm]{{{img/jmeter_use_case}}}%
 \caption{Przypadki u¿ycia aplikacji testuj¹cej}%
 \label{}%
 \end{figure}
 
 \section{Projekt bazy danych}
 
-Na potrzeby testów utworzona zostanie baza danych sk³adaj¹ca siê z 10 jednakowych tabel, oznaczonych literami od \textit{A} do \textit{J}. Tabele sk³adaæ siê bêd¹ z 7 kolumn: numeru id, 3 kolumn numerycznych oraz 3 kolumn tekstowych, oznaczonych literami od \textit{a} do \textit{f}. Schemat tabeli przedstawia poni¿szy rysunek. 
+Na potrzeby testów utworzona zostanie baza danych sk³adaj¹ca siê z 10 jednakowych tabel, oznaczonych literami od \textit{A} do \textit{J}. Tabele sk³adaæ siê bêd¹ z 7 kolumn: numeru id, 3 kolumn numerycznych oraz 3 kolumn tekstowych, oznaczonych literami od \textit{a} do \textit{f}. Schemat tabeli przedstawia rysunek \ref{ex_table}. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=6cm]{{{img/table_c}}}%
 \caption{Przyk³adowa tabela}%
-\label{}%
+\label{ex_table}%
 \end{figure}
 
 W tabeli A dodana zostanie dodatkowa kolumna \textit{timestamp}, z domyœln¹ wartoœci¹ \texttt{current\_timestamp}, zapisuj¹ca czas utworzenia ka¿dego rekordu w bazie danych. Dodatkowo w tabeli A na serwerze pe³ni¹cym funkcjê \textit{slave} utworzona zostanie dodatkowa kolumna \textit{replica\_timestamp} o takich samych w³asnoœciach, jak kolumna \textit{timestamp}. Kolumny te pos³u¿¹ do ocenienia opóŸnienia replikacji przy wstawianiu rekordów. 
@@ -46,9 +46,9 @@ W tabeli A dodana zostanie dodatkowa kolumna \textit{timestamp}, z domyœln¹ wart
 
 \subsection{Pgpool-II}
 
-Pgpool-II jest oprogramowaniem dzia³aj¹cym w warstwie middleware, co oznacza, ¿e poœredniczy ono w komunikacji miêdzy u¿ytkownikiem, a innymi warstwami systemu, w tym wypadku bazami danych. Oprogramowanie mo¿e dzia³aæ jako proces na jednym z komputerów bêd¹cych jednoczeœnie serwerem baz danych, jak i jako samodzielna maszyna. 
+Pgpool-II jest oprogramowaniem dzia³aj¹cym w warstwie middleware, co oznacza, ¿e poœredniczy ono w komunikacji miêdzy u¿ytkownikiem, a innymi warstwami systemu, w tym wypadku bazami danych. Oprogramowanie mo¿e dzia³aæ jako proces na jednym z komputerów bêd¹cych jednoczeœnie serwerem baz danych, jak i jako samodzielna maszyna \cite{pgpool_main}.
 
-Na potrzeby testów utworzone zostan¹ 3 serwery: pgpool-core, na którym zostanie uruchomione oprogramowanie pgpool-II oraz serwery pgpool1 oraz pgpool2, bêd¹ce serwerami baz danych PostgreSQL. Proces aplikacji pgpool pe³ni rolê tzn. load balancera, który automatycznie decyduje, na który z serwerów przekazaæ zapytanie zale¿nie od obci¹¿enia sieci. Dostêp do baz danych odbywaæ siê bêdzie przez domyœlny port 5432. Domyœlnym portem obs³ugi zapytañ na serwerze pgpool-core jest 9999, jednak ze wzglêdu na to, ¿e nie ma na nim instancji PostgreSQL wykorzystany zostanie port 5432. Konfiguracja na serwerze pgpool-core wymaga podania adresów IP wszystkich serwerów baz danych. Projektowany system wymaga³ bêdzie posiadania dwóch adresów statycznych.
+Na potrzeby testów utworzone zostan¹ 3 serwery: pgpool-core, na którym zostanie uruchomione oprogramowanie pgpool-II oraz serwery pgpool1 oraz pgpool2, bêd¹ce serwerami baz danych PostgreSQL. Proces aplikacji pgpool pe³ni rolê tzw. \textit{load balancera}, który automatycznie decyduje, na który z serwerów przekazaæ zapytanie zale¿nie od obci¹¿enia sieci. Dostêp do baz danych odbywaæ siê bêdzie przez domyœlny port 5432. Domyœlnym portem obs³ugi zapytañ na serwerze pgpool-core jest 9999, jednak ze wzglêdu na to, ¿e nie ma na nim instancji PostgreSQL wykorzystany zostanie port 5432. Konfiguracja na serwerze pgpool-core wymaga podania adresów IP wszystkich serwerów baz danych. Projektowany system wymaga³ bêdzie posiadania dwóch adresów statycznych.
 
 \begin{figure}[H]
 \centering
@@ -59,7 +59,7 @@ Na potrzeby testów utworzone zostan¹ 3 serwery: pgpool-core, na którym zostanie 
 
 \subsection{Bucardo}
 
- System replikacji bucardo wymaga do dzia³ania instancji bazy PostgreSQL. Informacje o zmianach zachodz¹cych w tabelach, a tak¿e konfiguracja replikacji przechowywane s¹ w lokalnej bazie danych o nazwie \texttt{bucardo}. Z tego wzglêdu zostanie on zainstalowany na serwerze master, a replikacja zostanie skonfigurowana z bazy lokalnej do bazy na serwerze zdalnym. Replikacja wymaga równie¿ utworzenia u¿ytkownika \texttt{bucardo} z uprawnieniami \texttt{SUPERUSER} na wszystkich serwerach. Komunikacja u¿ytkownika bêdzie odbywaæ siê wy³¹cznie z serwerem master, na domyœlnym porcie 5432. Wymagane bêdzie posiadanie jednego statycznego adresu IP dla serwera slave.
+ System replikacji bucardo wymaga do dzia³ania instancji bazy PostgreSQL. Informacje o zmianach zachodz¹cych w tabelach, a tak¿e konfiguracja replikacji przechowywane s¹ w lokalnej bazie danych o nazwie \texttt{bucardo}. Z tego wzglêdu zostanie on zainstalowany na serwerze master, a replikacja zostanie skonfigurowana z bazy lokalnej do bazy na serwerze zdalnym. Replikacja wymaga równie¿ utworzenia u¿ytkownika \texttt{bucardo} z uprawnieniami \texttt{SUPERUSER} na wszystkich serwerach. Komunikacja u¿ytkownika bêdzie odbywaæ siê wy³¹cznie z serwerem master, na domyœlnym porcie 5432, a zmiany replikowane asynchronicznie na serwer slave. Wymagane bêdzie posiadanie jednego statycznego adresu IP dla serwera slave \cite{bucardo_config}.
 
 \begin{figure}[H]
 \centering
@@ -70,7 +70,7 @@ Na potrzeby testów utworzone zostan¹ 3 serwery: pgpool-core, na którym zostanie 
 
 \subsection{Replikacja logiczna}
 
-System replikacji logicznej sk³adaæ siê bêdzie z dwóch serwerów. Na serwerze master utworzona zostanie publikacja obejmuj¹ca wszystkie tabele bazy danych \texttt{postgres}. Publikacja rejestruje wszystkie operacje dokonywane na bazie danych i udostêpnia je do odczytu przez subskrybentów. Na serwerze slave utworzona zostanie subskrypcja nas³uchuj¹ca zmian w publikacji serwera master i kopiuj¹ca te zmiany do lokalnej bazy danych. Dla u¿ytkownika udostêpniony zostanie port 5432 serwera master. Wymagane bêdzie posiadanie jednego statycznego adresu IP dla serwera master. 
+System replikacji logicznej sk³adaæ siê bêdzie z dwóch serwerów. Na serwerze master utworzona zostanie publikacja obejmuj¹ca wszystkie tabele bazy danych \texttt{postgres}. Publikacja rejestruje wszystkie operacje dokonywane na bazie danych i udostêpnia je do odczytu przez subskrybentów. Na serwerze slave utworzona zostanie subskrypcja nas³uchuj¹ca zmian w publikacji serwera master i kopiuj¹ca te zmiany w sposób asynchroniczny do lokalnej bazy danych. Dla u¿ytkownika udostêpniony zostanie port 5432 serwera master. Wymagane bêdzie posiadanie jednego statycznego adresu IP dla serwera master \cite{logical_config}.
 
 \begin{figure}[H]
 \centering
@@ -81,7 +81,7 @@ System replikacji logicznej sk³adaæ siê bêdzie z dwóch serwerów. Na serwerze mas
 
 \subsection{Replikacja strumieniowa}
 
-System replikacji strumieniowej wykorzystuje dwa serwery. Wykorzystuj¹c funkcje archiwizacji bazy danych na serwerze master utworzony zostanie plik WAL (write ahead log) przechowuj¹cy zmiany dokonywane na lokalnej bazie danych. Przy pomocy procesów WAL sender oraz WAL receiver zostanie utworzona kopia tego pliku na serwerze slave, który nastêpnie wykorzysta go do odtworzenia zmian. Do zestawienia po³¹czenia konieczne jest posiadanie jednego statycznego adresu IP dla serwera slave. Serwer slave dzia³aæ bêdzie w trybie hot-standby, oznacza to, ¿e bêdzie dzia³aæ w trybie tylko do odczytu i obs³ugiwaæ wy³¹cznie zapytania SELECT. U¿ytkownik komunikowaæ siê bêdzie z serwerem master na porcie 5432.
+System replikacji strumieniowej wykorzystuje dwa serwery. Wykorzystuj¹c funkcje archiwizacji bazy danych na serwerze master utworzony zostanie plik WAL (Write Ahead Log) przechowuj¹cy zmiany dokonywane na lokalnej bazie danych. Przy pomocy procesów WAL sender oraz WAL receiver w trybie asynchronicznym zostanie utworzona kopia tego pliku na serwerze slave, który nastêpnie wykorzysta go do odtworzenia zmian. Do zestawienia po³¹czenia konieczne jest posiadanie jednego statycznego adresu IP dla serwera slave. Serwer slave dzia³aæ bêdzie w trybie hot-standby, oznacza to, ¿e bêdzie dzia³aæ w trybie tylko do odczytu i obs³ugiwaæ wy³¹cznie zapytania SELECT. U¿ytkownik komunikowaæ siê bêdzie z serwerem master na porcie 5432 \cite{stream_config}.
 
 \begin{figure}[H]
 \centering
@@ -132,11 +132,11 @@ J      & 100 000          \\ \hline
 \end{tabular}
 \end{table}
 
-Dla ka¿dej tabeli przeprowadzone zostan¹ testy dla piêciu ró¿nych liczb aktywnych u¿ytkowników: 1, 5, 10, 25, 40. Testy zostan¹ powtórzone tak, aby wykonane zosta³o conajmniej 50 zapytañ dla ka¿dej kombinacji parametrów wejœciowych. Liczbê wymaganych powtórzeñ przedstawia tabela \ref{tab_reps}.
+Dla ka¿dej tabeli przeprowadzone zostan¹ testy dla piêciu ró¿nych liczb aktywnych u¿ytkowników: 1, 5, 10, 25, 40. Testy zostan¹ powtórzone tak, aby wykonane zosta³o co najmniej 50 zapytañ dla ka¿dej kombinacji parametrów wejœciowych. Liczbê wymaganych powtórzeñ przedstawia tabela \ref{tab_reps}.
 
 \begin{table}[H]
 \centering
-\caption{Liczba powtórzeñ testu w zaleznoœci od liczby aktywnych u¿ytkowników}
+\caption{Liczba powtórzeñ testu w zale¿noœci od liczby aktywnych u¿ytkowników}
 \label{tab_reps}
 \begin{tabular}{|r|r|}
 \hline
@@ -150,7 +150,7 @@ liczba u¿ytkowników & liczba powtórzeñ testu\\ \hline
 \end{table}
 
 
-W celu analizy opóŸnienia replikacji przeprowadzone zostan¹ dodatkowe testy z wykorzystaniem zapytania INSERT. Badany bêdzie wp³yw iloœci rekordów zapisywanych w jednym zapytaniu na czas replikacji. 
+W celu analizy opóŸnienia replikacji przeprowadzone zostan¹ dodatkowe testy z wykorzystaniem zapytania INSERT. Badany bêdzie wp³yw liczby rekordów zapisywanych w jednym zapytaniu na czas replikacji. 
 
 \begin{table}[H]
 \centering

@@ -4,12 +4,12 @@
 Po przeprowadzeniu analizy literaturowej problemu pracy opracowana zosta³a koncepcja rozwi¹zania. System z³o¿ony bêdzie z nastêpuj¹cych czêœci:
 
 \begin{itemize}
-	\item aplikacja serwerowa udostêpniaj¹ca API w stylu REST pozwalaj¹ce na wywo³ywanie zapytañ na bazie danych,
+	\item aplikacja serwerowa udostêpniaj¹ca API w stylu REST pozwalaj¹ca na wywo³ywanie zapytañ na bazie danych,
 	\item bazy danych wykorzystuj¹ce wybran¹ metodê replikacji danych,
 	\item oprogramowanie testowe bazy danych.
 \end{itemize}
 
-Aplikacje obci¹¿aj¹ce bazy danych dla celów testowych pozwalaj¹ na wysy³anie zapytañ zarówno bezpoœrednio do bazy danych, jak i za poœrednictem zapytañ HTTP. Rol¹ aplikacji serwerowej bêdzie przekierowanie zapytania HTTP do odpowiedniej bazy danych i wywo³anie na niej zapytania SQL. W aplikacji serwerowej zostan¹ skonfigurowane po³¹czenia do wszystkich utworzonych baz danych, a wybór bazy, która ma zostaæ obci¹¿ona zapytaniami testowymi odbywaæ siê bêdzie w momencie uruchomienia aplikacji.
+Aplikacje obci¹¿aj¹ce bazy danych dla celów testowych pozwalaj¹ na wysy³anie zapytañ zarówno bezpoœrednio do bazy danych, jak i za poœrednictwem zapytañ HTTP. Rol¹ aplikacji serwerowej bêdzie przekierowanie zapytania HTTP do odpowiedniej bazy danych i wywo³anie na niej zapytania SQL. W aplikacji serwerowej zostan¹ skonfigurowane po³¹czenia do wszystkich utworzonych baz danych, a wybór bazy, która ma zostaæ obci¹¿ona zapytaniami testowymi odbywaæ siê bêdzie w momencie uruchomienia aplikacji.
 \section{Wymagania funkcjonalne}
 
 \subsection{Aplikacja serwerowa}
@@ -21,7 +21,7 @@ Wymagania aplikacji serwerowej skupiaj¹ siê wokó³ zapewnienia komunikacji pomiêd
 \item Dostêp do aplikacji serwerowej powinien byæ uzyskiwany poprzez zapytania HTTP.
 \item Dostêp nie powinien wymagaæ logowania ani autoryzacji.
 \item Aplikacja w momencie uruchomienia powinna zweryfikowaæ schemat bazy danych, a w razie potrzeby utworzyæ brakuj¹ce tabele lub dokonaæ niezbêdnych modyfikacji na tabelach istniej¹cych.
-\item Aplikacja powinna pozwalaæ na wykonanie zaprojektowanych zapytañ testuj¹cych na testowanej bazie danych.
+\item Aplikacja powinna pozwalaæ na wykonanie zaprojektowanych zapytañ testuj¹cych na analizowanej bazie danych.
 \item Aplikacja powinna pozwalaæ na wybór bazy danych, na której prowadzone bêd¹ testy. Wyboru dokonuje siê poprzez edycjê pliku konfiguracyjnego.
 
 \end{itemize}
@@ -31,13 +31,13 @@ Wymagania aplikacji serwerowej skupiaj¹ siê wokó³ zapewnienia komunikacji pomiêd
 \begin{itemize} 
 \item W pracy badane bêd¹ cztery systemy replikacji danych: 
 	\begin{itemize}
-		\item Bucardo
-		\item pgpool-II 
-		\item replikacja logiczna 
-		\item replikacja strumieniowa
+		\item Bucardo \cite{bucardo_main},
+		\item pgpool-II \cite{pgpool_main},
+		\item replikacja logiczna \cite{logical_main},
+		\item replikacja strumieniowa \cite{stream_main}.
 	\end{itemize}
 \end{itemize}
-Systemy powinny zostaæ skonfigurowane wed³ug architektury master-slave (z wyj¹tkiem systemu pgpool-II). Replikacja danych odbywaæ siê bêdzie w jednym kierunku, z serwera master na serwer slave. 
+Systemy bucardo, replikacji logicznej i replikacji strumieniowej dzia³aj¹ w trybie asynchronicznym i powinny zostaæ skonfigurowane wed³ug architektury master-slave. Replikacja danych odbywaæ siê bêdzie w jednym kierunku, z serwera master na serwer slave. Wyj¹tkiem jest system pgpool-II, który dzia³a w trybie synchronicznym. 
 
 \begin{figure}[H]
 \centering
@@ -48,53 +48,55 @@ Systemy powinny zostaæ skonfigurowane wed³ug architektury master-slave (z wyj¹tk
 
 \subsubsection{Bucardo}
 
-Bucardo to oprogramowanie dostarczane przez firmê End Point Corporation. Podstaw¹ jego dzia³ania jest proces nas³uchuj¹cy zapytañ NOTIFY generowanych w trakcie dokonywania zmian na replikowanych bazach danych i reagowanie na nie. Informacje potrzebne do dzia³ania systemu przechowywane s¹ w g³ównej bazie danych bucardo tworzonej na serwerze master obok bazy replikowanej. Baza bucardo zawiera listê wszystkich replikowanych baz oraz informacje o sposobie uzyskania po³¹czenia z nimi. Do dzia³ania konieczne jest zdefiniowanie listy tabel podlegaj¹cych replikacji. Po konfiguracji triggery rozpoczynaj¹ zapisywanie informacji o tym, które rekordy w obserwowanych tabelach zosta³y zmienione, a nastêpnie ich zawartoœæ jest przesy³ana do pozosta³ych serwerów.
+Bucardo \cite{bucardo_main} to oprogramowanie dostarczane przez firmê End Point Corporation. Podstaw¹ jego dzia³ania jest proces nas³uchuj¹cy zapytañ NOTIFY generowanych w trakcie dokonywania zmian na replikowanych bazach danych i reagowanie na nie. Informacje potrzebne do dzia³ania systemu przechowywane s¹ w g³ównej bazie danych bucardo tworzonej na serwerze master obok bazy replikowanej. Baza bucardo zawiera listê wszystkich replikowanych baz oraz informacje o sposobie uzyskania po³¹czenia z nimi. Do dzia³ania konieczne jest zdefiniowanie listy tabel podlegaj¹cych replikacji. Po konfiguracji triggery rozpoczynaj¹ zapisywanie informacji o tym, które rekordy w obserwowanych tabelach zosta³y zmienione, a nastêpnie ich zawartoœæ jest przesy³ana do pozosta³ych serwerów. Replikacja dzia³a w trybie asynchronicznym.
 
 \subsubsection{Pgpool-II} 
 
-Pgpool-II jest to middleware, czyli oprogramowanie poœrednicz¹ce w wymianie danych pomiêdzy klientem a serwerem bazodanowym. Udostêpnia ono funkcjonalnoœci replikacji oraz równowa¿enia obci¹¿enia pomiêdzy serwerami. Implementowanym typem replikacji jest \textit{statement-based replication}, który opiera siê na wykonywaniu zadanych zapytañ SQL na ka¿dym serwerze podlegaj¹cym kopiowaniu danych. Pgpool-II jest systemem replikacji synchronicznej. W celu zredukowania czasu potrzebnego na przetworzenie zapytania pgpool otwiera sta³¹ liczbê po³¹czeñ z serwerami bazodanowymi i utrzymuje je pomiêdzy kolejnymi zapytaniami.
+Pgpool-II \cite{pgpool_main} jest to middleware, czyli oprogramowanie poœrednicz¹ce w wymianie danych pomiêdzy klientem a serwerem bazodanowym. Udostêpnia ono funkcjonalnoœci replikacji oraz równowa¿enia obci¹¿enia pomiêdzy serwerami. Implementowanym typem replikacji jest \textit{statement-based replication}, który opiera siê na wykonywaniu zadanych zapytañ SQL na ka¿dym serwerze podlegaj¹cym kopiowaniu danych. Pgpool-II jest systemem replikacji synchronicznej. W celu zredukowania czasu potrzebnego na przetworzenie zapytania pgpool otwiera sta³¹ liczbê po³¹czeñ z serwerami bazodanowymi i utrzymuje je pomiêdzy kolejnymi zapytaniami.
 
 \subsubsection{Replikacja logiczna}
 
-Dostêpny w bazach danych PostgreSQl od wersji 10 system replikacji logicznej opiera siê na przesy³aniu listy zmian pomiêdzy serwerami. Na serwerze master polega to na tworzeniu publikacji bêd¹cych list¹ rekordów, w których nast¹pi³a zmiana, zaœ na serwerach slave tworzone s¹ subskrypcje nas³uchuj¹ce nowych informacji w okreœlonych publikacjach. System ten nie obs³uguje zapytañ typu DDL (data definition language, zapytania modyfikuj¹ce strukturê bazy danych). Replikacja odbywa siê poprzez kopiowanie zawartoœci rekordów o okreœlonym kluczu g³ównym z serwera master na serwery slave. 
+Dostêpny w bazach danych PostgreSQL od wersji 10 system replikacji logicznej \cite{logical_main} wykorzystuje przesy³anie listy zmian pomiêdzy serwerami. Na serwerze master polega to na tworzeniu publikacji bêd¹cych list¹ rekordów, w których nast¹pi³a zmiana, zaœ na serwerach slave tworzone s¹ subskrypcje wykrywaj¹ce zmiany danych w okreœlonych publikacjach. System ten nie obs³uguje zapytañ typu DDL (z ang. Data Definition Language, zapytania modyfikuj¹ce strukturê bazy danych). Replikacja odbywa siê poprzez kopiowanie zawartoœci rekordów o okreœlonym kluczu g³ównym z serwera master na serwery slave. Dzia³a w trybie asynchronicznym.
 
 \subsubsection{Replikacja strumieniowa} 
 
-Replikacja strumieniowa jest dostêpna w badach danych PostgreSQL od wersji 9. Do tworzenia kopii danych wykorzystuje ona funkcje archiwizacyjne, które tworz¹ w systemie plików serwera dziennik zmian dokonywanych na bazie danych. Poprzez przesy³anie tego dziennika do innych serwerów mo¿liwe jest odtworzenie bazy danych na podstawie jego wpisów. Replikacja strumieniowa jest metod¹ asynchroniczn¹, jednak cechuje siê wystarczaj¹c¹ szybkoœci¹ aby pe³niæ rolê replikacji synchronicznej dla niewielkich iloœci danych. Utworzony serwer kopii zapasowej pracuje w trybie tylko do odczytu.
+Replikacja strumieniowa \cite{stream_main} jest dostêpna w bazach danych PostgreSQL od wersji 9. Do tworzenia kopii danych wykorzystuje ona funkcje archiwizacyjne, które tworz¹ w systemie plików serwera dziennik zmian dokonywanych na bazie danych. Poprzez przesy³anie tego dziennika do innych serwerów mo¿liwe jest odtworzenie bazy danych na podstawie jego wpisów. Replikacja strumieniowa jest metod¹ asynchroniczn¹, jednak cechuje siê wystarczaj¹c¹ szybkoœci¹, aby pe³niæ rolê replikacji synchronicznej dla niewielkich iloœci danych. Utworzony serwer kopii zapasowej pracuje w trybie tylko do odczytu.
+
+\section{Wymagania niefunkcjonalne}
 
 \subsection{Wykorzystywane technologie}
 
 
-Oprócz opisanych wy¿ej technologii replikacji oraz systemu bazodanowego PostgreSQL w realizacji projektu wykorzystane zostan¹ dodatkowe narzêdzia: 
+Oprócz opisanych wy¿ej technologii replikacji oraz systemu bazodanowego PostgreSQL podczas realizacji projektu wykorzystane zostan¹ dodatkowe narzêdzia: 
 \begin{itemize}
-	\item Aplikacja serwerowa zostanie stworzona w jêzyku Java z wykorzystaniem frameworka Spring Boot
-	\item Do utworzenia warstwy dostêpu do danych u¿yty zostanie framework Hibernate oraz standard JPA
-	\item Jako serwis hostingowy serwerów bazodanowych wykorzystany zostanie portal AWS
+	\item Aplikacja serwerowa zostanie zaimplementowana w jêzyku Java z wykorzystaniem frameworka Spring Boot \cite{spring_boot}.
+	\item Do utworzenia warstwy dostêpu do danych u¿yty zostanie framework Hibernate \cite{hibernate} oraz standard JPA \cite{jpa}.
+	\item Jako serwis hostingowy serwerów bazodanowych wykorzystany zostanie portal Amazon Web Services \cite{aws}.
 \end{itemize}
 
 \subsection{Narzêdzia wspomagaj¹ce ocenê wydajnoœci systemów bazodanowych}
-\subsubsection{pgbench}
+\subsubsection{Pgbench}
 
-Pgbench jest oprogramowaniem benchmarkowym dostarczanym razem z instalacj¹ bazy danych PostgreSQL. Do narzêdzia uzyskuje siê dostêp z poziomu linii poleceñ systemu.
+Pgbench \cite{pgbench} jest oprogramowaniem benchmarkowym dostarczanym razem z instalacj¹ bazy danych PostgreSQL. Do narzêdzia uzyskuje siê dostêp z poziomu linii poleceñ systemu.
 Pgbench pozwala na utworzenie tabel testowych w wyznaczonej bazie danych oraz wype³nienie ich przyk³adowymi danymi. Bazê danych inicjalizuje siê komend¹ \texttt{pgbench} z flag¹ \texttt{-i}. Mo¿liwe jest zdefiniowanie dodatkowych parametrów: 
 
 \begin{itemize}
-	\item -h - adres hosta 
-	\item -p - port 
-	\item -s - skala generowanych danych. Domyœlnie generowane jest 100 tys. wierszy
-	\item -d - baza danych 
-	\item -U - nazwa u¿ytkownika 
-	\item -P - has³o u¿ytkownika
+	\item -h - adres hosta,
+	\item -p - port,
+	\item -s - skala generowanych danych (domyœlnie generowane jest 100 tys. wierszy),
+	\item -d - baza danych, 
+	\item -U - nazwa u¿ytkownika,
+	\item -P - has³o u¿ytkownika.
 \end{itemize}
 \subsubsection{JMeter}
 
-Aplikacja JMeter tworzona przez organizacjê Apache Software Foundation to narzêdzie zaprojektowane do projektowania testów obci¹¿eniowych i mierzenia wydajnoœci. W celu dokonania pomiaru konieczne jest utworzenie planu testowego, sk³adaj¹cego siê z konfiguracji po³¹czeñ, grup w¹tków imituj¹cych u¿ytkowników systemu oraz zapytañ wykonywanych na bazie danych. Mo¿liwe jest te¿ u¿ycie dodatkowych elementrów, jak np. generatory zmiennych losowych oraz tworzenie raportów i wykresów.
+Aplikacja JMeter \cite{jmeter} tworzona przez organizacjê Apache Software Foundation to narzêdzie zaprojektowane do projektowania testów obci¹¿eniowych i mierzenia wydajnoœci. W celu dokonania pomiaru konieczne jest utworzenie planu testowego, sk³adaj¹cego siê z konfiguracji po³¹czeñ, grup w¹tków imituj¹cych u¿ytkowników systemu oraz zapytañ wykonywanych na bazie danych. Mo¿liwe jest te¿ u¿ycie dodatkowych elementów, jak np. generatory zmiennych losowych oraz tworzenie raportów i wykresów.
 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=12cm]{{{img/jmeter_window1}}}%
-\caption{Okno programu JMeter}%
+\caption{Okno programu JMeter \cite{jmeter}}%
 \label{}%
 \end{figure}
 
@@ -102,19 +104,19 @@ Program udostêpnia mo¿liwoœæ uruchomienia w trybie konsolowym na czas prowadzeni
 
 \subsubsection{Spawner Data Generator}
 
-Program Spawner Data Generator jest generatorem przyk³adowych danych na potrzeby testów systemów bazodanowych. Praca z programem polega na odtworzeniu schematu tabeli z bazy danych oraz zdefiniowanie dla ka¿dego pola typu danych, jakie maj¹ zostaæ wygenerowane. Mo¿liwe jest generowanie realistycznych danych, takich jak np. numery telefonu, imiona, adresy e-mail, jak równie¿ danych przypadkowych, np. losowe ci¹gi znaków, liczby czy losowe ci¹gi s³ów z tekstu \textit{Lorem ipsum}.  
+Program Spawner Data Generator \cite{spawner} jest generatorem przyk³adowych danych na potrzeby testów systemów bazodanowych. Praca z programem polega na odtworzeniu schematu tabeli z bazy danych oraz zdefiniowanie dla ka¿dego pola typu danych, jakie maj¹ zostaæ wygenerowane. Mo¿liwe jest generowanie realistycznych danych, takich jak np. numery telefonu, imiona, adresy e-mail, jak równie¿ danych przypadkowych, np. losowe ci¹gi znaków, liczby czy losowe ci¹gi s³ów z tekstu \textit{Lorem ipsum}.  
 \begin{figure}[H]
 \centering
 \includegraphics[width=12cm]{{{img/spawner1}}}%
-\caption{Okno programu Spawner Data Generator, definicja tabel}%
+\caption{Okno programu Spawner Data Generator \cite{spawner}, definicja tabel }%
 \label{}%
 \end{figure}
 
-Generowane dane mo¿na zapisaæ do pliku w formie z separatorem lub jako zapytania SQL. W przeciwieñstwie to licznych rozwi¹zañ dostêpnych online, Spawner Data Generator nie posiada ograniczenia liczby generowanych rekordów. 
+Generowane dane mo¿na zapisaæ do pliku w formie z separatorem lub jako zapytania SQL. W przeciwieñstwie do licznych rozwi¹zañ dostêpnych online, Spawner Data Generator nie posiada ograniczenia liczby generowanych rekordów. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=12cm]{{{img/spawner2}}}%
-\caption{Okno programu Spawner Data Generator, konfiguracja pliku wyjœciowego}%
+\caption{Okno programu Spawner Data Generator \cite{spawner}, konfiguracja pliku wyjœciowego}%
 \label{}%
 \end{figure}

@@ -8,8 +8,8 @@
 \documentclass[a4paper,onecolumn,oneside,12pt,extrafontsizes]{memoir}
 % W celu przygotowania wydruku do archiwum nale¿y przes³oniæ komendê powy¿sz¹
 % dwoma poni¿szymi komendami:
-%documentclass[a4paper,onecolumn,twoside,10pt]{memoir} 
-%renewcommand{\normalsize}{\fontsize{8pt}{10pt}\selectfont}
+%\documentclass[a4paper,onecolumn,twoside,10pt]{memoir} 
+%\renewcommand{\normalsize}{\fontsize{8pt}{10pt}\selectfont}
 
 \usepackage[cp1250]{inputenc} % jeœli kodowanie edytowanych plików to cp1250 
 %\usepackage[utf8]{inputenc} % jeœli kodowanie edytowanych plików to UTF8
@@ -28,6 +28,8 @@
 \usepackage{multirow}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{subfig}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
 %% Aby uzyskaæ polskie literki w pdfie (a nie zlepki) korzystamy z pakietu czcionek tgterms. 
 %% W pakiecie tym s¹ zdefiniowane klony czcionek Times o kszta³tach: normalny, pogrubiony, italic, italic pogrubiony.
 %% W pakiecie tym brakuje czcionki o kszta³cie: slanted (podobny do italic). 
@@ -194,7 +196,7 @@ language=Java,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Ustawienia odleg³oœci linii, wciêæ, odstêpów
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\linespread{1}
+\linespread{1.5}
 %\linespread{1.241}
 \setlength{\parindent}{14.5pt}
 %\setbeforesecskip{10pt plus 0.5ex}%{-3.5ex \@plus -1ex \@minus -.2ex}
@@ -617,7 +619,7 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 %\settypeoutlayoutunit{cm} % do debugowania
 %\typeoutstandardlayout    % wypisuje na stdout informacje o ustawieniach
 \maketitle
-\newpage
+
 
 
 \chapterstyle{noNumbered}
@@ -654,8 +656,9 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 \makeatother
 
 \lstlistoflistings
-\include{skroty} %skróty mo¿na sobie pomin¹æ
+%\include{skroty} %skróty mo¿na sobie pomin¹æ
 \chapterstyle{default}
+
 \include{rozdzial01}
 \include{rozdzial02}
 \include{rozdzial03}
@@ -666,8 +669,8 @@ SPECJALNOŒÆ: & \@specjalnosc\\
 \include{rozdzial08}
 \include{rozdzial09}
 %\bibliographystyle{plalpha}
-\bibliographystyle{plabbrv}
-
+%\bibliographystyle{plabbrv}
+\bibliographystyle{unsrt}
 %UWAGA: bibliotekê referencji nale¿y przygotowaæ samemu. Dobrym do tego narzêdziem jest JabRef.
 %       Nazwê przygotowanej biblioteki wpisuje siê poni¿ej bez rozszerzenia 
 %       (w tym przypadku jest to "dokumentacja.bib")

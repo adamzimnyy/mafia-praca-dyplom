@@ -1,28 +1,28 @@
-\chapter{Wstêp} 
+\chapter{Wstêp}
 
 Niniejszy dokument opisuje przebieg realizacji projektu dyplomowego magisterskiego o temacie \textit{Analiza i ocena wydajnoœci mechanizmów replikacji w systemie bazodanowym wykorzystuj¹cym PostgreSQL} na kierunku Informatyka, na wydziale Elektroniki Politechniki Wroc³awskiej.
 \section{Cel i zakres pracy}
 
-Celem pracy jest stworzenie niezale¿nych systemów wykorzystuj¹cych ró¿ne dostêpne metody replikacji danych i przetestowanie wp³ywu wybranej metody replikacji danych, jak i jej parametrów konfiguracyjnych na wydajnoœæ bazy danych. Miar¹ wydajnoœci jest czas odpowiedzi, a w przypadku testów replikacji wielkoœæ opóŸnienia.
+Celem pracy jest opracowanie niezale¿nych systemów wykorzystuj¹cych ró¿ne dostêpne metody replikacji danych i przetestowanie wp³ywu wybranej metody replikacji danych, jak i jej parametrów konfiguracyjnych na wydajnoœæ bazy danych. Miar¹ wydajnoœci jest czas odpowiedzi, a w przypadku testów replikacji wielkoœæ opóŸnienia.
 
 Zakres pracy obejmuje: 
 \begin{itemize}
 	\item analizê problemu w oparciu o dostêpn¹ literaturê,
-	\item projekt oraz wykonanie systemu bazowanowego opartego na PostgreSQL,
-	\item projekt oraz wykonanie webowego interfejsu dostêpowego do stworzonej bazy danych,
+	\item projekt oraz wykonanie systemu bazowanowego opartego na PostgreSQL \cite{postgres},
+	\item projekt oraz wykonanie webowego interfejsu dostêpowego do bazy danych,
 	\item konfiguracjê mechanizmów replikacji bazy danych,
 	\item projekt testów benchmarkowych pozwalaj¹cych okreœliæ wydajnoœæ systemu,
-	\item analizê statystyczn¹ i ocenê porównawcz¹ efektywnoœci zastosowanych rozwi¹zañ replikacji danych.
+	\item analizê statystyczn¹ i ocenê porównawcz¹ wyników badañ wydajnoœciowych zastosowanych mechanizmów replikacji danych.
 \end{itemize}
 \section{Metody replikacji w systemach bazodanowych}
 
-Replikacja to proces polegaj¹cy na kopiowaniu bazy danych pomiêdzy ró¿nymi serwerami, w celu utworzenia kopii zapasowej lub wykorzystania jako serwer zapasowy. Stosowanie replikacji pozwala na zwiêkszenie bezpieczeñstwa danych w razie awarii, a tak¿e zmiejszenie czasu dostêpu do danych poprzez roz³o¿enie obci¹¿eñ pomiêdzy serwery lub w przypadku czasowej niedostêpnoœci serwerów.
+Replikacja to proces polegaj¹cy na kopiowaniu bazy danych pomiêdzy ró¿nymi serwerami, w celu utworzenia kopii zapasowej lub wykorzystania jako serwer zapasowy. Stosowanie replikacji pozwala na zwiêkszenie bezpieczeñstwa danych w razie awarii, a tak¿e zmniejszenie czasu dostêpu do danych poprzez roz³o¿enie obci¹¿eñ pomiêdzy serwery lub w przypadku czasowej niedostêpnoœci serwerów \cite{repl}.
 
-Metody replikacji danych podzieiæ mo¿na na synchroniczne oraz asynchroniczne. W przypadku metod synchronicznych transakcja zatwierdzana jest dopiero, gdy wszystkie serwery potwierdz¹ jej poprawne wykonanie. Zapewnia to spójnoœæ danych we wszystkich serwerach bez wystêpowania opóŸnieñ, jednak mo¿e powodowaæ wiêksze opóŸnienia lub zawieszenie transakcji w przypadku niedostêpnoœci któregoœ z serwerów. Replikacja synchroniczna wymaga ogromnych przepustowoœci ³¹cza, co przek³ada siê na du¿y koszt wytworzenia i utrzymania systemu. 
+Metody replikacji danych podzieliæ mo¿na na synchroniczne oraz asynchroniczne. W przypadku metod synchronicznych transakcja zatwierdzana jest dopiero, gdy wszystkie serwery potwierdz¹ jej poprawne wykonanie. Zapewnia to spójnoœæ danych we wszystkich serwerach bez wystêpowania opóŸnieñ, jednak mo¿e powodowaæ wiêksze opóŸnienia lub zawieszenie transakcji w przypadku niedostêpnoœci któregoœ z serwerów. Replikacja synchroniczna wymaga du¿ych przepustowoœci ³¹cza, co przek³ada siê na du¿y koszt wytworzenia i utrzymania systemu. 
 
-W przypadku replikacji asynchronicznej, dane kopiowane s¹ co okreœlony czas lub po uaktywnieniu wyzwalacza. Konsekwencj¹ takiego sposobu replikacji jest minimalizacja opóŸnieñ w trakcie dodawania lub edycji rekordów, co przek³ada siê na wydajnoœæ aplikacji, jednak mo¿e powodowaæ powstawanie czasowych niespójnoœci pomiêdzy baz¹ g³ówn¹ a replikami. W zale¿noœci od przepustowoœci sieci, konfiguracji systemu i rozmiaru danych opóŸnienie to mo¿e wynosiæ nawet do kilku godzin. Stosowanie replikacji asynchronicznej pozwala na znaczne zmiejszenie kosztu wytworzenia systemu ze wzglêdu znacznie ni¿sze wymagania. 
+W przypadku replikacji asynchronicznej, dane kopiowane s¹ co okreœlony czas lub po uaktywnieniu wyzwalacza. Konsekwencj¹ takiego sposobu replikacji jest minimalizacja czasu dostêpu w trakcie dodawania lub edycji rekordów, co przek³ada siê na du¿¹ wydajnoœæ aplikacji, jednak mo¿e powodowaæ powstawanie czasowych niespójnoœci pomiêdzy baz¹ g³ówn¹ a replikami. W zale¿noœci od przepustowoœci sieci, konfiguracji systemu i rozmiaru danych opóŸnienie to mo¿e wynosiæ nawet do kilku godzin. Stosowanie replikacji asynchronicznej pozwala na znaczne zmniejszenie kosztu wytworzenia systemu ze wzglêdu na znacznie ni¿sze wymagania. 
 
-Ze wzglêdu na sposób przesy³ania danych metody replikacji mo¿na podzieliæ na \textit{statement-based} i \textit{row-based}. Replikacja \textit{statement-based} polega na ponownym wykonaniu na ka¿dym z serwerów  zapytañ, które zosta³y u¿yte do wprowadzenia zmian na serwerze g³ównym. Replikacja \textit{row-based} tworzy kopie powielaj¹c rzeczywiste zmiany w tabelach.  
+Ze wzglêdu na sposób przesy³ania danych metody replikacji mo¿na podzieliæ na \textit{statement-based} i \textit{row-based}. Replikacja \textit{statement-based} polega na ponownym wykonaniu na ka¿dym z serwerów  zapytañ, które zosta³y u¿yte do wprowadzenia zmian na serwerze g³ównym. Replikacja \textit{row-based} tworzy kopie rekordów powielaj¹c rzeczywiste zmiany w tabelach \cite{repl_based}.  
 
 W zale¿noœci od sposobu dostêpu przez u¿ytkownika wyró¿niæ mo¿na systemy master-slave lub multimaster. W systemach master-slave wystêpuje g³ówny wêze³ replikacji, z którym komunikuj¹ siê u¿ytkownicy, a zmiany dokonywane na nim propagowane s¹ do serwerów slave. W architekturze multimaster serwery s¹ sobie równowa¿ne, u¿ytkownicy mog¹ dokonywaæ zmian na dowolnym serwerze.
 
@@ -31,7 +31,28 @@ W zale¿noœci od sposobu dostêpu przez u¿ytkownika wyró¿niæ mo¿na systemy master-
 
 
 
-% \section{Metody testowania wydajnoœci systemów bazodanowych}
+%\section{Metody testowania wydajnoœci systemów bazodanowych}
 
-% \section{Istniej¹ce wyniki badañ wydajnoœci systemów baz danych SQL}
+ \section{Istniej¹ce wyniki badañ wydajnoœci systemów baz danych}
 
+
+Wraz z powstawaniem nowych systemów zarz¹dzania bazami danych pojawiaj¹ siê liczne artyku³y i prace zajmuj¹ce siê ich porównywaniem. Wiêkszoœæ z nich opisuje jednak ró¿nice w dostarczanych funkcjonalnoœciach, a rzadziej w wydajnoœci systemów. Zdecydowana wiêkszoœæ testów wydajnoœciowych, których wyniki s¹ publikowane przeprowadzana jest na bazach NoSQL. Du¿e trudnoœci sprawia równie¿ znalezienie prac skupiaj¹cych siê na systemach replikacji. 
+
+W artykule \textit{Benchmark: PostgreSQL, MongoDB, Neo4j, OrientDB and ArangoDB} \cite{arango} opisane s¹ wyniki testów porównawczych wydajnoœci wymienionych systemów. Do analizy czasu wykonania podstawowych operacji bazodanowych wykorzystana zosta³a baza danych portalu spo³ecznoœciowego Pokec dostêpna ze strony Stanford Network Analysis Project \cite{snap}. Wykonane zosta³y nastêpuj¹ce testy: 
+\begin{itemize}
+	\item zapis jednego dokumentu (stworzenie profilu u¿ytkownika),
+	\item odczyt jednego dokumentu (odczyt profilu u¿ytkownika),
+	\item agregacja danych (uzyskanie statystyk o rozk³adzie wieku u¿ytkowników). 
+\end{itemize}
+
+Badania wykaza³y, ¿e bazy danych PostgreSQL mog¹ konkurowaæ z bazami NoSQL pod wzglêdem szybkoœci dla operacji odczytu i zapisu, lecz s¹ przewa¿nie wolniejsze w operacjach agregacji danych. 
+
+
+W prezentacji z pracy dyplomowej \textit{Analiza porównawcza wybranych
+w³asnoœci systemów zarz¹dzania bazami danych} \cite{lach} Miros³awa Lacha przedstawione zosta³y wyniki badañ wydajnoœci systemów PostgreSQL, Microsoft SQL Server, MySQL oraz Oracle. Testowany by³ wp³yw zmieniaj¹cej siê iloœci danych oraz liczby u¿ytkowników na czasy odpowiedzi baz danych. Wyniki badañ pokazuj¹, ¿e PostgreSQL wypada od pozosta³ych systemów nieznacznie gorzej, jednak we wszystkich systemach wystêpuj¹ jednakowe zale¿noœci czasu odpowiedzi od obci¹¿enia.
+
+
+Artyku³ \textit{Millions of Queries per Second: PostgreSQL and MySQL’s Peaceful Battle at Today’s Demanding Workloads} opublikowany na blogu Percona \cite{percona} opisuje porównanie wydajnoœci baz MySQL oraz PostgreSQL. Wykorzystane zosta³y bardzo wydajne maszyny, z³o¿one z czterech procesorów posiadaj¹cych ³¹cznie 72 rdzenie oraz 3 TB pamiêci RAM. Do badañ u¿yte zosta³y standardowe testy dostêpne w narzêdziach pgbench \cite{pgbench} dla PostgreSQL oraz SysBench \cite{sysbench} dla MySQL, jednak autor artyku³u nie podaje szczegó³owych informacji na temat ich implementacji. Zbadany zosta³ wp³yw liczby aktywnych u¿ytkowników na liczbê zapytañ przetwarzanych na sekundê. Badania pokaza³y, ¿e PostgreSQL jest bardziej wydajny w zapytaniach odczytu danych oraz osi¹ga bardzo zbli¿one wyniki w operacjach zapisu. 
+
+
+Przeprowadzaj¹c analizê dostêpnych wyników badañ wydajnoœci nie znaleziono prac skupiaj¹cych siê bezpoœrednio na tematyce replikacji danych, a w szczególnoœci na wykorzystaniu mechanizmów replikacji badanych w tej pracy. 
